@@ -1,0 +1,613 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About Long Lead</title>
+<meta name="description" content="Great people are everywhere. The companies who need them just haven't met them yet. Long Lead exists to close that gap.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="About Long Lead">
+<meta property="og:description" content="Real, experienced interviewers, never AI. And a bench you build before you need one.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><g fill='%2316202B'><circle cx='8' cy='32' r='4'/><circle cx='21' cy='32' r='4'/><circle cx='34' cy='32' r='4'/></g><rect x='45' y='24' width='16' height='16' rx='2' fill='%231F6B5B'/></svg>">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+</style>
+</head>
+<body>
+<style>
+  :root {
+    --paper:      #F3F4F2;
+    --paper-2:    #EAECE8;
+    --ink:        #16202B;
+    --ink-soft:   #4E5C66;
+    --rule:       #D5D9D4;
+    --accent:     #1F6B5B;
+    --accent-dim: #E2EDE8;
+    --late:       #A8836A;
+    --late-dim:   #EFE5DC;
+
+    --serif: "Hoefler Text", "Iowan Old Style", ui-serif, Palatino, "Palatino Linotype", Georgia, serif;
+    --sans:  -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    --mono:  ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:      #10171E;
+      --paper-2:    #17212A;
+      --ink:        #E8EAE6;
+      --ink-soft:   #94A3AC;
+      --rule:       #26333D;
+      --accent:     #47B99A;
+      --accent-dim: #16302B;
+      --late:       #C09A80;
+      --late-dim:   #2C241E;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper:      #10171E;
+    --paper-2:    #17212A;
+    --ink:        #E8EAE6;
+    --ink-soft:   #94A3AC;
+    --rule:       #26333D;
+    --accent:     #47B99A;
+    --accent-dim: #16302B;
+    --late:       #C09A80;
+    --late-dim:   #2C241E;
+  }
+
+  :root[data-theme="light"] {
+    --paper:      #F3F4F2;
+    --paper-2:    #EAECE8;
+    --ink:        #16202B;
+    --ink-soft:   #4E5C66;
+    --rule:       #D5D9D4;
+    --accent:     #1F6B5B;
+    --accent-dim: #E2EDE8;
+    --late:       #A8836A;
+    --late-dim:   #EFE5DC;
+  }
+
+  html, body {
+    background: var(--paper);
+    color: var(--ink);
+  }
+
+  /* ============================================================
+     MOBILE FIRST, same as the landing page. Base styles are the
+     phone layout; every media query below is min-width and adds
+     to it. Nothing here should need a max-width query.
+     ============================================================ */
+
+  .ll {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;  /* stop iOS inflating type in landscape */
+  }
+
+  .ll-wrap {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 0 20px 52px;
+  }
+
+  .ll-measure { max-width: none; }
+
+  .ll-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0;
+  }
+
+  .ll h2 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(1.45rem, 5.2vw, 2.45rem);
+    line-height: 1.2;
+    letter-spacing: -0.012em;
+    text-wrap: balance;
+    margin: 0;
+  }
+
+  .ll h3 {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 1.0625rem;
+    letter-spacing: -0.005em;
+    margin: 0;
+  }
+
+  .ll p { margin: 0; }
+  .ll strong { font-weight: 600; }
+
+  /* even out line lengths so short copy never strands a word or two on the last line */
+  .ll p { text-wrap: pretty; }
+
+  /* ---------- masthead ---------- */
+
+  .ll-masthead {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 22px 0 14px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  /* masthead logo lockup: mark + tagline as one unit. On this page it is also
+     the way home, so the whole lockup is a link — no underline, no color shift */
+  .ll-logo-lockup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    text-decoration: none;
+    color: inherit;
+  }
+  .ll-logo-lockup:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; }
+
+  .ll-masthead-logo {
+    height: 40px;
+    width: auto;
+    display: block;
+  }
+
+  .ll-logo-lockup-tagline {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.03em;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  .ll-logo-mini {
+    height: 11px;
+    width: auto;
+    color: var(--ink-soft);
+    flex: none;
+  }
+
+  .ll-masthead-note {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .ll-masthead-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    text-align: right;
+  }
+
+  .ll-masthead-mail {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .ll-masthead-mail:hover { text-decoration: underline; }
+
+  /* ---------- hero ---------- */
+
+  .ll-hero {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 32px 0 0;
+  }
+
+  .ll-hero-main {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* logo art: hidden on phones (no white space to fill), revealed as a second
+     column at the desktop breakpoint below */
+  .ll-hero-art { display: none; }
+
+  .ll-hero h1 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(1.95rem, 7.4vw, 4.05rem);
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+    max-width: 15em;
+    margin: 0;
+  }
+
+  /* headline, lead, and sub read as one descending unit: three sizes, tight
+     internal spacing, then the section gap carries down */
+  .ll-hero-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .ll-hero-lead {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(1.3rem, 4.4vw, 2.1rem);
+    line-height: 1.18;
+    letter-spacing: -0.014em;
+    text-wrap: balance;
+    color: var(--ink);
+  }
+
+  /* the mission paragraph under the headline: sans, softer, the explainer.
+     .ll .ll-hero-body, not .ll-hero-body — `.ll p { margin: 0 }` above outranks
+     a lone class and would zero the margin out. Same for .ll-pull below. */
+  .ll .ll-hero-body {
+    margin-top: 10px;
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    text-wrap: balance;  /* short block: even the lines rather than run long-long-stub */
+  }
+
+  /* the line that gives the company its name. Set as a statement, not a quote:
+     serif, accent, a rule above it doing the work quotation marks would */
+  .ll .ll-pull {
+    margin-top: 4px;
+    padding-top: 18px;
+    border-top: 1px solid var(--rule);
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+    color: var(--accent);
+  }
+
+  /* ---------- generic section ---------- */
+
+  .ll-section {
+    padding-top: 46px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .ll-lede {
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+
+  /* header + subhead read as one unit: pull the subhead up tight under the h2,
+     out of the section's flex gap */
+  .ll h2 + .ll-lede,
+  .ll h2 + .ll-measure { margin-top: -21px; }
+
+  /* ---------- people ---------- */
+
+  /* Kelly and Adam. One column on phones, two side by side from 620px up —
+     exactly two people, so the row always fills */
+  .ll-people {
+    list-style: none;
+    margin: 4px 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .ll-person {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .ll .ll-person-name {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 1.5rem;
+    line-height: 1.15;
+    letter-spacing: -0.012em;
+    margin: 0;
+  }
+
+  .ll .ll-person-role {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-top: -2px;
+  }
+
+  .ll-person-bio {
+    font-size: 1rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 30em;
+  }
+
+  /* plain text link, no icon — matches the masthead mail treatment */
+  .ll-person-link {
+    align-self: flex-start;
+    margin-top: 2px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 2px;
+  }
+  .ll-person-link:hover { color: var(--accent); border-bottom-color: var(--accent); }
+  .ll-person-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  /* ---------- the bench ---------- */
+
+  /* Names and roles only, no links and no photos. One column on phones, two
+     from 620px up, so an odd number never strands a lonely cell in a 3-up row */
+  .ll-bench {
+    list-style: none;
+    margin: 4px 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .ll-bench li {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .ll-bench b {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 1.0625rem;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+  }
+
+  .ll-bench span {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    flex: none;
+    text-align: right;
+  }
+
+  /* a section that opens with the same divider as the closing block.
+     margin-top and padding-top match so the divider sits with equal space
+     above and below it */
+  .ll-section.ll-ruled {
+    margin-top: 28px;
+    border-top: 1px solid var(--rule);
+    padding-top: 28px;
+  }
+
+  /* ---------- close ---------- */
+
+  .ll-close {
+    margin-top: 28px;
+    border-top: 1px solid var(--rule);
+    padding-top: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .ll-close h2 { max-width: none; }
+
+  .ll-cta {
+    align-self: flex-start;
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--paper);
+    background: var(--accent);
+    padding: 15px 26px;
+    border-radius: 2px;
+    transition: opacity 0.18s ease;
+  }
+  .ll-cta:hover { opacity: 0.82; }
+  .ll-cta:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+  .ll-colophon {
+    margin-top: 36px;
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  /* footer email: a live mailto link styled exactly like the masthead's —
+     lowercase, same size and tracking, not the colophon's uppercase caps */
+  .ll-colophon-mail {
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .ll-colophon-mail:hover { text-decoration: underline; }
+
+  /* ============================================================
+     SCALE UP. Column counts always divide evenly, so a short
+     final row never leaves an empty cell: 1 → 2 → 4, never 3.
+     ============================================================ */
+
+  @media (min-width: 620px) {
+    .ll { font-size: 17px; line-height: 1.65; }
+    .ll-wrap { padding: 0 28px 72px; }
+    .ll-eyebrow { font-size: 12px; }
+
+    .ll-masthead { padding: 30px 0 16px; }
+    .ll-masthead-note { font-size: 11.5px; }
+    .ll-masthead-logo { height: 48px; }
+
+    .ll-hero { padding: 56px 0 0; gap: 26px; }
+    .ll-hero h1 { line-height: 1.09; letter-spacing: -0.022em; }
+    .ll-lede { font-size: 1.1875rem; line-height: 1.6; }
+    .ll-hero-stack { gap: 4px; }
+    .ll .ll-hero-body { font-size: 1.1875rem; line-height: 1.6; margin-top: 14px; }
+    .ll .ll-pull { font-size: 1.45rem; padding-top: 22px; }
+
+    .ll-section { padding-top: 62px; gap: 22px; }
+    .ll h2 { line-height: 1.18; }
+
+    .ll h2 + .ll-lede,
+    .ll h2 + .ll-measure { margin-top: -25px; }  /* keep the header/subhead unit tight */
+
+    .ll-people { grid-template-columns: 1fr 1fr; gap: 34px 40px; }
+    .ll-bench { grid-template-columns: 1fr 1fr; column-gap: 40px; }
+
+    .ll-close { margin-top: 36px; padding-top: 36px; gap: 22px; }
+    .ll-section.ll-ruled { margin-top: 36px; padding-top: 36px; }
+    .ll-colophon { margin-top: 44px; }
+  }
+
+  /* desktop: the hero becomes two columns — words on the left, logo art
+     filling the white space on the right, centered against the copy */
+  @media (min-width: 860px) {
+    .ll-hero {
+      flex-direction: row;
+      align-items: center;
+      gap: 40px;
+    }
+    .ll-hero-main { flex: 1 1 0; min-width: 0; }
+    .ll-hero-art {
+      display: block;
+      flex: 0 0 26%;
+      max-width: 240px;
+    }
+    .ll-hero-art img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  }
+
+</style>
+
+<div class="ll">
+  <div class="ll-wrap">
+
+    <header class="ll-masthead">
+      <a class="ll-logo-lockup" href="/">
+        <img class="ll-masthead-logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMjAwMCIgem9vbUFuZFBhbj0ibWFnbmlmeSIgdmlld0JveD0iMCAwIDE1MDAgMTQ5OS45OTk5MzMiIGhlaWdodD0iMjAwMCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ieE1pZFlNaWQgbWVldCIgdmVyc2lvbj0iMS4wIj48ZGVmcz48Y2xpcFBhdGggaWQ9Ijk0NGEwM2Y3YmIiPjxwYXRoIGQ9Ik0gMjgwLjY3NTc4MSAxNjggTCAxMjY5LjE3NTc4MSAxNjggTCAxMjY5LjE3NTc4MSAxMTU2LjUgTCAyODAuNjc1NzgxIDExNTYuNSBaIE0gMjgwLjY3NTc4MSAxNjggIiBjbGlwLXJ1bGU9Im5vbnplcm8iLz48L2NsaXBQYXRoPjwvZGVmcz48ZyBjbGlwLXBhdGg9InVybCgjOTQ0YTAzZjdiYikiPjxwYXRoIGZpbGw9IiMwMDE4NDMiIGQ9Ik0gNzc1LjA1MDc4MSAxNjggQyA1MDEuOTEwMTU2IDE2OCAyODAuNjc1NzgxIDM4OS4yMzA0NjkgMjgwLjY3NTc4MSA2NjIuMzcxMDk0IEMgMjgwLjY3NTc4MSA5MzUuNTE1NjI1IDUwMS45MTAxNTYgMTE1Ni43NDYwOTQgNzc1LjA1MDc4MSAxMTU2Ljc0NjA5NCBDIDEwNDguMTkxNDA2IDExNTYuNzQ2MDk0IDEyNjkuNDIxODc1IDkzNS41MTU2MjUgMTI2OS40MjE4NzUgNjYyLjM3MTA5NCBDIDEyNjkuNDIxODc1IDM4OS4yMzA0NjkgMTA0OC4xOTE0MDYgMTY4IDc3NS4wNTA3ODEgMTY4IFogTSA3NzUuMDUwNzgxIDE2OCAiIGZpbGwtb3BhY2l0eT0iMSIgZmlsbC1ydWxlPSJub256ZXJvIi8+PC9nPjxwYXRoIGZpbGw9IiNmZmZmZmYiIGQ9Ik0gNjc0LjA0Mjk2OSAxMjc5LjY4MzU5NCBDIDYzNy4wOTM3NSAxMjg0IDU5MC43MDcwMzEgMTI3Ni40NDkyMTkgNTU2LjMyMDMxMiAxMjYyLjQyMTg3NSBDIDUxOC4wMjM0MzggMTI0Ni43ODEyNSA0ODUuNjYwMTU2IDEyMTYuNDQxNDA2IDQ2OS44ODI4MTIgMTE3Ny44NzEwOTQgQyA0NDEuMjkyOTY5IDExMDcuODg2NzE5IDQ2My45NDkyMTkgMTAwOC45MDYyNSA0OTIuNTM1MTU2IDk0Mi4xNTIzNDQgQyA1NDQuMzE2NDA2IDgyMS4zMjgxMjUgNjQ5LjkwNjI1IDc0My41MTk1MzEgNzc1LjcyMjY1NiA3MTMuMDQyOTY5IEMgODI4Ljk4ODI4MSA3MDAuMjM0Mzc1IDg4My4wNjI1IDY5NC44Mzk4NDQgOTM0LjMwNDY4OCA2NzMuOTM3NSBDIDEwNDEuMjQyMTg4IDYzMC4yNDYwOTQgMTEwNy40NTMxMjUgNTI5LjkxNzk2OSAxMTUwLjYwNTQ2OSA0MjcuMTYwMTU2IEMgMTE2Mi40NzI2NTYgNDAwLjU5Mzc1IDExNzAuODMyMDMxIDM3MC41MjM0MzggMTE4Ni4zMzk4NDQgMzQ1LjcxMDkzOCBDIDExOTIuMDAzOTA2IDMzNi42NzU3ODEgMTIwMC4wOTM3NSAzMjcuMTAxNTYyIDEyMTEuMjg5MDYyIDMyNS4wNzgxMjUgQyAxMjE3LjQ5MjE4OCAzMjQgMTIyMy41NTg1OTQgMzI1Ljc1MzkwNiAxMjI4LjQxNDA2MiAzMjkuNjY0MDYyIEMgMTI1NS4zODI4MTIgMzUxLjkxNDA2MiAxMjYxLjE4MzU5NCA0MzIuMTQ4NDM4IDEyNjMuNzQ2MDk0IDQ2Ni40MDIzNDQgQyAxMjgwLjA2MjUgNjg2Ljc0NjA5NCAxMTk2LjU4OTg0NCA5MjUuODM1OTM4IDEwNTIuNDMzNTk0IDEwOTIuMTA5Mzc1IEMgOTU0LjgwNDY4OCAxMjA0Ljk3NjU2MiA4MjIuMjQ2MDk0IDEyNjkuMDMxMjUgNjc0LjA0Mjk2OSAxMjc5LjY4MzU5NCBaIE0gNjc0LjA0Mjk2OSAxMjc5LjY4MzU5NCAiIGZpbGwtb3BhY2l0eT0iMSIgZmlsbC1ydWxlPSJub256ZXJvIi8+PHBhdGggZmlsbD0iIzAwOWE5ZSIgZD0iTSA2OTguMDQyOTY5IDEzMjcuNjgzNTk0IEMgNjYxLjA5Mzc1IDEzMzIgNjE0LjcwNzAzMSAxMzI0LjQ0OTIxOSA1ODAuMzIwMzEyIDEzMTAuNDIxODc1IEMgNTQyLjAyMzQzOCAxMjk0Ljc4MTI1IDUwOS42NjAxNTYgMTI2NC40NDE0MDYgNDkzLjg4MjgxMiAxMjI1Ljg3MTA5NCBDIDQ2NS4yOTI5NjkgMTE1NS44ODY3MTkgNDg3Ljk0OTIxOSAxMDU2LjkwNjI1IDUxNi41MzUxNTYgOTkwLjE1MjM0NCBDIDU2OC4zMTY0MDYgODY5LjMyODEyNSA2NzMuOTA2MjUgNzkxLjUxOTUzMSA3OTkuNzIyNjU2IDc2MS4wNDI5NjkgQyA4NTIuOTg4MjgxIDc0OC4yMzQzNzUgOTA3LjA2MjUgNzQyLjgzOTg0NCA5NTguMzA0Njg4IDcyMS45Mzc1IEMgMTA2NS4yNDIxODggNjc4LjI0NjA5NCAxMTMxLjQ1MzEyNSA1NzcuOTE3OTY5IDExNzQuNjA1NDY5IDQ3NS4xNjAxNTYgQyAxMTg2LjQ3MjY1NiA0NDguNTkzNzUgMTE5NC44MzIwMzEgNDE4LjUyMzQzOCAxMjEwLjMzOTg0NCAzOTMuNzEwOTM4IEMgMTIxNi4wMDM5MDYgMzg0LjY3NTc4MSAxMjI0LjA5Mzc1IDM3NS4xMDE1NjIgMTIzNS4yODkwNjIgMzczLjA3ODEyNSBDIDEyNDEuNDkyMTg4IDM3MiAxMjQ3LjU1ODU5NCAzNzMuNzUzOTA2IDEyNTIuNDE0MDYyIDM3Ny42NjQwNjIgQyAxMjc5LjM4MjgxMiAzOTkuOTE0MDYyIDEyODUuMTgzNTk0IDQ4MC4xNDg0MzggMTI4Ny43NDYwOTQgNTE0LjQwMjM0NCBDIDEzMDQuMDYyNSA3MzQuNzQ2MDk0IDEyMjAuNTg5ODQ0IDk3My44MzU5MzggMTA3Ni40MzM1OTQgMTE0MC4xMDkzNzUgQyA5NzguODA0Njg4IDEyNTIuOTc2NTYyIDg0Ni4yNDYwOTQgMTMxNy4wMzEyNSA2OTguMDQyOTY5IDEzMjcuNjgzNTk0IFogTSA2OTguMDQyOTY5IDEzMjcuNjgzNTk0ICIgZmlsbC1vcGFjaXR5PSIxIiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48L3N2Zz4=" alt="Long Lead">
+        <span class="ll-logo-lockup-tagline">Meet talent before you need them</span>
+      </a>
+
+      <div class="ll-masthead-right">
+        <span class="ll-masthead-note">About us</span>
+        <a class="ll-masthead-mail" href="mailto:hello@longlead.co">hello@longlead.co</a>
+      </div>
+    </header>
+
+    <section class="ll-hero">
+      <div class="ll-hero-main">
+        <div class="ll-hero-stack">
+          <h1>Great people are everywhere.</h1>
+          <p class="ll-hero-lead">The companies who need them just haven’t met them yet.</p>
+          <p class="ll-hero-body">Long Lead exists to close that gap. Real, experienced interviewers, never AI, having real conversations and making the judgment calls a model can’t. And a bench you build before you need one.</p>
+          <p class="ll-pull">Meet talent before you need them, because you never know who you’ll need until you do.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="ll-section ll-ruled">
+      <p class="ll-eyebrow">Who we are</p>
+      <h2>The two of us, and a bench behind us.</h2>
+
+      <ul class="ll-people">
+        <li class="ll-person">
+          <h3 class="ll-person-name">Kelly Milner</h3>
+          <p class="ll-person-role">Founder</p>
+          <p class="ll-person-bio">Kelly started out as a designer and fell in love with building the teams instead, and has been a creative recruiter in New York ever since. Long Lead is that instinct made into a business: learn a shop properly, meet people long before there’s a req, and hand every name over at the end.</p>
+          <a class="ll-person-link" href="https://www.linkedin.com/in/kellymilner/" target="_blank" rel="noopener">LinkedIn</a>
+        </li>
+
+        <li class="ll-person">
+          <h3 class="ll-person-name">Adam Posner</h3>
+          <p class="ll-person-role">Managing Partner</p>
+          <p class="ll-person-bio">Adam comes from NHP Talent Group in New York, and has spent 500-plus episodes of thePOZcast asking people how careers actually get built. At Long Lead that turns into the day-to-day of the partnership: client relationships, how searches get staffed, and a network most searches never get near.</p>
+          <a class="ll-person-link" href="https://www.linkedin.com/in/adamjposner/" target="_blank" rel="noopener">LinkedIn</a>
+        </li>
+      </ul>
+    </section>
+
+    <section class="ll-section ll-ruled">
+      <p class="ll-eyebrow">The bench</p>
+      <h2>Everyone here has a specialty.</h2>
+      <p class="ll-lede">Growing, and paired to the work.</p>
+
+      <!-- ============================================================
+           TO ADD SOMEONE: copy any line below, paste it underneath,
+           change the name and the role. That's the whole job.
+           TO REMOVE SOMEONE: delete their line.
+           Keep the <li>...</li> on one line and nothing else can break.
+           ============================================================ -->
+      <ul class="ll-bench">
+        <li><b>Tim Young</b><span>Recruiter</span></li>
+        <li><b>Leanna Ballester</b><span>Business Development</span></li>
+      </ul>
+    </section>
+
+    <section class="ll-close" id="start">
+      <h2>Let’s have a virtual cup of coffee.</h2>
+      <p class="ll-measure" style="color: var(--ink-soft);">Tell us the role, and we’ll tell you who could be on your bench.</p>
+
+      <a class="ll-cta" href="https://calendly.com/longlead/15min" target="_blank" rel="noopener">Grab 15-mins</a>
+    </section>
+
+    <section>
+      <div class="ll-colophon">
+        <a href="/" style="display:flex;align-items:center;gap:9px;color:inherit;text-decoration:none;">
+          <svg class="ll-logo-mini" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+            <g fill="currentColor">
+              <circle cx="8" cy="32" r="4"/><circle cx="21" cy="32" r="4"/><circle cx="34" cy="32" r="4"/>
+              <rect x="45" y="24" width="16" height="16" rx="2"/>
+            </g>
+          </svg>
+          Long Lead
+        </a>
+        <a class="ll-colophon-mail" href="mailto:hello@longlead.co">hello@longlead.co</a>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+</body>
+</html>

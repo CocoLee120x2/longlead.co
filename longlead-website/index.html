@@ -1,0 +1,777 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Long Lead: talent pipelining</title>
+<meta name="description" content="Long Lead sources, screens, and warms a bench of candidates before you open the req, so the day you decide you need someone, you are not starting a search.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Long Lead">
+<meta property="og:description" content="Start building your bench, for the roles you have and the ones coming. No retainer, no placement fee. Every name is yours.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><g fill='%2316202B'><circle cx='8' cy='32' r='4'/><circle cx='21' cy='32' r='4'/><circle cx='34' cy='32' r='4'/></g><rect x='45' y='24' width='16' height='16' rx='2' fill='%231F6B5B'/></svg>">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+</style>
+</head>
+<body>
+<style>
+  :root {
+    --paper:      #F3F4F2;
+    --paper-2:    #EAECE8;
+    --ink:        #16202B;
+    --ink-soft:   #4E5C66;
+    --rule:       #D5D9D4;
+    --accent:     #1F6B5B;
+    --accent-dim: #E2EDE8;
+    --late:       #A8836A;
+    --late-dim:   #EFE5DC;
+
+    --serif: "Hoefler Text", "Iowan Old Style", ui-serif, Palatino, "Palatino Linotype", Georgia, serif;
+    --sans:  -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    --mono:  ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:      #10171E;
+      --paper-2:    #17212A;
+      --ink:        #E8EAE6;
+      --ink-soft:   #94A3AC;
+      --rule:       #26333D;
+      --accent:     #47B99A;
+      --accent-dim: #16302B;
+      --late:       #C09A80;
+      --late-dim:   #2C241E;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper:      #10171E;
+    --paper-2:    #17212A;
+    --ink:        #E8EAE6;
+    --ink-soft:   #94A3AC;
+    --rule:       #26333D;
+    --accent:     #47B99A;
+    --accent-dim: #16302B;
+    --late:       #C09A80;
+    --late-dim:   #2C241E;
+  }
+
+  :root[data-theme="light"] {
+    --paper:      #F3F4F2;
+    --paper-2:    #EAECE8;
+    --ink:        #16202B;
+    --ink-soft:   #4E5C66;
+    --rule:       #D5D9D4;
+    --accent:     #1F6B5B;
+    --accent-dim: #E2EDE8;
+    --late:       #A8836A;
+    --late-dim:   #EFE5DC;
+  }
+
+  html, body {
+    background: var(--paper);
+    color: var(--ink);
+  }
+
+  /* ============================================================
+     MOBILE FIRST. Base styles are the phone layout; every media
+     query below is min-width and adds to it. Nothing here should
+     need a max-width query.
+     ============================================================ */
+
+  .ll {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;  /* stop iOS inflating type in landscape */
+  }
+
+  .ll-wrap {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 0 20px 52px;
+  }
+
+  .ll-measure { max-width: none; }
+
+  .ll-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0;
+  }
+
+  .ll h2 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(1.45rem, 5.2vw, 2.45rem);
+    line-height: 1.2;
+    letter-spacing: -0.012em;
+    text-wrap: balance;
+    margin: 0;
+  }
+
+  .ll h3 {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 1.0625rem;
+    letter-spacing: -0.005em;
+    margin: 0;
+  }
+
+  .ll p { margin: 0; }
+  .ll strong { font-weight: 600; }
+
+  /* even out line lengths so short copy never strands a word or two on the last line */
+  .ll p { text-wrap: pretty; }
+
+  /* ---------- masthead ---------- */
+
+  .ll-masthead {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 22px 0 14px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  /* masthead logo lockup: mark + tagline as one unit */
+  .ll-logo-lockup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .ll-masthead-logo {
+    height: 40px;
+    width: auto;
+    display: block;
+  }
+
+  .ll-logo-lockup-tagline {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.03em;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  .ll-logo-mini {
+    height: 11px;
+    width: auto;
+    color: var(--ink-soft);
+    flex: none;
+  }
+
+  .ll-masthead-note {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .ll-masthead-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    text-align: right;
+  }
+
+  .ll-masthead-mail {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .ll-masthead-mail:hover { text-decoration: underline; }
+
+  /* nav + email share one baseline row under the "talent pipelining" note.
+     The separator is faded --ink-soft, not --rule: --rule is a hairline color
+     and vanishes at 11px type. Faint enough to read as punctuation between the
+     two links, not as a third item */
+  .ll-masthead-links {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .ll-masthead-sep { font-size: 11px; color: var(--ink-soft); opacity: 0.5; }
+
+  /* ---------- hero ---------- */
+
+  /* no padding-bottom: the chart is the last child, and any value here would
+     add to the next section's padding-top rather than replace it */
+  .ll-hero {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 32px 0 0;
+  }
+
+  /* the words + form; the art column sits beside it on wide screens */
+  .ll-hero-main {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* logo art: hidden on phones (no white space to fill), revealed as a second
+     column at the desktop breakpoint below */
+  .ll-hero-art { display: none; }
+
+  .ll-hero h1 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(1.95rem, 7.4vw, 4.05rem);
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+    max-width: 15em;
+    margin: 0;
+  }
+
+  /* headline, lead, and sub read as one descending unit: three sizes, tight
+     internal spacing, then the section gap carries down to the CTA */
+  .ll-hero-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  /* the second beat of the headline: a serif step down from the h1, still
+     part of the statement, not yet the explainer */
+  .ll-hero-lead {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(1.3rem, 4.4vw, 2.1rem);
+    line-height: 1.18;
+    letter-spacing: -0.014em;
+    text-wrap: balance;
+    color: var(--ink);
+  }
+
+  /* the explainer: sans, softer, smallest of the three. a touch more space
+     above it sets it apart from the two serif lines */
+  .ll-hero-sub {
+    margin-top: 0;
+    font-size: 1.0625rem;
+    line-height: 1.5;
+    font-weight: 500;
+    color: var(--accent);
+  }
+
+  /* hero CTA: sits under the subhead so the ask is in the first view, no scroll */
+  .ll-cta-hero { margin-top: 2px; }
+
+  /* ---------- generic section ---------- */
+
+  .ll-section {
+    padding-top: 46px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  /* ---------- pricing ---------- */
+
+  /* footnote hugging the list above it; the negative margin pulls it back out of
+     the section's flex gap so it reads as attached to the list, not floating
+     between the list and the lede below */
+  /* .ll .ll-footnote, not .ll-footnote — `.ll p { margin: 0 }` above outranks a
+     lone class and would zero the negative margin out */
+  .ll .ll-footnote {
+    margin-top: -16px;
+    font-size: 0.8125rem;
+    line-height: 1.55;
+    font-style: italic;
+    color: var(--ink-soft);
+  }
+
+  /* Lead-in sentence. Used for the price anchor and the closing tease in pricing,
+     and the figures line in the hero. No margin — each sits in a flex parent whose
+     gap already spaces it. */
+  .ll-lede {
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+
+  /* header + subhead read as one unit: pull the subhead up tight under the h2,
+     out of the section's flex gap */
+  .ll h2 + .ll-lede,
+  .ll h2 + .ll-measure { margin-top: -21px; }
+
+  /* ---------- depth list ---------- */
+
+  .ll-depth-list {
+    margin: 4px 0 0;
+    padding-left: 1.1em;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .ll-depth-list li {
+    font-size: 1rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+
+  .ll-depth-list li::marker { color: var(--accent); }
+  .ll-depth-list strong { color: var(--ink); }
+
+  /* ---------- faq ---------- */
+
+  .ll-faq {
+    display: flex;
+    flex-direction: column;
+    margin-top: 8px;
+  }
+
+  .ll-faq details { border-top: 1px solid var(--rule); }
+  .ll-faq details:last-child { border-bottom: 1px solid var(--rule); }
+
+  .ll-faq summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    padding: 16px 0;
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 1.0625rem;
+    letter-spacing: -0.005em;
+  }
+  .ll-faq summary::-webkit-details-marker { display: none; }
+  .ll-faq summary::after {
+    content: "+";
+    font-family: var(--mono);
+    font-size: 1rem;
+    color: var(--accent);
+    flex: none;
+  }
+  .ll-faq details[open] summary::after { content: "\2212"; }
+  .ll-faq summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .ll-faq details p {
+    color: var(--ink-soft);
+    padding: 0 0 20px;
+    max-width: 44em;
+  }
+
+  /* a section that opens with the same divider as the closing block.
+     margin-top and padding-top match so the divider sits with equal space
+     above and below it */
+  .ll-section.ll-ruled {
+    margin-top: 28px;
+    border-top: 1px solid var(--rule);
+    padding-top: 28px;
+  }
+
+  /* ---------- close ---------- */
+
+  .ll-close {
+    margin-top: 28px;
+    border-top: 1px solid var(--rule);
+    padding-top: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  /* no cap here. 13em forced "cup of coffee." onto its own line.
+     text-wrap: balance on .ll h2 still evens the break on narrow screens. */
+  .ll-close h2 { max-width: none; }
+
+  .ll-cta {
+    align-self: flex-start;
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--paper);
+    background: var(--accent);
+    padding: 15px 26px;
+    border-radius: 2px;
+    transition: opacity 0.18s ease;
+  }
+  .ll-cta:hover { opacity: 0.82; }
+  .ll-cta:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+  /* ---------- contact form ---------- */
+
+  .ll-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-width: 30em;
+    margin-top: 4px;
+  }
+
+  .ll-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .ll-field label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .ll-field input {
+    font-family: var(--sans);
+    font-size: 1rem;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 11px 13px;
+    width: 100%;
+  }
+  .ll-field input::placeholder { color: var(--ink-soft); opacity: 0.65; }
+  .ll-field input:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+    border-color: var(--accent);
+  }
+
+  /* the .ll-cta styles assume an <a>; as a form button it needs the resets */
+  .ll-form button.ll-cta {
+    align-self: flex-start;
+    border: 0;
+    cursor: pointer;
+    margin-top: 2px;
+  }
+
+  /* honeypot: hidden from people, catches bots that fill every field */
+  .ll-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+  /* inline states: shown in place of the form so no one leaves the page */
+  .ll-form-thanks {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    line-height: 1.3;
+    color: var(--accent);
+  }
+  .ll-form-err {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: var(--late);
+    margin-top: 4px;
+  }
+
+  .ll-colophon {
+    margin-top: 36px;
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  /* footer email: a live mailto link styled exactly like the masthead's —
+     lowercase, same size and tracking, not the colophon's uppercase caps */
+  .ll-colophon-mail {
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .ll-colophon-mail:hover { text-decoration: underline; }
+
+  /* ============================================================
+     SCALE UP. Column counts always divide evenly, so a short
+     final row never leaves an empty cell: 1 → 2 → 4, never 3.
+     ============================================================ */
+
+
+  @media (min-width: 620px) {
+    .ll { font-size: 17px; line-height: 1.65; }
+    .ll-wrap { padding: 0 28px 72px; }
+    .ll-eyebrow { font-size: 12px; }
+
+    .ll-masthead { padding: 30px 0 16px; }
+    .ll-masthead-note { font-size: 11.5px; }
+    .ll-masthead-logo { height: 48px; }
+
+    .ll-hero { padding: 56px 0 0; gap: 26px; }
+    .ll-hero h1 { line-height: 1.09; letter-spacing: -0.022em; }
+    .ll-lede { font-size: 1.1875rem; line-height: 1.6; }
+    .ll-hero-stack { gap: 4px; }
+    .ll-hero-sub { font-size: 1.25rem; line-height: 1.45; margin-top: 0; }
+
+    .ll-section { padding-top: 62px; gap: 22px; }
+    .ll h2 { line-height: 1.18; }
+
+    .ll .ll-footnote { margin-top: -20px; }  /* section gap grows to 22px here; keep the tight hug */
+    .ll h2 + .ll-lede,
+    .ll h2 + .ll-measure { margin-top: -25px; }  /* keep the header/subhead unit tight */
+
+    .ll-close { margin-top: 36px; padding-top: 36px; gap: 22px; }
+    .ll-section.ll-ruled { margin-top: 36px; padding-top: 36px; }
+    .ll-colophon { margin-top: 44px; }
+  }
+
+  /* desktop: the hero becomes two columns — words/form on the left, logo art
+     filling the white space on the right, centered against the copy */
+  @media (min-width: 860px) {
+    .ll-hero {
+      flex-direction: row;
+      align-items: center;
+      gap: 40px;
+    }
+    .ll-hero-main { flex: 1 1 0; min-width: 0; }
+    .ll-hero-art {
+      display: block;
+      flex: 0 0 26%;
+      max-width: 240px;
+    }
+    .ll-hero-art img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  }
+
+</style>
+
+<div class="ll">
+  <div class="ll-wrap">
+
+    <header class="ll-masthead">
+      <div class="ll-logo-lockup">
+        <img class="ll-masthead-logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMjAwMCIgem9vbUFuZFBhbj0ibWFnbmlmeSIgdmlld0JveD0iMCAwIDE1MDAgMTQ5OS45OTk5MzMiIGhlaWdodD0iMjAwMCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ieE1pZFlNaWQgbWVldCIgdmVyc2lvbj0iMS4wIj48ZGVmcz48Y2xpcFBhdGggaWQ9Ijk0NGEwM2Y3YmIiPjxwYXRoIGQ9Ik0gMjgwLjY3NTc4MSAxNjggTCAxMjY5LjE3NTc4MSAxNjggTCAxMjY5LjE3NTc4MSAxMTU2LjUgTCAyODAuNjc1NzgxIDExNTYuNSBaIE0gMjgwLjY3NTc4MSAxNjggIiBjbGlwLXJ1bGU9Im5vbnplcm8iLz48L2NsaXBQYXRoPjwvZGVmcz48ZyBjbGlwLXBhdGg9InVybCgjOTQ0YTAzZjdiYikiPjxwYXRoIGZpbGw9IiMwMDE4NDMiIGQ9Ik0gNzc1LjA1MDc4MSAxNjggQyA1MDEuOTEwMTU2IDE2OCAyODAuNjc1NzgxIDM4OS4yMzA0NjkgMjgwLjY3NTc4MSA2NjIuMzcxMDk0IEMgMjgwLjY3NTc4MSA5MzUuNTE1NjI1IDUwMS45MTAxNTYgMTE1Ni43NDYwOTQgNzc1LjA1MDc4MSAxMTU2Ljc0NjA5NCBDIDEwNDguMTkxNDA2IDExNTYuNzQ2MDk0IDEyNjkuNDIxODc1IDkzNS41MTU2MjUgMTI2OS40MjE4NzUgNjYyLjM3MTA5NCBDIDEyNjkuNDIxODc1IDM4OS4yMzA0NjkgMTA0OC4xOTE0MDYgMTY4IDc3NS4wNTA3ODEgMTY4IFogTSA3NzUuMDUwNzgxIDE2OCAiIGZpbGwtb3BhY2l0eT0iMSIgZmlsbC1ydWxlPSJub256ZXJvIi8+PC9nPjxwYXRoIGZpbGw9IiNmZmZmZmYiIGQ9Ik0gNjc0LjA0Mjk2OSAxMjc5LjY4MzU5NCBDIDYzNy4wOTM3NSAxMjg0IDU5MC43MDcwMzEgMTI3Ni40NDkyMTkgNTU2LjMyMDMxMiAxMjYyLjQyMTg3NSBDIDUxOC4wMjM0MzggMTI0Ni43ODEyNSA0ODUuNjYwMTU2IDEyMTYuNDQxNDA2IDQ2OS44ODI4MTIgMTE3Ny44NzEwOTQgQyA0NDEuMjkyOTY5IDExMDcuODg2NzE5IDQ2My45NDkyMTkgMTAwOC45MDYyNSA0OTIuNTM1MTU2IDk0Mi4xNTIzNDQgQyA1NDQuMzE2NDA2IDgyMS4zMjgxMjUgNjQ5LjkwNjI1IDc0My41MTk1MzEgNzc1LjcyMjY1NiA3MTMuMDQyOTY5IEMgODI4Ljk4ODI4MSA3MDAuMjM0Mzc1IDg4My4wNjI1IDY5NC44Mzk4NDQgOTM0LjMwNDY4OCA2NzMuOTM3NSBDIDEwNDEuMjQyMTg4IDYzMC4yNDYwOTQgMTEwNy40NTMxMjUgNTI5LjkxNzk2OSAxMTUwLjYwNTQ2OSA0MjcuMTYwMTU2IEMgMTE2Mi40NzI2NTYgNDAwLjU5Mzc1IDExNzAuODMyMDMxIDM3MC41MjM0MzggMTE4Ni4zMzk4NDQgMzQ1LjcxMDkzOCBDIDExOTIuMDAzOTA2IDMzNi42NzU3ODEgMTIwMC4wOTM3NSAzMjcuMTAxNTYyIDEyMTEuMjg5MDYyIDMyNS4wNzgxMjUgQyAxMjE3LjQ5MjE4OCAzMjQgMTIyMy41NTg1OTQgMzI1Ljc1MzkwNiAxMjI4LjQxNDA2MiAzMjkuNjY0MDYyIEMgMTI1NS4zODI4MTIgMzUxLjkxNDA2MiAxMjYxLjE4MzU5NCA0MzIuMTQ4NDM4IDEyNjMuNzQ2MDk0IDQ2Ni40MDIzNDQgQyAxMjgwLjA2MjUgNjg2Ljc0NjA5NCAxMTk2LjU4OTg0NCA5MjUuODM1OTM4IDEwNTIuNDMzNTk0IDEwOTIuMTA5Mzc1IEMgOTU0LjgwNDY4OCAxMjA0Ljk3NjU2MiA4MjIuMjQ2MDk0IDEyNjkuMDMxMjUgNjc0LjA0Mjk2OSAxMjc5LjY4MzU5NCBaIE0gNjc0LjA0Mjk2OSAxMjc5LjY4MzU5NCAiIGZpbGwtb3BhY2l0eT0iMSIgZmlsbC1ydWxlPSJub256ZXJvIi8+PHBhdGggZmlsbD0iIzAwOWE5ZSIgZD0iTSA2OTguMDQyOTY5IDEzMjcuNjgzNTk0IEMgNjYxLjA5Mzc1IDEzMzIgNjE0LjcwNzAzMSAxMzI0LjQ0OTIxOSA1ODAuMzIwMzEyIDEzMTAuNDIxODc1IEMgNTQyLjAyMzQzOCAxMjk0Ljc4MTI1IDUwOS42NjAxNTYgMTI2NC40NDE0MDYgNDkzLjg4MjgxMiAxMjI1Ljg3MTA5NCBDIDQ2NS4yOTI5NjkgMTE1NS44ODY3MTkgNDg3Ljk0OTIxOSAxMDU2LjkwNjI1IDUxNi41MzUxNTYgOTkwLjE1MjM0NCBDIDU2OC4zMTY0MDYgODY5LjMyODEyNSA2NzMuOTA2MjUgNzkxLjUxOTUzMSA3OTkuNzIyNjU2IDc2MS4wNDI5NjkgQyA4NTIuOTg4MjgxIDc0OC4yMzQzNzUgOTA3LjA2MjUgNzQyLjgzOTg0NCA5NTguMzA0Njg4IDcyMS45Mzc1IEMgMTA2NS4yNDIxODggNjc4LjI0NjA5NCAxMTMxLjQ1MzEyNSA1NzcuOTE3OTY5IDExNzQuNjA1NDY5IDQ3NS4xNjAxNTYgQyAxMTg2LjQ3MjY1NiA0NDguNTkzNzUgMTE5NC44MzIwMzEgNDE4LjUyMzQzOCAxMjEwLjMzOTg0NCAzOTMuNzEwOTM4IEMgMTIxNi4wMDM5MDYgMzg0LjY3NTc4MSAxMjI0LjA5Mzc1IDM3NS4xMDE1NjIgMTIzNS4yODkwNjIgMzczLjA3ODEyNSBDIDEyNDEuNDkyMTg4IDM3MiAxMjQ3LjU1ODU5NCAzNzMuNzUzOTA2IDEyNTIuNDE0MDYyIDM3Ny42NjQwNjIgQyAxMjc5LjM4MjgxMiAzOTkuOTE0MDYyIDEyODUuMTgzNTk0IDQ4MC4xNDg0MzggMTI4Ny43NDYwOTQgNTE0LjQwMjM0NCBDIDEzMDQuMDYyNSA3MzQuNzQ2MDk0IDEyMjAuNTg5ODQ0IDk3My44MzU5MzggMTA3Ni40MzM1OTQgMTE0MC4xMDkzNzUgQyA5NzguODA0Njg4IDEyNTIuOTc2NTYyIDg0Ni4yNDYwOTQgMTMxNy4wMzEyNSA2OTguMDQyOTY5IDEzMjcuNjgzNTk0IFogTSA2OTguMDQyOTY5IDEzMjcuNjgzNTk0ICIgZmlsbC1vcGFjaXR5PSIxIiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48L3N2Zz4=" alt="Long Lead">
+        <span class="ll-logo-lockup-tagline">Meet talent before you need them</span>
+      </div>
+
+      <div class="ll-masthead-right">
+        <span class="ll-masthead-note">Talent pipelining</span>
+        <span class="ll-masthead-links">
+          <a class="ll-masthead-mail" href="/about">About</a>
+          <span class="ll-masthead-sep" aria-hidden="true">·</span>
+          <a class="ll-masthead-mail" href="mailto:hello@longlead.co">hello@longlead.co</a>
+        </span>
+      </div>
+    </header>
+
+    <section class="ll-hero">
+      <div class="ll-hero-main">
+      <div class="ll-hero-stack">
+        <h1>Start building your bench.</h1>
+        <p class="ll-hero-lead">For the roles you have, and the ones coming.</p>
+        <p class="ll-hero-sub">No retainer, no placement fee. Every name is yours.</p>
+      </div>
+      <form class="ll-form ll-cta-hero" action="https://formsubmit.co/hello@longlead.co" method="POST">
+        <input type="hidden" name="_subject" value="New Long Lead inquiry (hero)">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_template" value="table">
+        <input type="text" name="_honey" class="ll-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+        <div class="ll-field">
+          <label for="hf-name">Name</label>
+          <input id="hf-name" name="name" type="text" autocomplete="name" required>
+        </div>
+        <div class="ll-field">
+          <label for="hf-email">Email</label>
+          <input id="hf-email" name="email" type="email" autocomplete="email" required>
+        </div>
+        <div class="ll-field">
+          <label for="hf-role">The role you’re thinking about</label>
+          <input id="hf-role" name="role" type="text" placeholder="Senior producer, account director, CFO…">
+        </div>
+
+        <button class="ll-cta" type="submit">Start your bench</button>
+      </form>
+      </div>
+    </section>
+
+    <section class="ll-section ll-ruled">
+      <p class="ll-eyebrow">How it works</p>
+      <h2>Before you need to hire.</h2>
+      <p class="ll-lede">We do the groundwork.</p>
+
+      <ul class="ll-depth-list">
+        <li><strong>We learn your shop.</strong> What the work actually is, who thrives in it, and who you’d never hire again.</li>
+        <li><strong>We do the sourcing.</strong> Your open roles, your ATS, and the people who aren’t looking yet. And when a search needs to stay confidential, nothing tips off the market or your team.</li>
+        <li><strong>We vet to the depth you choose.</strong> At a minimum, resumes of people who are genuinely interested. Or go as far as the role needs, deeper with written questionnaires and recorded video interviews.</li>
+        <li><strong>You get people who want to be there.</strong> Interested, already talking to us, and ready when you are. You decide from there.</li>
+      </ul>
+    </section>
+
+    <section class="ll-section ll-ruled">
+      <p class="ll-eyebrow">What it costs</p>
+      <h2>Priced by your needs.</h2>
+      <p class="ll-lede">From $1,500 a week.</p>
+      <p class="ll-footnote">* Confidential searches are priced case by case.</p>
+
+      <ul class="ll-depth-list">
+        <li><strong>Seniority.</strong> Jr, Mid, or Sr, from taking work off your plate to owning the whole outcome.</li>
+        <li><strong>Depth.</strong> Resumes, written questionnaires, or recorded video interviews.</li>
+        <li><strong>Speed.</strong> A steady weekly build, or all hands on your role when you’re in a crunch.</li>
+      </ul>
+
+    </section>
+
+    <section class="ll-section ll-ruled">
+      <p class="ll-eyebrow">Who you’d be working with</p>
+      <h2>Real humans.</h2>
+      <p class="ll-lede">Who already know your world.</p>
+      <div class="ll-measure">
+        <p>Long Lead is Kelly Milner, Adam Posner, and a small bench of experts, each with their own specialty. You get paired with whoever knows your corner of the business, so the person sourcing for you already speaks the language.</p>
+      </div>
+    </section>
+
+    <section class="ll-close" id="start">
+      <h2>Let’s have a virtual cup of coffee.</h2>
+      <p class="ll-measure" style="color: var(--ink-soft);">Tell us the role, and we’ll tell you who could be on your bench.</p>
+
+      <a class="ll-cta" href="https://calendly.com/longlead/15min" target="_blank" rel="noopener">Grab 15-mins</a>
+    </section>
+
+    <section class="ll-section ll-ruled">
+      <p class="ll-eyebrow">Fair questions</p>
+      <h2>We know you want to know.</h2>
+
+      <div class="ll-faq">
+        <details>
+          <summary>Can you guarantee we’ll love all the candidates?</summary>
+          <p>No, and be careful with anyone who says yes. If we knew the magic sauce that made every hire perfect, we would be billionaires. What we can promise is the work: real sourcing every week, honest reads on every person, and nobody in your inbox who hasn’t already told us they’re interested.</p>
+        </details>
+        <details>
+          <summary>What if the person we hire doesn’t work out?</summary>
+          <p>The bench is still there. That is the whole point of building one: the next conversation starts from names you already know, not from zero. Nobody can promise you a perfect hire, but we can make the second try a lot shorter than the first.</p>
+        </details>
+        <details>
+          <summary>What slows a search down?</summary>
+          <p>Usually feedback. We move at the speed your team gets back to us, so the longer a resume sits, the colder the candidate gets. On our end, speed is a lever you can turn up: in a crunch we put more of the bench on your role at once. But once names are in front of you, fast, honest feedback, even a quick no, is what keeps everything moving. That part is on you, and we’ll say so nicely when it happens.</p>
+        </details>
+        <details>
+          <summary>Our reputation isn’t great. Can you work around that?</summary>
+          <p>We can tell your story well. Every email goes out in your brand’s voice and tone, selling your company the way you would on your best day. What we can’t do is rebrand you. How you’re seen in your industry affects who says yes to a conversation, and that part belongs to you.</p>
+        </details>
+        <details>
+          <summary>Will there be action every week, and do you charge if there isn’t?</summary>
+          <p>There’s work every week. Action is a different thing. Some weeks the market answers fast, some weeks it goes quiet, and no recruiter alive can tell you which is coming. Either way the sourcing, outreach, and follow-ups keep moving, and you see all of it. So yes, you pay for weeks we work, not weeks we get lucky. A quiet week still had names sourced, emails out, and follow-ups going. And if things need to slow down on your side, say the word and pause. We bill weekly on purpose, so stopping and starting is painless.</p>
+        </details>
+        <details>
+          <summary>Is there a minimum commitment?</summary>
+          <p>If we’ve never worked together, we suggest a minimum of four weeks. The first stretch is calibration: setting up, getting to know your shop, and figuring out the process that fits you. Once we know each other, it can be as short as two weeks. Come back for a one-off search anytime.</p>
+        </details>
+        <details>
+          <summary>How do you keep us in the loop?</summary>
+          <p>As often as you want. Once a week, twice a week, every ten days, your call. You’ll always know how many people we’ve reached out to and whatever numbers matter to you, whether that’s seniority, location, background, diversity, or something specific to your shop. If it can be counted, we’re happy to track it and report it back as often as you need.</p>
+        </details>
+        <details>
+          <summary>How is this different from a recruiting agency?</summary>
+          <p>Most agencies charge a percentage of first-year salary the day someone signs, and the pipeline disappears when they do. We charge a flat weekly rate, there is no placement fee, and everything we build stays with you.</p>
+        </details>
+        <details>
+          <summary>Do you offer more than pipelining?</summary>
+          <p>Yes. Pipelining is the core, but plenty of searches need more, and we’re happy to carry it for an added fee. Interview scheduling, process design, reference checks, offer support, HR onboarding, whatever yours calls for. Every search is different, so tell us what you need and we’ll figure it out.</p>
+        </details>
+        <details>
+          <summary>What do we actually walk away with?</summary>
+          <p>Every name we reached out to, whether they wrote back or not. The interested ones come with whatever depth of vetting you chose. The quiet ones are still yours, because today’s no answer is tomorrow’s one phone call away.</p>
+        </details>
+        <details>
+          <summary>Do you work inside our ATS?</summary>
+          <p>Yes. If you have one, we work in it. If you don’t, we’re happy to set one up, or hand everything over in Notion, Google Sheets, or whatever your team actually opens.</p>
+        </details>
+        <details>
+          <summary>Do you use AI to screen candidates?</summary>
+          <p>No. We use it to help source, organize, and tag, because it’s good at the boring parts. But no algorithm decides who you see, and nobody gets screened out by a robot. We still think the best way to hire a human is human to human.</p>
+        </details>
+        <details>
+          <summary>Can a search stay confidential?</summary>
+          <p>Yes, and it happens more often than you’d think, at every level. Nothing tips off the market or your team. Confidential searches are priced case by case, so let’s talk.</p>
+        </details>
+      </div>
+    </section>
+
+    <section>
+      <div class="ll-colophon">
+        <span style="display:flex;align-items:center;gap:9px;">
+          <svg class="ll-logo-mini" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+            <g fill="currentColor">
+              <circle cx="8" cy="32" r="4"/><circle cx="21" cy="32" r="4"/><circle cx="34" cy="32" r="4"/>
+              <rect x="45" y="24" width="16" height="16" rx="2"/>
+            </g>
+          </svg>
+          Long Lead
+        </span>
+        <a class="ll-colophon-mail" href="mailto:hello@longlead.co">hello@longlead.co</a>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script>
+  // Submit every .ll-form in place via FormSubmit's AJAX endpoint so no one
+  // ever leaves the page. Falls back to a normal submit if JS is unavailable.
+  (function () {
+    var ENDPOINT = "https://formsubmit.co/ajax/hello@longlead.co";
+    document.querySelectorAll(".ll-form").forEach(function (form) {
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var btn = form.querySelector("button[type=submit]");
+        var label = btn ? btn.textContent : "";
+        if (btn) { btn.disabled = true; btn.textContent = "Sending…"; }
+
+        var data = {};
+        new FormData(form).forEach(function (v, k) { data[k] = v; });
+
+        fetch(ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify(data)
+        })
+          .then(function (r) { if (!r.ok) throw new Error(); return r.json(); })
+          .then(function () {
+            form.innerHTML = '<p class="ll-form-thanks">Thanks. We’ll be in touch soon.</p>';
+          })
+          .catch(function () {
+            if (btn) { btn.disabled = false; btn.textContent = label; }
+            if (!form.querySelector(".ll-form-err")) {
+              var err = document.createElement("p");
+              err.className = "ll-form-err";
+              err.textContent = "Something went wrong. Please email hello@longlead.co directly.";
+              form.appendChild(err);
+            }
+          });
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>
