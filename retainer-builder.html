@@ -572,80 +572,30 @@
 
   .primary-btn:hover { background: var(--brass-strong); border-color: var(--brass-strong); }
 
-  .doc-trigger {
-    padding: 18px 26px 22px;
-    border-top: 1px solid var(--line);
-  }
+  /* agreement generator */
+  .agreement-card { margin-top: 28px; }
 
-  .doc-trigger .primary-btn { width: 100%; }
+  .agreement-body { padding: 22px 26px 26px; }
 
-  /* invoice / contract overlay */
-  .doc-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(20, 24, 29, 0.5);
-    padding: 32px 16px;
-    overflow-y: auto;
-    z-index: 100;
-  }
+  .agreement-body > .field-help { margin-bottom: 20px; }
 
-  .doc-overlay.show { display: block; }
-
-  .doc-sheet {
-    max-width: 720px;
-    margin: 0 auto;
-    background: var(--surface);
-    border-radius: 10px;
-    box-shadow: var(--shadow);
-    overflow: hidden;
-  }
-
-  .doc-toolbar {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    padding: 16px 20px;
-    background: var(--surface-sunken);
-    border-bottom: 1px solid var(--line);
-  }
-
-  .doc-content { padding: 40px 44px 44px; }
-
-  .doc-content .eyebrow { margin-bottom: 10px; }
-
-  .doc-content h2 {
-    font-family: "Fraunces", Georgia, serif;
-    font-weight: 600;
-    font-size: 28px;
-    margin: 0 0 4px;
-    color: var(--ink);
-  }
-
-  .doc-meta {
-    font-size: 13px;
-    color: var(--slate);
-    margin: 0 0 28px;
-  }
-
-  .doc-fields {
+  .agreement-fields {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 14px 20px;
-    margin-bottom: 28px;
+    gap: 16px 20px;
+    margin-bottom: 24px;
   }
 
-  .doc-field label {
+  .form-field label {
     display: block;
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--slate);
-    margin-bottom: 4px;
+    color: var(--ink);
+    margin-bottom: 6px;
   }
 
-  .doc-field input {
+  .form-field input,
+  .form-field select {
     width: 100%;
     font-family: "Public Sans", sans-serif;
     font-size: 14px;
@@ -653,7 +603,59 @@
     background: var(--surface-sunken);
     border: 1px solid var(--line-strong);
     border-radius: 6px;
-    padding: 8px 10px;
+    padding: 10px 12px;
+  }
+
+  .form-field select { cursor: pointer; }
+
+  #generateAgreementBtn { width: 100%; }
+
+  .agreement-output {
+    display: none;
+    margin-top: 28px;
+    padding-top: 28px;
+    border-top: 1px solid var(--line);
+  }
+
+  .agreement-output.show { display: block; }
+
+  .agreement-output h3 {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 600;
+    font-size: 24px;
+    margin: 0 0 4px;
+    color: var(--ink);
+  }
+
+  .agreement-sub {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    color: var(--slate);
+    margin: 0 0 24px;
+  }
+
+  .agreement-recitals {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    margin-bottom: 24px;
+  }
+
+  .agreement-output section { margin-bottom: 22px; }
+
+  .agreement-output section h4 {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 600;
+    font-size: 16px;
+    margin: 0 0 8px;
+    color: var(--ink);
+  }
+
+  .agreement-output section p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    margin: 0 0 10px;
   }
 
   .doc-section-title {
@@ -666,53 +668,70 @@
     margin: 24px 0 10px;
   }
 
-  .doc-param-row {
-    display: flex;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 6px 0;
-    font-size: 14px;
-    border-bottom: 1px solid var(--line);
+  .agreement-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 12px 0;
   }
 
-  .doc-param-row .k { color: var(--slate); }
-  .doc-param-row .v { color: var(--ink); font-weight: 600; text-align: right; }
+  .agreement-table td {
+    padding: 7px 8px;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink-soft);
+  }
 
-  .doc-ledger { margin-top: 10px; }
+  .agreement-table td:last-child {
+    text-align: right;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
 
-  .doc-signatures {
+  .agreement-table tr.total td {
+    font-weight: 700;
+    color: var(--ink);
+    border-top: 2px solid var(--ink);
+    border-bottom: none;
+  }
+
+  .agreement-signatures {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 40px;
-    margin-top: 48px;
+    margin-top: 36px;
   }
 
-  .doc-sig-line {
+  .agreement-sig-block { font-size: 13px; color: var(--ink); }
+
+  .agreement-sig-line {
     border-top: 1px solid var(--ink);
+    margin-top: 36px;
     padding-top: 6px;
-    font-size: 12px;
     color: var(--slate);
   }
 
-  .doc-footnote {
-    margin-top: 32px;
+  .agreement-footnote {
+    margin-top: 28px;
     font-size: 11px;
     color: var(--slate);
     line-height: 1.5;
   }
 
+  .agreement-print-btn { margin-top: 24px; }
+
   @media print {
     body * { visibility: hidden; }
-    .doc-sheet, .doc-sheet * { visibility: visible; }
-    .doc-sheet {
+    .agreement-output, .agreement-output * { visibility: visible; }
+    .agreement-output {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
-      box-shadow: none;
       border: none;
+      padding: 0;
+      margin: 0;
     }
-    .doc-overlay { position: static; background: none; padding: 0; }
     .no-print { display: none !important; }
   }
 
@@ -864,51 +883,51 @@
       </div>
 
       <p class="footnote">Estimate for internal planning purposes. Final engagement terms are confirmed in the signed agreement.</p>
-
-      <div class="doc-trigger">
-        <button class="primary-btn" id="createDocBtn" type="button">Create Invoice / Contract</button>
-      </div>
       </section>
     </div>
   </div>
-</div>
 
-<div class="doc-overlay" id="docOverlay">
-  <div class="doc-sheet">
-    <div class="doc-toolbar no-print">
-      <button class="reset-btn" id="docCloseBtn" type="button">Close</button>
-      <button class="primary-btn" id="docPrintBtn" type="button">Print / Save as PDF</button>
+  <section class="card agreement-card">
+    <div class="card-head">
+      <h2>Generate Agreement</h2>
     </div>
-    <div class="doc-content">
-      <p class="eyebrow">Long Lead</p>
-      <h2>Engagement Summary</h2>
-      <p class="doc-meta" id="docDate"></p>
+    <div class="agreement-body">
+      <p class="field-help">Fill in the parties and start date, then generate a printable agreement with the configuration above locked in.</p>
 
-      <div class="doc-fields no-print">
-        <div class="doc-field">
-          <label for="docClientName">Client Name</label>
-          <input type="text" id="docClientName" placeholder="Jane Smith">
+      <div class="agreement-fields">
+        <div class="form-field">
+          <label for="clientEntity">Client legal entity</label>
+          <input type="text" id="clientEntity" placeholder="Acme Inc.">
         </div>
-        <div class="doc-field">
-          <label for="docClientCompany">Company</label>
-          <input type="text" id="docClientCompany" placeholder="Acme Inc.">
+        <div class="form-field">
+          <label for="clientState">Client state of formation</label>
+          <input type="text" id="clientState" placeholder="Delaware">
+        </div>
+        <div class="form-field">
+          <label for="clientSignerName">Client signer name</label>
+          <input type="text" id="clientSignerName" placeholder="Jane Smith">
+        </div>
+        <div class="form-field">
+          <label for="clientSignerTitle">Client signer title</label>
+          <input type="text" id="clientSignerTitle" placeholder="CEO">
+        </div>
+        <div class="form-field">
+          <label for="longLeadSigner">Long Lead signer</label>
+          <select id="longLeadSigner">
+            <option>Kelly Milner, Founder</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="startDate">Engagement start date</label>
+          <input type="date" id="startDate">
         </div>
       </div>
 
-      <p class="doc-section-title">Engagement Parameters</p>
-      <div id="docParams"></div>
+      <button class="primary-btn" id="generateAgreementBtn" type="button">Generate Agreement</button>
 
-      <p class="doc-section-title">Pricing Breakdown</p>
-      <div class="doc-ledger" id="docLedger"></div>
-
-      <div class="doc-signatures">
-        <div class="doc-sig-line">Client Signature &nbsp;&nbsp;&nbsp;&nbsp; Date</div>
-        <div class="doc-sig-line">Long Lead &nbsp;&nbsp;&nbsp;&nbsp; Date</div>
-      </div>
-
-      <p class="doc-footnote">This summary reflects the terms discussed and is not itself a binding agreement. Final engagement terms are confirmed in the signed contract.</p>
+      <div class="agreement-output" id="agreementOutput"></div>
     </div>
-  </div>
+  </section>
 </div>
 
 <script>
@@ -1068,55 +1087,121 @@
     sliderFill(durationEl);
   }
 
-  function buildDocContent() {
-    const s = getCurrentState();
-
-    document.getElementById("docDate").textContent = new Date().toLocaleDateString("en-US", {
-      year: "numeric", month: "long", day: "numeric"
-    });
-
-    const paramRows = [
-      { k: "Seniority", v: s.seniority.name + " — " + s.seniority.def },
-      { k: "Depth", v: s.depth.name + " — " + s.depth.def },
-      { k: "Speed", v: s.speed.name + " — " + s.speed.def },
-      { k: "Duration", v: s.duration + " week" + (s.duration === 1 ? "" : "s") },
-      { k: "Confidentiality", v: s.isConfidential ? "Yes (+20% premium)" : "No" }
-    ];
-    if (asyncQty > 0) {
-      paramRows.push({ k: "Async Video Response", v: asyncQty + " use" + (asyncQty === 1 ? "" : "s") });
-    }
-    if (interviewQty > 0) {
-      paramRows.push({ k: "Video Interview", v: interviewQty + " use" + (interviewQty === 1 ? "" : "s") });
-    }
-
-    document.getElementById("docParams").innerHTML = paramRows.map(r =>
-      '<div class="doc-param-row"><span class="k">' + r.k + '</span><span class="v">' + r.v + "</span></div>"
-    ).join("");
-
-    document.getElementById("docLedger").innerHTML = rowsToHtml(buildLedgerRows(s));
+  function fmtDate(d) {
+    return d.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
   }
 
-  const docOverlay = document.getElementById("docOverlay");
+  function addWeeks(date, weeks) {
+    const d = new Date(date);
+    d.setDate(d.getDate() + weeks * 7);
+    return d;
+  }
 
-  document.getElementById("createDocBtn").addEventListener("click", () => {
-    buildDocContent();
-    docOverlay.classList.add("show");
-  });
+  function feeTableRows(s) {
+    const rows = [
+      ["Base engagement rate", "$1,500 / week"],
+      ["Seniority tier", s.seniority.name + " (" + fmtSigned(s.seniority.amt) + " / week)"],
+      ["Vetting depth", s.depth.name + " (" + fmtSigned(s.depth.amt) + " / week)"],
+      ["Search intensity", s.speed.name + " (" + fmtSigned(s.speed.amt) + " / week)"]
+    ];
+    if (s.isConfidential) rows.push(["Confidentiality premium", "+20%"]);
+    rows.push(["Weekly rate", fmt(s.weeklyRate) + " / week"]);
+    rows.push(["Engagement duration", s.duration + " week" + (s.duration === 1 ? "" : "s")]);
+    rows.push(["Recurring subtotal", fmt(s.recurringBudget)]);
+    if (s.asyncTotal > 0) rows.push(["Async Video Response × " + asyncQty, fmt(s.asyncTotal)]);
+    if (s.interviewTotal > 0) rows.push(["Video Interview × " + interviewQty, fmt(s.interviewTotal)]);
+    return rows;
+  }
 
-  document.getElementById("docCloseBtn").addEventListener("click", () => {
-    docOverlay.classList.remove("show");
-  });
+  function feeTableHtml(s) {
+    const rows = feeTableRows(s);
+    return '<table class="agreement-table">' +
+      rows.map(r => "<tr><td>" + r[0] + "</td><td>" + r[1] + "</td></tr>").join("") +
+      '<tr class="total"><td>TOTAL ENGAGEMENT FEE</td><td>' + fmt(s.totalBudget) + "</td></tr>" +
+      "</table>";
+  }
 
-  docOverlay.addEventListener("click", (e) => {
-    if (e.target === docOverlay) docOverlay.classList.remove("show");
-  });
+  const startDateEl = document.getElementById("startDate");
+  startDateEl.value = new Date().toISOString().split("T")[0];
 
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") docOverlay.classList.remove("show");
-  });
+  document.getElementById("generateAgreementBtn").addEventListener("click", () => {
+    const s = getCurrentState();
 
-  document.getElementById("docPrintBtn").addEventListener("click", () => {
-    window.print();
+    const clientEntity = document.getElementById("clientEntity").value.trim() || "[Client Legal Entity]";
+    const clientState = document.getElementById("clientState").value.trim() || "[State of Formation]";
+    const clientSignerName = document.getElementById("clientSignerName").value.trim() || "[Signer Name]";
+    const clientSignerTitle = document.getElementById("clientSignerTitle").value.trim() || "[Title]";
+    const longLeadSigner = document.getElementById("longLeadSigner").value;
+
+    const startDateVal = startDateEl.value;
+    const startDate = startDateVal ? new Date(startDateVal + "T00:00:00") : new Date();
+    const endDate = addWeeks(startDate, s.duration);
+    const effectiveDate = new Date();
+
+    const addonNote = (s.asyncTotal > 0 || s.interviewTotal > 0)
+      ? " Add-on services used during the Term are invoiced as incurred, net 15, if not already included above."
+      : "";
+
+    const output = document.getElementById("agreementOutput");
+    output.innerHTML =
+      "<h3>Recruiting Services Agreement</h3>" +
+      '<p class="agreement-sub">Long Lead, LLC · longlead.co</p>' +
+      '<p class="agreement-recitals">' +
+        "This Recruiting Services Agreement (the &ldquo;Agreement&rdquo;) is entered into as of " + fmtDate(effectiveDate) + ' (the &ldquo;Effective Date&rdquo;) by and between:<br>' +
+        "<strong>Long Lead, LLC</strong>, a limited liability company (&ldquo;Long Lead&rdquo;), and<br>" +
+        "<strong>" + clientEntity + "</strong>, a " + clientState + ' entity (&ldquo;Client&rdquo;).<br>' +
+        'Long Lead and Client are each a &ldquo;Party&rdquo; and together the &ldquo;Parties.&rdquo;' +
+      "</p>" +
+      "<section><h4>1. Services</h4>" +
+        "<p>Long Lead will provide recruiting and talent-sourcing services (the &ldquo;Services&rdquo;) to Client for the engagement described in Schedule A. The Services consist of proactive candidate sourcing and outreach, vetting to the depth selected, and regular reporting.</p>" +
+        "<p><strong>Best-efforts engagement.</strong> This is a retained, best-efforts engagement. Long Lead does not guarantee any particular number of candidates, interviews, introductions, or hires, and the fees are earned in exchange for the effort and services rendered, not contingent on any placement or hire.</p>" +
+        "<p><strong>No placement fee.</strong> There is no separate placement, contingency, or success fee. The fees in Schedule A are the entire compensation for the Services.</p>" +
+      "</section>" +
+      "<section><h4>2. Term</h4>" +
+        "<p>The engagement begins on " + fmtDate(startDate) + " and runs for " + s.duration + " week" + (s.duration === 1 ? "" : "s") + ", through approximately " + fmtDate(endDate) + ' (the &ldquo;Term&rdquo;), unless extended by written agreement or terminated under Section 5.</p>' +
+      "</section>" +
+      "<section><h4>3. Fees</h4>" +
+        "<p>Client will pay Long Lead a total engagement fee of " + fmt(s.totalBudget) + ", calculated per the configuration in Schedule A.</p>" +
+        feeTableHtml(s) +
+      "</section>" +
+      "<section><h4>4. Payment Schedule</h4>" +
+        "<p>The full engagement fee is invoiced on execution of this Agreement, payable net 15 from the invoice date." + addonNote + " Late amounts accrue interest at 1.5% per month or the maximum permitted by law, whichever is less.</p>" +
+      "</section>" +
+      "<section><h4>5. Termination</h4>" +
+        "<p>Either Party may terminate this Agreement on 14 days&rsquo; written notice. On termination, Client will pay for all Services performed and fees earned through the effective date of termination, including any installment already invoiced. Fees paid for periods not yet worked, if any, will be refunded on a pro-rata basis. Sections 6 through 9 survive termination.</p>" +
+      "</section>" +
+      "<section><h4>6. Confidentiality</h4>" +
+        "<p>Each Party will keep the other&rsquo;s non-public information confidential and use it only to perform this Agreement. Candidate information provided by Long Lead is confidential to Client and may be used only to evaluate and engage candidates.</p>" +
+      "</section>" +
+      "<section><h4>7. Ownership of Work Product</h4>" +
+        "<p>Candidate names, profiles, and research delivered to Client under this Agreement become Client&rsquo;s to use for its hiring purposes upon payment of the fees to which they relate. Long Lead retains its general methods, templates, and know-how.</p>" +
+      "</section>" +
+      "<section><h4>8. Independent Contractor; Limitation of Liability</h4>" +
+        "<p>Long Lead is an independent contractor, not an employee, agent, or joint venturer of Client. Long Lead does not guarantee the performance, tenure, or suitability of any candidate. To the fullest extent permitted by law, each Party&rsquo;s total liability under this Agreement is limited to the total fees paid by Client under this Agreement, and neither Party is liable for indirect, incidental, or consequential damages.</p>" +
+      "</section>" +
+      "<section><h4>9. General</h4>" +
+        "<p>This Agreement is the entire agreement between the Parties on its subject and supersedes prior discussions. It may be amended only in a writing signed by both Parties. It is governed by the laws of the State of New York, without regard to conflict-of-laws rules. If any provision is unenforceable, the rest remains in effect. This Agreement may be signed in counterparts, including electronically.</p>" +
+      "</section>" +
+      '<p class="doc-section-title">Schedule A — Engagement Configuration</p>' +
+      feeTableHtml(s) +
+      '<div class="agreement-signatures">' +
+        '<div class="agreement-sig-block"><strong>Long Lead, LLC</strong>' +
+          '<div class="agreement-sig-line">Signature</div>' +
+          '<div class="agreement-sig-line">' + longLeadSigner + '</div>' +
+          '<div class="agreement-sig-line">Date</div>' +
+        "</div>" +
+        '<div class="agreement-sig-block"><strong>' + clientEntity + '</strong>' +
+          '<div class="agreement-sig-line">Signature</div>' +
+          '<div class="agreement-sig-line">' + clientSignerName + ", " + clientSignerTitle + '</div>' +
+          '<div class="agreement-sig-line">Date</div>' +
+        "</div>" +
+      "</div>" +
+      '<p class="agreement-footnote">Generated by the Long Lead Retainer Builder. This document should be reviewed by counsel before use.</p>' +
+      '<button class="primary-btn agreement-print-btn no-print" id="printAgreementBtn" type="button">Print / Save as PDF</button>';
+
+    output.classList.add("show");
+    document.getElementById("printAgreementBtn").addEventListener("click", () => window.print());
+    output.scrollIntoView({ behavior: "smooth", block: "start" });
   });
 
   [seniorityEl, depthEl, speedEl, durationEl, confidentialEl].forEach(el => {
