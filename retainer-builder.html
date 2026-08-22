@@ -1,0 +1,1139 @@
+<title>Retainer Builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --ink: #1B2430;
+    --ink-soft: #3D4756;
+    --slate: #5B6472;
+    --parchment: #F6F3EC;
+    --surface: #FFFFFF;
+    --surface-sunken: #FBF9F4;
+    --line: #E4DFD3;
+    --line-strong: #D3CCBA;
+    --brass: #97753F;
+    --brass-strong: #7C5F30;
+    --brass-tint: #F0E6D2;
+    --burgundy: #7A3434;
+    --burgundy-tint: #F2E2E0;
+    --shadow: 0 1px 2px rgba(27, 36, 48, 0.06), 0 8px 24px rgba(27, 36, 48, 0.06);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #ECE7DA;
+      --ink-soft: #C7C1B2;
+      --slate: #9BA2AD;
+      --parchment: #14181D;
+      --surface: #1C222B;
+      --surface-sunken: #191E25;
+      --line: #323A45;
+      --line-strong: #414C59;
+      --brass: #CDA968;
+      --brass-strong: #E2C384;
+      --brass-tint: rgba(205, 169, 104, 0.14);
+      --burgundy: #D08880;
+      --burgundy-tint: rgba(208, 136, 128, 0.14);
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 28px rgba(0, 0, 0, 0.35);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ink: #ECE7DA;
+    --ink-soft: #C7C1B2;
+    --slate: #9BA2AD;
+    --parchment: #14181D;
+    --surface: #1C222B;
+    --surface-sunken: #191E25;
+    --line: #323A45;
+    --line-strong: #414C59;
+    --brass: #CDA968;
+    --brass-strong: #E2C384;
+    --brass-tint: rgba(205, 169, 104, 0.14);
+    --burgundy: #D08880;
+    --burgundy-tint: rgba(208, 136, 128, 0.14);
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 28px rgba(0, 0, 0, 0.35);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--parchment);
+    color: var(--ink);
+    font-family: "Public Sans", -apple-system, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .shell {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 56px 28px 80px;
+  }
+
+  header.page-head {
+    max-width: 640px;
+    margin-bottom: 40px;
+  }
+
+  .eyebrow {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brass-strong);
+    margin: 0 0 12px;
+  }
+
+  h1 {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 600;
+    font-size: 40px;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    margin: 0 0 12px;
+    text-wrap: balance;
+    color: var(--ink);
+  }
+
+  .page-head p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--slate);
+    margin: 0;
+    max-width: 54ch;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.95fr;
+    gap: 28px;
+    align-items: start;
+  }
+
+  @media (max-width: 900px) {
+    .grid { grid-template-columns: 1fr; }
+    .estimate { position: static !important; }
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .card-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 22px 26px 18px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .card-head h2 {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 600;
+    font-size: 20px;
+    margin: 0;
+    color: var(--ink);
+  }
+
+  .reset-btn {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--slate);
+    background: transparent;
+    border: 1px solid var(--line-strong);
+    border-radius: 6px;
+    padding: 7px 12px;
+    cursor: pointer;
+    transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+  }
+
+  .reset-btn:hover {
+    color: var(--ink);
+    border-color: var(--slate);
+    background: var(--surface-sunken);
+  }
+
+  .field-group {
+    padding: 22px 26px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .field-group:last-child { border-bottom: none; }
+
+  .field-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .field-title-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 4px;
+  }
+
+  .field-title-row .field-label { margin-bottom: 0; }
+
+  .tier-amt {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 13px;
+    color: var(--brass-strong);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .field-help {
+    font-size: 13px;
+    color: var(--slate);
+    margin: 0 0 14px;
+    line-height: 1.5;
+  }
+
+  /* range sliders */
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--line);
+    outline: none;
+    margin: 10px 0 4px;
+  }
+
+  input[type="range"]::-webkit-slider-runnable-track {
+    height: 6px;
+    border-radius: 3px;
+    background: transparent;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    margin-top: -6px;
+    border-radius: 50%;
+    background: var(--brass);
+    border: 2px solid var(--surface);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.35);
+    cursor: pointer;
+  }
+
+  input[type="range"]::-moz-range-track {
+    height: 6px;
+    border-radius: 3px;
+    background: transparent;
+  }
+
+  input[type="range"]::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--brass);
+    border: 2px solid var(--surface);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.35);
+    cursor: pointer;
+  }
+
+  .slider-ticks {
+    display: flex;
+    justify-content: space-between;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    color: var(--slate);
+    margin-top: 6px;
+  }
+
+  .slider-ticks span { text-align: center; flex: 1; }
+  .slider-ticks span:first-child { text-align: left; }
+  .slider-ticks span:last-child { text-align: right; }
+
+  .tick-marks {
+    display: flex;
+    justify-content: space-between;
+    margin: -1px 0 5px;
+  }
+
+  .tick-marks span {
+    width: 16px;
+    height: 6px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .tick-marks span::before {
+    content: "";
+    width: 2px;
+    height: 6px;
+    background: var(--line-strong);
+    border-radius: 1px;
+  }
+
+  .week-numbers {
+    display: flex;
+    justify-content: space-between;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    color: var(--slate);
+  }
+
+  .week-numbers span {
+    width: 16px;
+    text-align: center;
+  }
+
+  .tier-readout {
+    margin-top: 14px;
+    padding: 10px 12px;
+    background: var(--surface-sunken);
+    border: 1px solid var(--line);
+    border-radius: 7px;
+  }
+
+  .tier-readout .tier-def {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+
+  /* confidentiality toggle */
+  .toggle-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .toggle-text .field-label { margin-bottom: 3px; }
+  .toggle-text p {
+    margin: 0;
+    font-size: 13px;
+    color: var(--slate);
+    line-height: 1.5;
+    max-width: 40ch;
+  }
+
+  .switch { position: relative; flex: none; width: 44px; height: 26px; }
+  .switch input { opacity: 0; width: 0; height: 0; }
+
+  .switch-track {
+    position: absolute;
+    inset: 0;
+    background: var(--line-strong);
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+
+  .switch-track::after {
+    content: "";
+    position: absolute;
+    top: 3px; left: 3px;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--surface);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    transition: transform 0.15s ease;
+  }
+
+  .switch input:checked + .switch-track { background: var(--burgundy); }
+  .switch input:checked + .switch-track::after { transform: translateX(18px); }
+  .switch input:focus-visible + .switch-track { outline: 2px solid var(--brass); outline-offset: 2px; }
+
+  /* estimate panel */
+  .estimate {
+    position: sticky;
+    top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .estimate-head {
+    padding: 24px 26px 4px;
+  }
+
+  .estimate-head .eyebrow { margin-bottom: 8px; }
+
+  .conf-tag {
+    display: none;
+    align-items: center;
+    gap: 6px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--burgundy);
+    background: var(--burgundy-tint);
+    border: 1px solid var(--burgundy);
+    border-radius: 4px;
+    padding: 4px 8px;
+    width: fit-content;
+    margin-bottom: 12px;
+  }
+
+  .conf-tag.show { display: inline-flex; }
+
+  .ledger {
+    background: var(--surface-sunken);
+    padding: 20px 26px 24px;
+  }
+
+  .ledger-title {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--slate);
+    margin: 0 0 12px;
+  }
+
+  .ledger-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 7px 0;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 13px;
+  }
+
+  .ledger-row .label { color: var(--ink-soft); }
+  .ledger-row .val { color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+  .ledger-row.subtotal {
+    border-top: 1px dashed var(--line-strong);
+    margin-top: 4px;
+    padding-top: 10px;
+    font-weight: 600;
+  }
+
+  .ledger-row.premium .label,
+  .ledger-row.premium .val { color: var(--burgundy); }
+
+  .ledger-row.total {
+    border-top: 2px solid var(--ink);
+    margin-top: 8px;
+    padding-top: 12px;
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  .footnote {
+    padding: 16px 26px 22px;
+    font-size: 12px;
+    color: var(--slate);
+    line-height: 1.5;
+    border-top: 1px solid var(--line);
+  }
+
+  /* ad hoc add-ons */
+  .addon-section {
+    padding: 4px 26px 20px;
+  }
+
+  .addon-section > .field-help { margin-bottom: 16px; }
+
+  .addon-item + .addon-item { margin-top: 18px; }
+
+  .addon-item-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 6px;
+  }
+
+  .addon-item-head .field-label { margin-bottom: 0; }
+
+  .addon-unit-price {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    color: var(--slate);
+    white-space: nowrap;
+  }
+
+  .addon-box {
+    margin-top: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 16px;
+    background: var(--surface-sunken);
+    border: 1px solid var(--line);
+    border-radius: 7px;
+  }
+
+  .qty-stepper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .qty-btn {
+    width: 28px;
+    height: 28px;
+    flex: none;
+    border-radius: 6px;
+    border: 1px solid var(--line-strong);
+    background: var(--surface);
+    color: var(--ink);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 15px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.12s ease, background 0.12s ease;
+  }
+
+  .qty-btn:hover { border-color: var(--brass); background: var(--brass-tint); }
+  .qty-btn:active { transform: translateY(1px); }
+
+  .qty-value {
+    min-width: 20px;
+    text-align: center;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 15px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .qty-caption {
+    font-size: 11px;
+    color: var(--slate);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .addon-total { text-align: right; flex: none; }
+
+  .addon-total-figure {
+    display: block;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 13px;
+    color: var(--brass-strong);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .addon-total-caption {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    color: var(--slate);
+  }
+
+  .addon-hint {
+    display: none;
+    margin-top: 10px;
+    font-size: 12.5px;
+    color: var(--burgundy);
+    line-height: 1.5;
+  }
+
+  .addon-hint.show { display: block; }
+
+  @media (max-width: 520px) {
+    .addon-box { flex-wrap: wrap; }
+    .addon-total { text-align: left; }
+  }
+
+  .primary-btn {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--surface);
+    background: var(--brass);
+    border: 1px solid var(--brass);
+    border-radius: 6px;
+    padding: 9px 16px;
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease;
+  }
+
+  .primary-btn:hover { background: var(--brass-strong); border-color: var(--brass-strong); }
+
+  .doc-trigger {
+    padding: 18px 26px 22px;
+    border-top: 1px solid var(--line);
+  }
+
+  .doc-trigger .primary-btn { width: 100%; }
+
+  /* invoice / contract overlay */
+  .doc-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(20, 24, 29, 0.5);
+    padding: 32px 16px;
+    overflow-y: auto;
+    z-index: 100;
+  }
+
+  .doc-overlay.show { display: block; }
+
+  .doc-sheet {
+    max-width: 720px;
+    margin: 0 auto;
+    background: var(--surface);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .doc-toolbar {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 16px 20px;
+    background: var(--surface-sunken);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .doc-content { padding: 40px 44px 44px; }
+
+  .doc-content .eyebrow { margin-bottom: 10px; }
+
+  .doc-content h2 {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 600;
+    font-size: 28px;
+    margin: 0 0 4px;
+    color: var(--ink);
+  }
+
+  .doc-meta {
+    font-size: 13px;
+    color: var(--slate);
+    margin: 0 0 28px;
+  }
+
+  .doc-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 20px;
+    margin-bottom: 28px;
+  }
+
+  .doc-field label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--slate);
+    margin-bottom: 4px;
+  }
+
+  .doc-field input {
+    width: 100%;
+    font-family: "Public Sans", sans-serif;
+    font-size: 14px;
+    color: var(--ink);
+    background: var(--surface-sunken);
+    border: 1px solid var(--line-strong);
+    border-radius: 6px;
+    padding: 8px 10px;
+  }
+
+  .doc-section-title {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--slate);
+    margin: 24px 0 10px;
+  }
+
+  .doc-param-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 6px 0;
+    font-size: 14px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .doc-param-row .k { color: var(--slate); }
+  .doc-param-row .v { color: var(--ink); font-weight: 600; text-align: right; }
+
+  .doc-ledger { margin-top: 10px; }
+
+  .doc-signatures {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-top: 48px;
+  }
+
+  .doc-sig-line {
+    border-top: 1px solid var(--ink);
+    padding-top: 6px;
+    font-size: 12px;
+    color: var(--slate);
+  }
+
+  .doc-footnote {
+    margin-top: 32px;
+    font-size: 11px;
+    color: var(--slate);
+    line-height: 1.5;
+  }
+
+  @media print {
+    body * { visibility: hidden; }
+    .doc-sheet, .doc-sheet * { visibility: visible; }
+    .doc-sheet {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      box-shadow: none;
+      border: none;
+    }
+    .doc-overlay { position: static; background: none; padding: 0; }
+    .no-print { display: none !important; }
+  }
+
+  button:focus-visible,
+  a:focus-visible {
+    outline: 2px solid var(--brass);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+
+<div class="shell">
+  <header class="page-head">
+    <p class="eyebrow">Long Lead</p>
+    <h1>Retainer Builder</h1>
+    <p>Slide each lever to fit the search.</p>
+  </header>
+
+  <div class="grid">
+    <section class="card">
+      <div class="card-head">
+        <h2>Engagement Parameters</h2>
+        <button class="reset-btn" id="resetBtn" type="button">Reset</button>
+      </div>
+
+      <div class="field-group">
+        <div class="field-title-row">
+          <label class="field-label" for="seniority">Seniority</label>
+          <span class="tier-amt" id="seniorityAmt">+$0/wk</span>
+        </div>
+        <p class="field-help">From taking work off your plate to owning the whole outcome.</p>
+        <input type="range" id="seniority" min="1" max="3" step="1" value="1">
+        <div class="slider-ticks"><span>Jr</span><span>Mid</span><span>Sr</span></div>
+        <div class="tier-readout">
+          <span class="tier-def" id="seniorityDef"></span>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <div class="field-title-row">
+          <label class="field-label" for="depth">Depth</label>
+          <span class="tier-amt" id="depthAmt">+$0/wk</span>
+        </div>
+        <p class="field-help">From a written first pass to a live conversation on camera.</p>
+        <input type="range" id="depth" min="1" max="3" step="1" value="1">
+        <div class="slider-ticks"><span>Questionnaire</span><span>Async Video</span><span>Interview</span></div>
+        <div class="tier-readout">
+          <span class="tier-def" id="depthDef"></span>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <div class="field-title-row">
+          <label class="field-label" for="speed">Speed</label>
+          <span class="tier-amt" id="speedAmt">+$0/wk</span>
+        </div>
+        <p class="field-help">A steady weekly build, or all hands on your role when you're in a crunch.</p>
+        <input type="range" id="speed" min="1" max="3" step="1" value="1">
+        <div class="slider-ticks"><span>Steady</span><span>Accelerated</span><span>All Hands</span></div>
+        <div class="tier-readout">
+          <span class="tier-def" id="speedDef"></span>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label" for="duration">Engagement Duration</label>
+        <p class="field-help">Projected length of the search.</p>
+        <input type="range" id="duration" min="1" max="8" step="1" value="1">
+        <div class="tick-marks">
+          <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div class="week-numbers">
+          <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span>
+        </div>
+      </div>
+
+    </section>
+
+    <div class="estimate" aria-live="polite">
+      <section class="card">
+      <div class="estimate-head">
+        <p class="eyebrow">Add-Ons</p>
+        <span class="conf-tag" id="confTag">Confidential Engagement</span>
+      </div>
+
+      <div class="addon-section">
+        <p class="field-help">One-off access for the base tier, without upgrading Depth for the week.</p>
+
+        <div class="addon-item">
+          <div class="addon-item-head">
+            <span class="field-label">Async Video Response</span>
+            <span class="addon-unit-price">$175/use</span>
+          </div>
+          <div class="addon-box">
+            <div class="qty-stepper">
+              <button type="button" class="qty-btn" id="asyncMinus" aria-label="Decrease Async Video Response quantity">−</button>
+              <span class="qty-value" id="asyncQty">0</span>
+              <button type="button" class="qty-btn" id="asyncPlus" aria-label="Increase Async Video Response quantity">+</button>
+            </div>
+            <div class="addon-total">
+              <span class="addon-total-figure" id="asyncTotal">$0</span>
+              <span class="addon-total-caption" id="asyncCaption">$175 × 0</span>
+            </div>
+          </div>
+          <p class="addon-hint" id="asyncHint"></p>
+        </div>
+
+        <div class="addon-item">
+          <div class="addon-item-head">
+            <span class="field-label">Video Interview</span>
+            <span class="addon-unit-price">$350/use</span>
+          </div>
+          <div class="addon-box">
+            <div class="qty-stepper">
+              <button type="button" class="qty-btn" id="interviewMinus" aria-label="Decrease Video Interview quantity">−</button>
+              <span class="qty-value" id="interviewQty">0</span>
+              <button type="button" class="qty-btn" id="interviewPlus" aria-label="Increase Video Interview quantity">+</button>
+            </div>
+            <div class="addon-total">
+              <span class="addon-total-figure" id="interviewTotal">$0</span>
+              <span class="addon-total-caption" id="interviewCaption">$350 × 0</span>
+            </div>
+          </div>
+          <p class="addon-hint" id="interviewHint"></p>
+        </div>
+
+        <div class="addon-item">
+          <div class="toggle-row">
+            <div class="toggle-text">
+              <span class="field-label">Confidentiality Surcharge</span>
+              <p>Adds a 20% premium to the weekly total for discreet, confidential searches.</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="confidential">
+              <span class="switch-track"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+      </section>
+
+      <section class="card">
+      <div class="ledger">
+        <p class="ledger-title">Breakdown</p>
+        <div id="ledgerRows"></div>
+      </div>
+
+      <p class="footnote">Estimate for internal planning purposes. Final engagement terms are confirmed in the signed agreement.</p>
+
+      <div class="doc-trigger">
+        <button class="primary-btn" id="createDocBtn" type="button">Create Invoice / Contract</button>
+      </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<div class="doc-overlay" id="docOverlay">
+  <div class="doc-sheet">
+    <div class="doc-toolbar no-print">
+      <button class="reset-btn" id="docCloseBtn" type="button">Close</button>
+      <button class="primary-btn" id="docPrintBtn" type="button">Print / Save as PDF</button>
+    </div>
+    <div class="doc-content">
+      <p class="eyebrow">Long Lead</p>
+      <h2>Engagement Summary</h2>
+      <p class="doc-meta" id="docDate"></p>
+
+      <div class="doc-fields no-print">
+        <div class="doc-field">
+          <label for="docClientName">Client Name</label>
+          <input type="text" id="docClientName" placeholder="Jane Smith">
+        </div>
+        <div class="doc-field">
+          <label for="docClientCompany">Company</label>
+          <input type="text" id="docClientCompany" placeholder="Acme Inc.">
+        </div>
+      </div>
+
+      <p class="doc-section-title">Engagement Parameters</p>
+      <div id="docParams"></div>
+
+      <p class="doc-section-title">Pricing Breakdown</p>
+      <div class="doc-ledger" id="docLedger"></div>
+
+      <div class="doc-signatures">
+        <div class="doc-sig-line">Client Signature &nbsp;&nbsp;&nbsp;&nbsp; Date</div>
+        <div class="doc-sig-line">Long Lead &nbsp;&nbsp;&nbsp;&nbsp; Date</div>
+      </div>
+
+      <p class="doc-footnote">This summary reflects the terms discussed and is not itself a binding agreement. Final engagement terms are confirmed in the signed contract.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  const fmt = (n) => "$" + Math.round(n).toLocaleString("en-US");
+  const fmtSigned = (n) => (n === 0 ? "+$0" : (n > 0 ? "+" : "−") + "$" + Math.abs(Math.round(n)).toLocaleString("en-US"));
+
+  const seniorityEl = document.getElementById("seniority");
+  const depthEl = document.getElementById("depth");
+  const speedEl = document.getElementById("speed");
+  const durationEl = document.getElementById("duration");
+  const confidentialEl = document.getElementById("confidential");
+  const resetBtn = document.getElementById("resetBtn");
+
+  const seniorityMeta = {
+    1: { name: "Jr", amt: 0, def: "Mid-level and manager roles." },
+    2: { name: "Mid", amt: 750, def: "Director and VP roles." },
+    3: { name: "Sr", amt: 1500, def: "C-suite and executive roles." }
+  };
+
+  const depthMeta = {
+    1: { name: "Questionnaire Vetting", amt: 0, def: "A written questionnaire to check fit before anyone moves forward." },
+    2: { name: "Async Video Response", amt: 500, def: "Candidates record their answers on their own time." },
+    3: { name: "Video Interview", amt: 1000, def: "We get on camera with every candidate." }
+  };
+
+  const speedMeta = {
+    1: { name: "Steady Build", amt: 0, def: "One recruiter, steady weekly pace." },
+    2: { name: "Accelerated", amt: 500, def: "More hours, faster turnaround." },
+    3: { name: "All Hands", amt: 1000, def: "Everybody on it. Fastest possible fill." }
+  };
+
+  const ADHOC_ASYNC = 175;
+  const ADHOC_INTERVIEW = 350;
+
+  let asyncQty = 0;
+  let interviewQty = 0;
+
+  function renderAddons() {
+    const asyncBreakeven = Math.ceil(depthMeta[2].amt / ADHOC_ASYNC);
+    const asyncTotal = ADHOC_ASYNC * asyncQty;
+    document.getElementById("asyncQty").textContent = asyncQty;
+    document.getElementById("asyncTotal").textContent = fmt(asyncTotal);
+    document.getElementById("asyncCaption").textContent = fmt(ADHOC_ASYNC) + " × " + asyncQty;
+    const asyncHint = document.getElementById("asyncHint");
+    asyncHint.classList.toggle("show", asyncQty >= asyncBreakeven);
+    asyncHint.textContent = "At " + asyncQty + " this week, upgrading Depth to Async Video Response (+" +
+      fmt(depthMeta[2].amt) + "/wk) would cost " + fmt(depthMeta[2].amt) + " instead of " + fmt(asyncTotal) + ".";
+
+    const interviewBreakeven = Math.ceil(depthMeta[3].amt / ADHOC_INTERVIEW);
+    const interviewTotal = ADHOC_INTERVIEW * interviewQty;
+    document.getElementById("interviewQty").textContent = interviewQty;
+    document.getElementById("interviewTotal").textContent = fmt(interviewTotal);
+    document.getElementById("interviewCaption").textContent = fmt(ADHOC_INTERVIEW) + " × " + interviewQty;
+    const interviewHint = document.getElementById("interviewHint");
+    interviewHint.classList.toggle("show", interviewQty >= interviewBreakeven);
+    interviewHint.textContent = "At " + interviewQty + " this week, upgrading Depth to Video Interview (+" +
+      fmt(depthMeta[3].amt) + "/wk) would cost " + fmt(depthMeta[3].amt) + " instead of " + fmt(interviewTotal) + ".";
+  }
+
+  function refreshAll() {
+    renderAddons();
+    render();
+  }
+
+  document.getElementById("asyncMinus").addEventListener("click", () => {
+    asyncQty = Math.max(0, asyncQty - 1);
+    refreshAll();
+  });
+  document.getElementById("asyncPlus").addEventListener("click", () => {
+    asyncQty = Math.min(20, asyncQty + 1);
+    refreshAll();
+  });
+  document.getElementById("interviewMinus").addEventListener("click", () => {
+    interviewQty = Math.max(0, interviewQty - 1);
+    refreshAll();
+  });
+  document.getElementById("interviewPlus").addEventListener("click", () => {
+    interviewQty = Math.min(20, interviewQty + 1);
+    refreshAll();
+  });
+
+  function sliderFill(el) {
+    const min = Number(el.min), max = Number(el.max), val = Number(el.value);
+    const pct = ((val - min) / (max - min)) * 100;
+    el.style.background = "linear-gradient(to right, var(--brass) " + pct + "%, var(--line) " + pct + "%)";
+  }
+
+  function getCurrentState() {
+    const seniority = seniorityMeta[Number(seniorityEl.value)];
+    const depth = depthMeta[Number(depthEl.value)];
+    const speed = speedMeta[Number(speedEl.value)];
+    const base = 1500;
+    const subtotal = base + seniority.amt + depth.amt + speed.amt;
+    const isConfidential = confidentialEl.checked;
+    const premium = isConfidential ? subtotal * 0.2 : 0;
+    const weeklyRate = subtotal + premium;
+    const duration = Number(durationEl.value);
+    const recurringBudget = weeklyRate * duration;
+    const asyncTotal = ADHOC_ASYNC * asyncQty;
+    const interviewTotal = ADHOC_INTERVIEW * interviewQty;
+    const totalBudget = recurringBudget + asyncTotal + interviewTotal;
+    return { seniority, depth, speed, base, subtotal, isConfidential, premium, weeklyRate, duration, recurringBudget, asyncTotal, interviewTotal, totalBudget };
+  }
+
+  function buildLedgerRows(s) {
+    const rows = [];
+    rows.push({ label: "Base rate", val: fmt(s.base), kind: "" });
+    rows.push({ label: "Seniority — " + s.seniority.name, val: fmtSigned(s.seniority.amt), kind: "" });
+    rows.push({ label: "Depth — " + s.depth.name, val: fmtSigned(s.depth.amt), kind: "" });
+    rows.push({ label: "Speed — " + s.speed.name, val: fmtSigned(s.speed.amt), kind: "" });
+    rows.push({ label: "Subtotal", val: fmt(s.subtotal), kind: "subtotal" });
+
+    if (s.isConfidential) {
+      rows.push({ label: "Confidentiality premium (20%)", val: fmtSigned(s.premium), kind: "premium" });
+    }
+
+    rows.push({ label: "Weekly rate", val: fmt(s.weeklyRate), kind: "subtotal" });
+    rows.push({
+      label: "× " + s.duration + " week" + (s.duration === 1 ? "" : "s"),
+      val: fmt(s.recurringBudget),
+      kind: ""
+    });
+
+    if (asyncQty > 0) {
+      rows.push({ label: "Async Video Response × " + asyncQty, val: fmt(s.asyncTotal), kind: "" });
+    }
+    if (interviewQty > 0) {
+      rows.push({ label: "Video Interview × " + interviewQty, val: fmt(s.interviewTotal), kind: "" });
+    }
+
+    rows.push({ label: "Total engagement budget", val: fmt(s.totalBudget), kind: "total" });
+    return rows;
+  }
+
+  function rowsToHtml(rows) {
+    return rows.map(r => {
+      return '<div class="ledger-row ' + r.kind + '"><span class="label">' + r.label + '</span><span class="val">' + r.val + "</span></div>";
+    }).join("");
+  }
+
+  function render() {
+    const s = getCurrentState();
+
+    document.getElementById("seniorityDef").textContent = s.seniority.def;
+    document.getElementById("seniorityAmt").textContent = fmtSigned(s.seniority.amt);
+    document.getElementById("depthDef").textContent = s.depth.def;
+    document.getElementById("depthAmt").textContent = fmtSigned(s.depth.amt);
+    document.getElementById("speedDef").textContent = s.speed.def;
+    document.getElementById("speedAmt").textContent = fmtSigned(s.speed.amt);
+    document.getElementById("confTag").classList.toggle("show", s.isConfidential);
+
+    document.getElementById("ledgerRows").innerHTML = rowsToHtml(buildLedgerRows(s));
+
+    sliderFill(seniorityEl);
+    sliderFill(depthEl);
+    sliderFill(speedEl);
+    sliderFill(durationEl);
+  }
+
+  function buildDocContent() {
+    const s = getCurrentState();
+
+    document.getElementById("docDate").textContent = new Date().toLocaleDateString("en-US", {
+      year: "numeric", month: "long", day: "numeric"
+    });
+
+    const paramRows = [
+      { k: "Seniority", v: s.seniority.name + " — " + s.seniority.def },
+      { k: "Depth", v: s.depth.name + " — " + s.depth.def },
+      { k: "Speed", v: s.speed.name + " — " + s.speed.def },
+      { k: "Duration", v: s.duration + " week" + (s.duration === 1 ? "" : "s") },
+      { k: "Confidentiality", v: s.isConfidential ? "Yes (+20% premium)" : "No" }
+    ];
+    if (asyncQty > 0) {
+      paramRows.push({ k: "Async Video Response", v: asyncQty + " use" + (asyncQty === 1 ? "" : "s") });
+    }
+    if (interviewQty > 0) {
+      paramRows.push({ k: "Video Interview", v: interviewQty + " use" + (interviewQty === 1 ? "" : "s") });
+    }
+
+    document.getElementById("docParams").innerHTML = paramRows.map(r =>
+      '<div class="doc-param-row"><span class="k">' + r.k + '</span><span class="v">' + r.v + "</span></div>"
+    ).join("");
+
+    document.getElementById("docLedger").innerHTML = rowsToHtml(buildLedgerRows(s));
+  }
+
+  const docOverlay = document.getElementById("docOverlay");
+
+  document.getElementById("createDocBtn").addEventListener("click", () => {
+    buildDocContent();
+    docOverlay.classList.add("show");
+  });
+
+  document.getElementById("docCloseBtn").addEventListener("click", () => {
+    docOverlay.classList.remove("show");
+  });
+
+  docOverlay.addEventListener("click", (e) => {
+    if (e.target === docOverlay) docOverlay.classList.remove("show");
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") docOverlay.classList.remove("show");
+  });
+
+  document.getElementById("docPrintBtn").addEventListener("click", () => {
+    window.print();
+  });
+
+  [seniorityEl, depthEl, speedEl, durationEl, confidentialEl].forEach(el => {
+    el.addEventListener("input", render);
+    el.addEventListener("change", render);
+  });
+
+  resetBtn.addEventListener("click", () => {
+    seniorityEl.value = 1;
+    depthEl.value = 1;
+    speedEl.value = 1;
+    durationEl.value = 1;
+    confidentialEl.checked = false;
+    asyncQty = 0;
+    interviewQty = 0;
+    refreshAll();
+  });
+
+  refreshAll();
+</script>
