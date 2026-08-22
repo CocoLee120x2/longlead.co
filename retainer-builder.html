@@ -688,6 +688,26 @@
     white-space: nowrap;
   }
 
+  .agreement-table.wide td:last-child {
+    text-align: left;
+    color: var(--ink-soft);
+    font-variant-numeric: normal;
+    white-space: normal;
+  }
+
+  .agreement-table.wide td:nth-child(2) {
+    text-align: right;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .agreement-table.wide tr:first-child td {
+    font-weight: 600;
+    color: var(--ink);
+    border-bottom: 2px solid var(--line-strong);
+  }
+
   .agreement-table tr.total td {
     font-weight: 700;
     color: var(--ink);
@@ -1138,9 +1158,31 @@
     const endDate = addWeeks(startDate, s.duration);
     const effectiveDate = new Date();
 
-    const addonNote = (s.asyncTotal > 0 || s.interviewTotal > 0)
-      ? " Add-on services used during the Term are invoiced as incurred, net 15, if not already included above."
-      : "";
+    const usesThirds = s.duration >= 3;
+    let installmentRows, paymentIntro;
+
+    if (usesThirds) {
+      const third = Math.round(s.totalBudget / 3);
+      const finalShare = s.totalBudget - third * 2;
+      const midpointDate = addWeeks(startDate, Math.floor(s.duration / 2));
+      installmentRows = [
+        ["Initial (1/3)", fmt(third), "On execution of this Agreement", "Net 15 from invoice date"],
+        ["Midpoint (1/3)", fmt(third), "At the midpoint of the Term (~" + fmtDate(midpointDate) + ")", "Net 15 from invoice date"],
+        ["Final (1/3)", fmt(finalShare), "At the end of the Term (~" + fmtDate(endDate) + ")", "Net 15 from invoice date"]
+      ];
+      paymentIntro = "The engagement fee is invoiced in three equal installments — on execution of this Agreement, at the midpoint of the Term, and at the end of the Term — each payable net 15 from its invoice date. Midpoint and final installments are invoiced on schedule regardless of interim hiring outcomes, consistent with the best-efforts, no-placement-fee structure of this engagement.";
+    } else {
+      installmentRows = [
+        ["Full engagement", fmt(s.totalBudget), "On execution of this Agreement", "Net 15 from invoice date"]
+      ];
+      paymentIntro = "The full engagement fee is invoiced on execution of this Agreement, payable net 15 from the invoice date.";
+    }
+
+    const installmentTable =
+      '<table class="agreement-table wide">' +
+      "<tr><td>Installment</td><td>Amount</td><td>Invoiced</td><td>Terms</td></tr>" +
+      installmentRows.map(r => "<tr><td>" + r[0] + "</td><td>" + r[1] + "</td><td>" + r[2] + "</td><td>" + r[3] + "</td></tr>").join("") +
+      "</table>";
 
     const output = document.getElementById("agreementOutput");
     output.innerHTML =
@@ -1153,9 +1195,9 @@
         'Long Lead and Client are each a &ldquo;Party&rdquo; and together the &ldquo;Parties.&rdquo;' +
       "</p>" +
       "<section><h4>1. Services</h4>" +
-        "<p>Long Lead will provide recruiting and talent-sourcing services (the &ldquo;Services&rdquo;) to Client for the engagement described in Schedule A. The Services consist of proactive candidate sourcing and outreach, vetting to the depth selected, and regular reporting.</p>" +
+        "<p>Long Lead will provide recruiting and talent-sourcing services (the &ldquo;Services&rdquo;) to Client for the engagement described in Schedule A. The Services consist of proactive candidate sourcing and outreach, vetting to the depth selected, and regular reporting. Reporting cadence and the metrics tracked (for example, volume of outreach, seniority, location, background, or other criteria Client specifies) will be set by Client and delivered as often as Client reasonably requests.</p>" +
         "<p><strong>Best-efforts engagement.</strong> This is a retained, best-efforts engagement. Long Lead does not guarantee any particular number of candidates, interviews, introductions, or hires, and the fees are earned in exchange for the effort and services rendered, not contingent on any placement or hire.</p>" +
-        "<p><strong>No placement fee.</strong> There is no separate placement, contingency, or success fee. The fees in Schedule A are the entire compensation for the Services.</p>" +
+        "<p><strong>No placement fee.</strong> There is no separate placement, contingency, or success fee. The fees in Schedule A are the entire compensation for the Services. Client is free to hire, not hire, or engage any candidate at its sole discretion with no additional fee owed to Long Lead.</p>" +
       "</section>" +
       "<section><h4>2. Term</h4>" +
         "<p>The engagement begins on " + fmtDate(startDate) + " and runs for " + s.duration + " week" + (s.duration === 1 ? "" : "s") + ", through approximately " + fmtDate(endDate) + ' (the &ldquo;Term&rdquo;), unless extended by written agreement or terminated under Section 5.</p>' +
@@ -1165,7 +1207,9 @@
         feeTableHtml(s) +
       "</section>" +
       "<section><h4>4. Payment Schedule</h4>" +
-        "<p>The full engagement fee is invoiced on execution of this Agreement, payable net 15 from the invoice date." + addonNote + " Late amounts accrue interest at 1.5% per month or the maximum permitted by law, whichever is less.</p>" +
+        "<p>" + paymentIntro + "</p>" +
+        installmentTable +
+        "<p>Add-on services (Async Video Response, Video Interview) used during the Term are invoiced as incurred, net 15, if not already included above. Late amounts accrue interest at 1.5% per month or the maximum permitted by law, whichever is less.</p>" +
       "</section>" +
       "<section><h4>5. Termination</h4>" +
         "<p>Either Party may terminate this Agreement on 14 days&rsquo; written notice. On termination, Client will pay for all Services performed and fees earned through the effective date of termination, including any installment already invoiced. Fees paid for periods not yet worked, if any, will be refunded on a pro-rata basis. Sections 6 through 9 survive termination.</p>" +
