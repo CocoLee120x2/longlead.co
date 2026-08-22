@@ -548,6 +548,42 @@
     .addon-total { text-align: left; }
   }
 
+  .text-input {
+    display: block;
+    width: 100%;
+    font-family: "Public Sans", sans-serif;
+    font-size: 14px;
+    color: var(--ink);
+    background: var(--surface-sunken);
+    border: 1px solid var(--line-strong);
+    border-radius: 7px;
+    padding: 10px 12px;
+    margin-top: 2px;
+  }
+  .text-input:focus-visible {
+    outline: 2px solid var(--brass);
+    outline-offset: 1px;
+    border-color: var(--brass);
+  }
+
+  .generate-btn {
+    width: 100%;
+    margin-top: 20px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--surface);
+    background: var(--brass-strong);
+    border: none;
+    border-radius: 7px;
+    padding: 14px;
+    cursor: pointer;
+    transition: opacity 0.15s ease;
+  }
+  .generate-btn:hover { opacity: 0.88; }
+
   button:focus-visible,
   a:focus-visible {
     outline: 2px solid var(--brass);
@@ -691,6 +727,39 @@
       </div>
 
       <p class="footnote">Estimate for internal planning purposes. Final engagement terms are confirmed in the signed agreement.</p>
+      </section>
+
+      <section class="card">
+      <div class="card-head">
+        <h2>Generate Agreement</h2>
+      </div>
+      <div class="field-group">
+        <p class="field-help">Fill in the parties and start date, then generate a printable agreement with the configuration above locked in.</p>
+
+        <label class="field-label" for="clientEntity">Client legal entity</label>
+        <input type="text" id="clientEntity" class="text-input" placeholder="e.g. Acme Corp, Inc.">
+
+        <label class="field-label" for="clientState" style="margin-top:14px;">Client state of formation</label>
+        <input type="text" id="clientState" class="text-input" placeholder="e.g. Delaware">
+
+        <label class="field-label" for="clientSigner" style="margin-top:14px;">Client signer name</label>
+        <input type="text" id="clientSigner" class="text-input" placeholder="e.g. Jane Doe">
+
+        <label class="field-label" for="clientTitle" style="margin-top:14px;">Client signer title</label>
+        <input type="text" id="clientTitle" class="text-input" placeholder="e.g. Head of Talent">
+
+        <label class="field-label" for="llSigner" style="margin-top:14px;">Long Lead signer</label>
+        <select id="llSigner" class="text-input">
+          <option value="Kelly Milner|Founder">Kelly Milner, Founder</option>
+          <option value="Adam Posner|Managing Partner">Adam Posner, Managing Partner</option>
+        </select>
+
+        <label class="field-label" for="startDate" style="margin-top:14px;">Engagement start date</label>
+        <input type="date" id="startDate" class="text-input">
+
+        <button type="button" class="generate-btn" id="generateBtn">Generate Agreement</button>
+        <p class="addon-hint" id="genError" style="color:var(--burgundy);"></p>
+      </div>
       </section>
     </div>
   </div>
@@ -862,6 +931,216 @@
     interviewQty = 0;
     refreshAll();
   });
+
+  // ---- Contract generation ----
+  function currentConfig() {
+    const seniority = seniorityMeta[Number(seniorityEl.value)];
+    const depth = depthMeta[Number(depthEl.value)];
+    const speed = speedMeta[Number(speedEl.value)];
+    const base = 1500;
+    const subtotal = base + seniority.amt + depth.amt + speed.amt;
+    const isConfidential = confidentialEl.checked;
+    const premium = isConfidential ? subtotal * 0.2 : 0;
+    const weeklyRate = subtotal + premium;
+    const duration = Number(durationEl.value);
+    const recurringBudget = weeklyRate * duration;
+    const asyncTotal = ADHOC_ASYNC * asyncQty;
+    const interviewTotal = ADHOC_INTERVIEW * interviewQty;
+    const totalBudget = recurringBudget + asyncTotal + interviewTotal;
+    return { seniority, depth, speed, base, subtotal, isConfidential, premium,
+      weeklyRate, duration, recurringBudget, asyncTotal, interviewTotal, totalBudget };
+  }
+
+  function addWeeks(dateStr, weeks) {
+    const d = new Date(dateStr + "T00:00:00");
+    d.setDate(d.getDate() + weeks * 7);
+    return d;
+  }
+  function fmtDate(d) {
+    return d.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+  }
+
+  function paymentSchedule(cfg, startStr) {
+    const total = cfg.totalBudget;
+    const start = new Date(startStr + "T00:00:00");
+    // Under 3 weeks: single upfront invoice. 3+ weeks: thirds.
+    if (cfg.duration < 3) {
+      return {
+        mode: "single",
+        rows: [{ label: "Full engagement", pct: "100%", amt: total,
+          trigger: "On execution of this Agreement", due: "Net 15 from invoice date" }]
+      };
+    }
+    const first = Math.round(total / 3);
+    const second = Math.round(total / 3);
+    const third = total - first - second; // absorb rounding
+    const midWeek = Math.floor(cfg.duration / 2);
+    const midDate = addWeeks(startStr, midWeek);
+    const endDate = addWeeks(startStr, cfg.duration);
+    return {
+      mode: "thirds",
+      rows: [
+        { label: "Initial payment (1/3)", pct: "33.3%", amt: first,
+          trigger: "On execution, before work begins", due: "Net 15 from invoice date" },
+        { label: "Midpoint payment (1/3)", pct: "33.3%", amt: second,
+          trigger: "At engagement midpoint (" + fmtDate(midDate) + ")", due: "Net 15 from invoice date" },
+        { label: "Final payment (1/3)", pct: "33.3%", amt: third,
+          trigger: "At engagement close (" + fmtDate(endDate) + ")", due: "Net 15 from invoice date" }
+      ]
+    };
+  }
+
+  function buildContractHTML(cfg, fields, sched) {
+    const today = new Date();
+    const startD = new Date(fields.startDate + "T00:00:00");
+    const endD = addWeeks(fields.startDate, cfg.duration);
+
+    const configRows = [
+      ["Base engagement rate", fmt(cfg.base) + " / week"],
+      ["Seniority tier", cfg.seniority.name + " (" + fmtSigned(cfg.seniority.amt) + " / week)"],
+      ["Vetting depth", cfg.depth.name + " (" + fmtSigned(cfg.depth.amt) + " / week)"],
+      ["Search intensity", cfg.speed.name + " (" + fmtSigned(cfg.speed.amt) + " / week)"]
+    ];
+    if (cfg.isConfidential) configRows.push(["Confidentiality surcharge", "+20% (" + fmtSigned(cfg.premium) + " / week)"]);
+    configRows.push(["Weekly rate", fmt(cfg.weeklyRate) + " / week"]);
+    configRows.push(["Engagement duration", cfg.duration + " week" + (cfg.duration === 1 ? "" : "s")]);
+    configRows.push(["Recurring subtotal", fmt(cfg.recurringBudget)]);
+    if (cfg.asyncQty > 0 || cfg.asyncTotal > 0) configRows.push(["Async Video Response add-on", fmt(ADHOC_ASYNC) + " \u00D7 " + asyncQty + " = " + fmt(cfg.asyncTotal)]);
+    if (cfg.interviewTotal > 0) configRows.push(["Video Interview add-on", fmt(ADHOC_INTERVIEW) + " \u00D7 " + interviewQty + " = " + fmt(cfg.interviewTotal)]);
+    configRows.push(["TOTAL ENGAGEMENT FEE", fmt(cfg.totalBudget)]);
+
+    const cfgTable = configRows.map((r, i) => {
+      const isTotal = i === configRows.length - 1;
+      return '<tr' + (isTotal ? ' class="total-row"' : '') + '><td>' + r[0] + '</td><td class="num">' + r[1] + '</td></tr>';
+    }).join("");
+
+    const schedTable = sched.rows.map(r =>
+      '<tr><td>' + r.label + '</td><td class="num">' + fmt(r.amt) + '</td><td>' + r.trigger + '</td><td>' + r.due + '</td></tr>'
+    ).join("");
+
+    const confClause = cfg.isConfidential
+      ? '<p>This is a <strong>confidential engagement</strong>. Long Lead shall not disclose the existence of this search, the identity of the Client, or the nature of the roles being sourced to any third party except candidates and personnel directly engaged in performing the Services, each of whom shall be bound to equivalent confidentiality. Client\u2019s name and any identifying details shall be omitted from Long Lead\u2019s outreach where reasonably practicable.</p>'
+      : '';
+
+    return '<!doctype html><html><head><meta charset="utf-8"><title>Long Lead Services Agreement</title><style>'
+      + 'body{font-family:Georgia,"Times New Roman",serif;color:#16202B;line-height:1.55;max-width:720px;margin:40px auto;padding:0 32px;font-size:14px;}'
+      + 'h1{font-size:22px;margin:0 0 4px;} .sub{font-family:Arial,sans-serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#4E5C66;margin:0 0 28px;}'
+      + 'h2{font-size:14px;margin:26px 0 8px;border-bottom:1px solid #D5D9D4;padding-bottom:4px;}'
+      + 'p{margin:0 0 10px;} ol{margin:0 0 10px;padding-left:20px;} li{margin-bottom:6px;}'
+      + 'table{width:100%;border-collapse:collapse;margin:10px 0 16px;font-family:Arial,sans-serif;font-size:12px;}'
+      + 'td,th{border:1px solid #D5D9D4;padding:7px 9px;text-align:left;vertical-align:top;} th{background:#EAECE8;}'
+      + '.num{text-align:right;white-space:nowrap;} .total-row td{font-weight:bold;background:#F3F4F2;}'
+      + '.sig{margin-top:40px;display:flex;justify-content:space-between;gap:40px;} .sig-block{flex:1;}'
+      + '.sig-line{border-top:1px solid #16202B;margin-top:36px;padding-top:5px;font-family:Arial,sans-serif;font-size:11px;color:#4E5C66;}'
+      + '.print-bar{font-family:Arial,sans-serif;background:#EAECE8;padding:12px;text-align:center;margin-bottom:24px;font-size:12px;border-radius:4px;}'
+      + '.print-bar button{font-family:Arial;background:#1F6B5B;color:#fff;border:none;padding:8px 18px;border-radius:3px;cursor:pointer;font-size:12px;margin-left:8px;}'
+      + '@media print{.print-bar{display:none;}}'
+      + '</style></head><body>'
+      + '<div class="print-bar">Review, then print or save as PDF.<button onclick="window.print()">Print / Save PDF</button></div>'
+      + '<h1>Recruiting Services Agreement</h1>'
+      + '<p class="sub">Long Lead, LLC \u00B7 longlead.co</p>'
+
+      + '<p>This Recruiting Services Agreement (the \u201CAgreement\u201D) is entered into as of ' + fmtDate(today) + ' (the \u201CEffective Date\u201D) by and between:</p>'
+      + '<p><strong>Long Lead, LLC</strong>, a limited liability company (\u201CLong Lead\u201D), and</p>'
+      + '<p><strong>' + fields.clientEntity + '</strong>, a ' + fields.clientState + ' entity (\u201CClient\u201D).</p>'
+      + '<p>Long Lead and Client are each a \u201CParty\u201D and together the \u201CParties.\u201D</p>'
+
+      + '<h2>1. Services</h2>'
+      + '<p>Long Lead will provide recruiting and talent-sourcing services (the \u201CServices\u201D) to Client for the engagement described in Schedule A. The Services consist of proactive candidate sourcing and outreach, vetting to the depth selected, and regular reporting. Reporting cadence and the metrics tracked (for example, volume of outreach, seniority, location, background, or other criteria Client specifies) will be set by Client and delivered as often as Client reasonably requests.</p>'
+      + '<p><strong>Best-efforts engagement.</strong> This is a retained, best-efforts engagement. Long Lead does not guarantee any particular number of candidates, interviews, introductions, or hires, and the fees are earned in exchange for the effort and services rendered, not contingent on any placement or hire.</p>'
+      + '<p><strong>No placement fee.</strong> There is no separate placement, contingency, or success fee. The fees in Schedule A are the entire compensation for the Services. Client is free to hire, not hire, or engage any candidate at its sole discretion with no additional fee owed to Long Lead.</p>'
+
+      + '<h2>2. Term</h2>'
+      + '<p>The engagement begins on ' + fmtDate(startD) + ' and runs for ' + cfg.duration + ' week' + (cfg.duration === 1 ? '' : 's') + ', through approximately ' + fmtDate(endD) + ' (the \u201CTerm\u201D), unless extended by written agreement or terminated under Section 5.</p>'
+
+      + '<h2>3. Fees</h2>'
+      + '<p>Client will pay Long Lead a total engagement fee of <strong>' + fmt(cfg.totalBudget) + '</strong>, calculated per the configuration in Schedule A.</p>'
+      + configTableSection(cfgTable)
+
+      + '<h2>4. Payment Schedule</h2>'
+      + (sched.mode === "single"
+          ? '<p>The full engagement fee is invoiced on execution of this Agreement, payable net 15 from the invoice date.</p>'
+          : '<p>The engagement fee is payable in three equal installments, invoiced at the points below and each payable net 15 from the invoice date. Installments are earned on a time basis and are not contingent on any hire or outcome.</p>')
+      + '<table><tr><th>Installment</th><th class="num">Amount</th><th>Invoiced</th><th>Terms</th></tr>' + schedTable + '</table>'
+      + '<p>Add-on services (Async Video Response, Video Interview) used during the Term are invoiced as incurred, net 15, if not already included above. Late amounts accrue interest at 1.5% per month or the maximum permitted by law, whichever is less.</p>'
+
+      + '<h2>5. Termination</h2>'
+      + '<p>Either Party may terminate this Agreement on 14 days\u2019 written notice. On termination, Client will pay for all Services performed and fees earned through the effective date of termination, including any installment already invoiced. Fees paid for periods not yet worked, if any, will be refunded on a pro-rata basis. Sections 6 through 9 survive termination.</p>'
+
+      + '<h2>6. Confidentiality</h2>'
+      + '<p>Each Party will keep the other\u2019s non-public information confidential and use it only to perform this Agreement. Candidate information provided by Long Lead is confidential to Client and may be used only to evaluate and engage candidates.</p>'
+      + confClause
+
+      + '<h2>7. Ownership of Work Product</h2>'
+      + '<p>Candidate names, profiles, and research delivered to Client under this Agreement become Client\u2019s to use for its hiring purposes upon payment of the fees to which they relate. Long Lead retains its general methods, templates, and know-how.</p>'
+
+      + '<h2>8. Independent Contractor; Limitation of Liability</h2>'
+      + '<p>Long Lead is an independent contractor, not an employee, agent, or joint venturer of Client. Long Lead does not guarantee the performance, tenure, or suitability of any candidate. To the fullest extent permitted by law, each Party\u2019s total liability under this Agreement is limited to the total fees paid by Client under this Agreement, and neither Party is liable for indirect, incidental, or consequential damages.</p>'
+
+      + '<h2>9. General</h2>'
+      + '<p>This Agreement is the entire agreement between the Parties on its subject and supersedes prior discussions. It may be amended only in a writing signed by both Parties. It is governed by the laws of the State of New York, without regard to conflict-of-laws rules. If any provision is unenforceable, the rest remains in effect. This Agreement may be signed in counterparts, including electronically.</p>'
+
+      + '<h2>Schedule A \u2014 Engagement Configuration</h2>'
+      + configTableSection(cfgTable)
+
+      + '<div class="sig">'
+      + '<div class="sig-block"><strong>Long Lead, LLC</strong><div class="sig-line">Signature</div>'
+      + '<div class="sig-line">' + fields.llSignerName + ', ' + fields.llSignerTitle + '</div>'
+      + '<div class="sig-line">Date</div></div>'
+      + '<div class="sig-block"><strong>' + fields.clientEntity + '</strong><div class="sig-line">Signature</div>'
+      + '<div class="sig-line">' + fields.clientSigner + ', ' + fields.clientTitle + '</div>'
+      + '<div class="sig-line">Date</div></div>'
+      + '</div>'
+
+      + '<p style="margin-top:32px;font-family:Arial;font-size:10px;color:#4E5C66;">Generated by the Long Lead Retainer Builder. This document should be reviewed by counsel before use.</p>'
+      + '</body></html>';
+  }
+
+  function configTableSection(rows) {
+    return '<table><tr><th>Item</th><th class="num">Value</th></tr>' + rows + '</table>';
+  }
+
+  function generateContract() {
+    const err = document.getElementById("genError");
+    err.classList.remove("show");
+    const clientEntity = document.getElementById("clientEntity").value.trim();
+    const clientState = document.getElementById("clientState").value.trim();
+    const clientSigner = document.getElementById("clientSigner").value.trim();
+    const clientTitle = document.getElementById("clientTitle").value.trim();
+    const startDate = document.getElementById("startDate").value;
+    const llRaw = document.getElementById("llSigner").value.split("|");
+
+    const missing = [];
+    if (!clientEntity) missing.push("client entity");
+    if (!clientState) missing.push("client state");
+    if (!clientSigner) missing.push("client signer");
+    if (!clientTitle) missing.push("client title");
+    if (!startDate) missing.push("start date");
+    if (missing.length) {
+      err.textContent = "Please fill in: " + missing.join(", ") + ".";
+      err.classList.add("show");
+      return;
+    }
+
+    const cfg = currentConfig();
+    cfg.asyncQty = asyncQty;
+    cfg.interviewQty = interviewQty;
+    const sched = paymentSchedule(cfg, startDate);
+    const fields = { clientEntity, clientState, clientSigner, clientTitle, startDate,
+      llSignerName: llRaw[0], llSignerTitle: llRaw[1] };
+
+    const html = buildContractHTML(cfg, fields, sched);
+    const w = window.open("", "_blank");
+    if (!w) {
+      err.textContent = "Please allow pop-ups to open the agreement.";
+      err.classList.add("show");
+      return;
+    }
+    w.document.write(html);
+    w.document.close();
+  }
+
+  document.getElementById("generateBtn").addEventListener("click", generateContract);
 
   refreshAll();
 </script>
