@@ -1126,9 +1126,9 @@
 
   function feeTableRows(s) {
     const rows = [
-      ["Seniority tier", s.seniority.name + " (" + fmtSigned(s.seniority.amt) + " / week)"],
-      ["Vetting depth", s.depth.name + " (" + fmtSigned(s.depth.amt) + " / week)"],
-      ["Search intensity", s.speed.name + " (" + fmtSigned(s.speed.amt) + " / week)"],
+      ["Seniority tier", s.seniority.name],
+      ["Vetting depth", s.depth.name],
+      ["Search intensity", s.speed.name],
       ["Weekly rate", fmt(s.weeklyRate) + " / week × " + s.duration + " week" + (s.duration === 1 ? "" : "s")]
     ];
     if (s.asyncTotal > 0) rows.push(["Async Video Response × " + asyncQty, fmt(s.asyncTotal)]);
