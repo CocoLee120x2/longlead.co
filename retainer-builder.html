@@ -1,6 +1,6 @@
 <title>Retainer Builder</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap">
 <style>
   :root {
     --ink: #1B2430;
@@ -615,68 +615,73 @@
     margin-top: 28px;
     padding-top: 28px;
     border-top: 1px solid var(--line);
-    font-family: "Times New Roman", Times, Georgia, serif;
+    font-family: "PT Serif", Georgia, "Times New Roman", serif;
     color: var(--ink);
   }
 
   .agreement-output.show { display: block; }
 
+  .agreement-titleblock {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
   .agreement-output h3 {
     font-weight: 700;
-    font-size: 24px;
-    margin: 0 0 4px;
+    font-size: 28px;
+    margin: 0 0 6px;
     color: var(--ink);
   }
 
   .agreement-sub {
     font-style: italic;
-    font-size: 13px;
+    font-size: 14px;
     color: var(--slate);
-    margin: 0 0 24px;
+    margin: 0 0 22px;
   }
 
   .agreement-recitals {
     font-size: 15px;
-    line-height: 1.7;
+    line-height: 1.8;
     color: var(--ink);
-    margin-bottom: 24px;
+    margin: 0 auto;
+    max-width: 62ch;
   }
 
-  .agreement-output section { margin-bottom: 22px; }
+  .agreement-output section { margin: 40px 0; }
 
   .agreement-output section h4 {
     font-weight: 700;
-    font-size: 16px;
-    margin: 0 0 8px;
+    font-size: 21px;
+    margin: 0 0 12px;
     color: var(--ink);
   }
 
   .agreement-output section p {
     font-size: 15px;
-    line-height: 1.7;
+    line-height: 1.8;
     color: var(--ink);
-    margin: 0 0 10px;
+    margin: 0 0 12px;
   }
 
   .doc-section-title {
     font-weight: 700;
-    font-size: 13px;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
+    font-size: 21px;
     color: var(--ink);
-    margin: 24px 0 10px;
+    margin: 40px 0 14px;
   }
 
   .agreement-table {
     width: 100%;
     border-collapse: collapse;
     font-size: 14px;
-    margin: 12px 0;
+    margin: 14px 0;
+    border: 1px solid var(--line-strong);
   }
 
   .agreement-table td {
-    padding: 7px 8px;
-    border-bottom: 1px solid var(--line);
+    padding: 9px 12px;
+    border: 1px solid var(--line-strong);
     color: var(--ink-soft);
   }
 
@@ -704,6 +709,7 @@
   .agreement-table.wide tr:first-child td {
     font-weight: 600;
     color: var(--ink);
+    background: var(--surface-sunken);
     border-bottom: 2px solid var(--line-strong);
   }
 
@@ -1167,10 +1173,10 @@
       const midpointDate = addWeeks(startDate, Math.floor(s.duration / 2));
       installmentRows = [
         ["Initial (1/3)", fmt(third), "On execution of this Agreement", "Due upon receipt"],
-        ["Midpoint (1/3)", fmt(third), "At the midpoint of the Term (~" + fmtDate(midpointDate) + ")", "Net 15 from invoice date"],
-        ["Final (1/3)", fmt(finalShare), "At the end of the Term (~" + fmtDate(endDate) + ")", "Net 15 from invoice date"]
+        ["Midpoint (1/3)", fmt(third), "At the midpoint of the Term (~" + fmtDate(midpointDate) + ")", "Due upon receipt"],
+        ["Final (1/3)", fmt(finalShare), "At the end of the Term (~" + fmtDate(endDate) + ")", "Due upon receipt"]
       ];
-      paymentIntro = "The engagement fee is invoiced in three equal installments — on execution of this Agreement, at the midpoint of the Term, and at the end of the Term. The initial installment is due upon receipt, and Services begin only once it is paid; the midpoint and final installments are each payable net 15 from their invoice date and are invoiced on schedule regardless of interim hiring outcomes, consistent with the best-efforts, no-placement-fee structure of this engagement.";
+      paymentIntro = "The engagement fee is invoiced in three equal installments — on execution of this Agreement, at the midpoint of the Term, and at the end of the Term. Each installment is due upon receipt, and Services begin only once the initial installment is paid. Midpoint and final installments are invoiced on schedule regardless of interim hiring outcomes, consistent with the best-efforts, no-placement-fee structure of this engagement.";
     } else {
       installmentRows = [
         ["Full engagement", fmt(s.totalBudget), "On execution of this Agreement", "Due upon receipt"]
@@ -1186,14 +1192,16 @@
 
     const output = document.getElementById("agreementOutput");
     output.innerHTML =
-      "<h3>Recruiting Services Agreement</h3>" +
-      '<p class="agreement-sub">Long Lead, LLC · longlead.co</p>' +
-      '<p class="agreement-recitals">' +
-        "This Recruiting Services Agreement (the &ldquo;Agreement&rdquo;) is entered into as of " + fmtDate(effectiveDate) + ' (the &ldquo;Effective Date&rdquo;) by and between:<br>' +
-        "<strong>Long Lead, LLC</strong>, a limited liability company (&ldquo;Long Lead&rdquo;), and<br>" +
-        "<strong>" + clientEntity + "</strong>, a " + clientState + ' entity (&ldquo;Client&rdquo;).<br>' +
-        'Long Lead and Client are each a &ldquo;Party&rdquo; and together the &ldquo;Parties.&rdquo;' +
-      "</p>" +
+      '<div class="agreement-titleblock">' +
+        "<h3>Recruiting Services Agreement</h3>" +
+        '<p class="agreement-sub">Long Lead, LLC · longlead.co</p>' +
+        '<p class="agreement-recitals">' +
+          "This Recruiting Services Agreement (the &ldquo;Agreement&rdquo;) is entered into as of " + fmtDate(effectiveDate) + ' (the &ldquo;Effective Date&rdquo;) by and between ' +
+          "<strong>Long Lead, LLC</strong>, a limited liability company (&ldquo;Long Lead&rdquo;), and " +
+          "<strong>" + clientEntity + "</strong>, a " + clientState + ' entity (&ldquo;Client&rdquo;). ' +
+          'Long Lead and Client are each a &ldquo;Party&rdquo; and together the &ldquo;Parties.&rdquo;' +
+        "</p>" +
+      "</div>" +
       "<section><h4>1. Services</h4>" +
         "<p>Long Lead will provide recruiting and talent-sourcing services (the &ldquo;Services&rdquo;) to Client for the engagement described in Schedule A. The Services consist of proactive candidate sourcing and outreach, vetting to the depth selected, and regular reporting. Reporting cadence and the metrics tracked (for example, volume of outreach, seniority, location, background, or other criteria Client specifies) will be set by Client and delivered as often as Client reasonably requests.</p>" +
         "<p><strong>Best-efforts engagement.</strong> This is a retained, best-efforts engagement. Long Lead does not guarantee any particular number of candidates, interviews, introductions, or hires, and the fees are earned in exchange for the effort and services rendered, not contingent on any placement or hire.</p>" +
@@ -1208,7 +1216,7 @@
       "<section><h4>4. Payment Schedule</h4>" +
         "<p>" + paymentIntro + "</p>" +
         installmentTable +
-        "<p>If Client requests Async Video Response or Video Interview usage beyond what is already included in Schedule A, those extra uses are billed separately, invoiced as they happen, payable net 15. Late amounts accrue interest at 1.5% per month or the maximum permitted by law, whichever is less.</p>" +
+        "<p>If Client requests Async Video Response or Video Interview usage beyond what is already included in Schedule A, the cost of those extra uses is added to the final payment. Late amounts accrue interest at 1.5% per month or the maximum permitted by law, whichever is less.</p>" +
       "</section>" +
       "<section><h4>5. Termination</h4>" +
         "<p>Either Party may terminate this Agreement on " + (usesThirds ? "14 days" : "3 days") + "&rsquo; written notice. On termination, Client will pay for all Services performed and fees earned through the effective date of termination, including any installment already invoiced. Fees paid for periods not yet worked, if any, will be refunded on a pro-rata basis. Sections 6 through 9 survive termination.</p>" +
