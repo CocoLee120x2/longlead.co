@@ -644,6 +644,7 @@
     font-size: 15px;
     line-height: 1.8;
     color: var(--ink);
+    text-align: left;
     margin: 0 auto;
     max-width: 62ch;
   }
@@ -657,7 +658,8 @@
     color: var(--ink);
   }
 
-  .agreement-output section p {
+  .agreement-output section p,
+  .agreement-output > p {
     font-size: 15px;
     line-height: 1.8;
     color: var(--ink);
@@ -700,7 +702,7 @@
   }
 
   .agreement-table.wide td:nth-child(2) {
-    text-align: right;
+    text-align: left;
     color: var(--ink);
     font-variant-numeric: tabular-nums;
     white-space: nowrap;
@@ -1125,15 +1127,12 @@
 
   function feeTableRows(s) {
     const rows = [
-      ["Base engagement rate", "$1,500 / week"],
       ["Seniority tier", s.seniority.name + " (" + fmtSigned(s.seniority.amt) + " / week)"],
       ["Vetting depth", s.depth.name + " (" + fmtSigned(s.depth.amt) + " / week)"],
-      ["Search intensity", s.speed.name + " (" + fmtSigned(s.speed.amt) + " / week)"]
+      ["Search intensity", s.speed.name + " (" + fmtSigned(s.speed.amt) + " / week)"],
+      ["Weekly rate", fmt(s.weeklyRate) + " / week"],
+      ["Engagement duration", s.duration + " week" + (s.duration === 1 ? "" : "s")]
     ];
-    if (s.isConfidential) rows.push(["Confidentiality premium", "+20%"]);
-    rows.push(["Weekly rate", fmt(s.weeklyRate) + " / week"]);
-    rows.push(["Engagement duration", s.duration + " week" + (s.duration === 1 ? "" : "s")]);
-    rows.push(["Recurring subtotal", fmt(s.recurringBudget)]);
     if (s.asyncTotal > 0) rows.push(["Async Video Response × " + asyncQty, fmt(s.asyncTotal)]);
     if (s.interviewTotal > 0) rows.push(["Video Interview × " + interviewQty, fmt(s.interviewTotal)]);
     return rows;
@@ -1269,6 +1268,17 @@
     asyncQty = 0;
     interviewQty = 0;
     refreshAll();
+
+    document.getElementById("clientEntity").value = "";
+    document.getElementById("clientState").value = "";
+    document.getElementById("clientSignerName").value = "";
+    document.getElementById("clientSignerTitle").value = "";
+    document.getElementById("longLeadSigner").selectedIndex = 0;
+    startDateEl.value = new Date().toISOString().split("T")[0];
+
+    const output = document.getElementById("agreementOutput");
+    output.classList.remove("show");
+    output.innerHTML = "";
   });
 
   refreshAll();
