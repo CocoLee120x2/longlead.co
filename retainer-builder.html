@@ -615,63 +615,62 @@
     margin-top: 28px;
     padding-top: 28px;
     border-top: 1px solid var(--line);
+    font-family: "Times New Roman", Times, Georgia, serif;
+    color: var(--ink);
   }
 
   .agreement-output.show { display: block; }
 
   .agreement-output h3 {
-    font-family: "Fraunces", Georgia, serif;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 24px;
     margin: 0 0 4px;
     color: var(--ink);
   }
 
   .agreement-sub {
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 12px;
+    font-style: italic;
+    font-size: 13px;
     color: var(--slate);
     margin: 0 0 24px;
   }
 
   .agreement-recitals {
-    font-size: 14px;
+    font-size: 15px;
     line-height: 1.7;
-    color: var(--ink-soft);
+    color: var(--ink);
     margin-bottom: 24px;
   }
 
   .agreement-output section { margin-bottom: 22px; }
 
   .agreement-output section h4 {
-    font-family: "Fraunces", Georgia, serif;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 16px;
     margin: 0 0 8px;
     color: var(--ink);
   }
 
   .agreement-output section p {
-    font-size: 14px;
+    font-size: 15px;
     line-height: 1.7;
-    color: var(--ink-soft);
+    color: var(--ink);
     margin: 0 0 10px;
   }
 
   .doc-section-title {
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.02em;
     text-transform: uppercase;
-    color: var(--slate);
+    color: var(--ink);
     margin: 24px 0 10px;
   }
 
   .agreement-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 13px;
+    font-size: 14px;
     margin: 12px 0;
   }
 
@@ -935,6 +934,7 @@
           <label for="longLeadSigner">Long Lead signer</label>
           <select id="longLeadSigner">
             <option>Kelly Milner, Founder</option>
+            <option>Adam Posner, Managing Partner</option>
           </select>
         </div>
         <div class="form-field">
@@ -1166,16 +1166,16 @@
       const finalShare = s.totalBudget - third * 2;
       const midpointDate = addWeeks(startDate, Math.floor(s.duration / 2));
       installmentRows = [
-        ["Initial (1/3)", fmt(third), "On execution of this Agreement", "Net 15 from invoice date"],
+        ["Initial (1/3)", fmt(third), "On execution of this Agreement", "Due upon receipt"],
         ["Midpoint (1/3)", fmt(third), "At the midpoint of the Term (~" + fmtDate(midpointDate) + ")", "Net 15 from invoice date"],
         ["Final (1/3)", fmt(finalShare), "At the end of the Term (~" + fmtDate(endDate) + ")", "Net 15 from invoice date"]
       ];
-      paymentIntro = "The engagement fee is invoiced in three equal installments — on execution of this Agreement, at the midpoint of the Term, and at the end of the Term — each payable net 15 from its invoice date. Midpoint and final installments are invoiced on schedule regardless of interim hiring outcomes, consistent with the best-efforts, no-placement-fee structure of this engagement.";
+      paymentIntro = "The engagement fee is invoiced in three equal installments — on execution of this Agreement, at the midpoint of the Term, and at the end of the Term. The initial installment is due upon receipt, and Services begin only once it is paid; the midpoint and final installments are each payable net 15 from their invoice date and are invoiced on schedule regardless of interim hiring outcomes, consistent with the best-efforts, no-placement-fee structure of this engagement.";
     } else {
       installmentRows = [
-        ["Full engagement", fmt(s.totalBudget), "On execution of this Agreement", "Net 15 from invoice date"]
+        ["Full engagement", fmt(s.totalBudget), "On execution of this Agreement", "Due upon receipt"]
       ];
-      paymentIntro = "The full engagement fee is invoiced on execution of this Agreement, payable net 15 from the invoice date.";
+      paymentIntro = "The full engagement fee is invoiced on execution of this Agreement and is due upon receipt. Services begin only once payment is received.";
     }
 
     const installmentTable =
@@ -1208,22 +1208,22 @@
       "<section><h4>4. Payment Schedule</h4>" +
         "<p>" + paymentIntro + "</p>" +
         installmentTable +
-        "<p>Add-on services (Async Video Response, Video Interview) used during the Term are invoiced as incurred, net 15, if not already included above. Late amounts accrue interest at 1.5% per month or the maximum permitted by law, whichever is less.</p>" +
+        "<p>If Client requests Async Video Response or Video Interview usage beyond what is already included in Schedule A, those extra uses are billed separately, invoiced as they happen, payable net 15. Late amounts accrue interest at 1.5% per month or the maximum permitted by law, whichever is less.</p>" +
       "</section>" +
       "<section><h4>5. Termination</h4>" +
         "<p>Either Party may terminate this Agreement on " + (usesThirds ? "14 days" : "3 days") + "&rsquo; written notice. On termination, Client will pay for all Services performed and fees earned through the effective date of termination, including any installment already invoiced. Fees paid for periods not yet worked, if any, will be refunded on a pro-rata basis. Sections 6 through 9 survive termination.</p>" +
       "</section>" +
       "<section><h4>6. Confidentiality</h4>" +
-        "<p>Each Party will keep the other&rsquo;s non-public information confidential and use it only to perform this Agreement. Candidate information provided by Long Lead is confidential to Client and may be used only to evaluate and engage candidates.</p>" +
+        "<p>Both Parties agree to keep any private information they learn about each other confidential, and to use it only for this engagement, not for any other purpose. Candidate information Long Lead provides to Client is confidential and may only be used to evaluate and hire candidates.</p>" +
       "</section>" +
       "<section><h4>7. Ownership of Work Product</h4>" +
-        "<p>Candidate names, profiles, and research delivered to Client under this Agreement become Client&rsquo;s to use for its hiring purposes upon payment of the fees to which they relate. Long Lead retains its general methods, templates, and know-how.</p>" +
+        "<p>The candidate names, profiles, and research Long Lead delivers become Client&rsquo;s to use for hiring once Client has paid the fee that covers that work. Long Lead keeps its own general methods, templates, and know-how.</p>" +
       "</section>" +
       "<section><h4>8. Independent Contractor; Limitation of Liability</h4>" +
         "<p>Long Lead is an independent contractor, not an employee, agent, or joint venturer of Client. Long Lead does not guarantee the performance, tenure, or suitability of any candidate. To the fullest extent permitted by law, each Party&rsquo;s total liability under this Agreement is limited to the total fees paid by Client under this Agreement, and neither Party is liable for indirect, incidental, or consequential damages.</p>" +
       "</section>" +
       "<section><h4>9. General</h4>" +
-        "<p>This Agreement is the entire agreement between the Parties on its subject and supersedes prior discussions. It may be amended only in a writing signed by both Parties. It is governed by the laws of the State of New York, without regard to conflict-of-laws rules. If any provision is unenforceable, the rest remains in effect. This Agreement may be signed in counterparts, including electronically.</p>" +
+        "<p>This Agreement is the entire agreement between the Parties on its subject and supersedes prior discussions. It may be amended only in a writing signed by both Parties. It is governed by the laws of the State of Delaware, without regard to conflict-of-laws rules. If any provision is unenforceable, the rest remains in effect. This Agreement may be signed in counterparts, including electronically.</p>" +
       "</section>" +
       '<p class="doc-section-title">Schedule A — Engagement Configuration</p>' +
       feeTableHtml(s) +
