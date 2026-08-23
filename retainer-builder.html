@@ -767,6 +767,86 @@
     outline-offset: 2px;
   }
 
+  /* multi-search tabs */
+  .search-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 4px;
+  }
+  .search-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--slate);
+    background: var(--surface-sunken);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: border-color 0.12s ease, color 0.12s ease, background 0.12s ease;
+  }
+  .search-tab:hover { border-color: var(--brass); }
+  .search-tab.active {
+    color: var(--ink);
+    background: var(--brass-tint);
+    border-color: var(--brass);
+    font-weight: 600;
+  }
+  .search-tab .tab-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    font-size: 14px;
+    line-height: 1;
+    color: var(--slate);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+  .search-tab .tab-close:hover { color: var(--burgundy); background: var(--burgundy-tint); }
+
+  .search-panel { display: none; }
+  .search-panel.active { display: block; }
+
+  .add-search-btn {
+    margin: 4px 0 0;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--brass-strong);
+    background: transparent;
+    border: 1px dashed var(--line-strong);
+    border-radius: 7px;
+    padding: 11px 16px;
+    cursor: pointer;
+    width: 100%;
+    transition: border-color 0.12s ease, background 0.12s ease;
+  }
+  .add-search-btn:hover { border-color: var(--brass); background: var(--brass-tint); }
+
+  .headcount-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 14px;
+    padding: 14px 16px;
+    background: var(--surface-sunken);
+    border: 1px solid var(--line);
+    border-radius: 7px;
+  }
+  .headcount-label .field-label { margin-bottom: 2px; }
+  .headcount-label p { margin: 0; font-size: 12px; color: var(--slate); line-height: 1.5; }
+
   @media (prefers-reduced-motion: reduce) {
     * { transition: none !important; }
   }
@@ -786,44 +866,11 @@
         <button class="reset-btn" id="resetBtn" type="button">Reset</button>
       </div>
 
-      <div class="field-group">
-        <div class="field-title-row">
-          <label class="field-label" for="seniority">Seniority</label>
-          <span class="tier-amt" id="seniorityAmt">+$0/wk</span>
-        </div>
-        <p class="field-help">From taking work off your plate to owning the whole outcome.</p>
-        <input type="range" id="seniority" min="1" max="3" step="1" value="1">
-        <div class="slider-ticks"><span>Jr</span><span>Mid</span><span>Sr</span></div>
-        <div class="tier-readout">
-          <span class="tier-def" id="seniorityDef"></span>
-        </div>
-      </div>
+      <div class="search-tabs" id="searchTabs"></div>
 
-      <div class="field-group">
-        <div class="field-title-row">
-          <label class="field-label" for="depth">Depth</label>
-          <span class="tier-amt" id="depthAmt">+$0/wk</span>
-        </div>
-        <p class="field-help">From a written first pass to a live conversation on camera.</p>
-        <input type="range" id="depth" min="1" max="3" step="1" value="1">
-        <div class="slider-ticks"><span>Questionnaire</span><span>Async Video</span><span>Interview</span></div>
-        <div class="tier-readout">
-          <span class="tier-def" id="depthDef"></span>
-        </div>
-      </div>
+      <div id="searchPanels"></div>
 
-      <div class="field-group">
-        <div class="field-title-row">
-          <label class="field-label" for="speed">Speed</label>
-          <span class="tier-amt" id="speedAmt">+$0/wk</span>
-        </div>
-        <p class="field-help">A steady weekly build, or all hands on your role when you're in a crunch.</p>
-        <input type="range" id="speed" min="1" max="3" step="1" value="1">
-        <div class="slider-ticks"><span>Steady</span><span>Accelerated</span><span>All Hands</span></div>
-        <div class="tier-readout">
-          <span class="tier-def" id="speedDef"></span>
-        </div>
-      </div>
+      <button type="button" class="add-search-btn" id="addSearchBtn">+ Add Parallel Search</button>
 
       <div class="field-group">
         <label class="field-label" for="duration">Engagement Duration</label>
@@ -852,7 +899,7 @@
         <div class="addon-item">
           <div class="addon-item-head">
             <span class="field-label">Async Video Response</span>
-            <span class="addon-unit-price">$175/use</span>
+            <span class="addon-unit-price">$125/use</span>
           </div>
           <div class="addon-box">
             <div class="qty-stepper">
@@ -862,7 +909,7 @@
             </div>
             <div class="addon-total">
               <span class="addon-total-figure" id="asyncTotal">$0</span>
-              <span class="addon-total-caption" id="asyncCaption">$175 × 0</span>
+              <span class="addon-total-caption" id="asyncCaption">$125 × 0</span>
             </div>
           </div>
           <p class="addon-hint" id="asyncHint"></p>
@@ -871,7 +918,7 @@
         <div class="addon-item">
           <div class="addon-item-head">
             <span class="field-label">Video Interview</span>
-            <span class="addon-unit-price">$350/use</span>
+            <span class="addon-unit-price">$275/use</span>
           </div>
           <div class="addon-box">
             <div class="qty-stepper">
@@ -881,7 +928,7 @@
             </div>
             <div class="addon-total">
               <span class="addon-total-figure" id="interviewTotal">$0</span>
-              <span class="addon-total-caption" id="interviewCaption">$350 × 0</span>
+              <span class="addon-total-caption" id="interviewCaption">$275 × 0</span>
             </div>
           </div>
           <p class="addon-hint" id="interviewHint"></p>
@@ -961,9 +1008,6 @@
   const fmt = (n) => "$" + Math.round(n).toLocaleString("en-US");
   const fmtSigned = (n) => (n === 0 ? "+$0" : (n > 0 ? "+" : "−") + "$" + Math.abs(Math.round(n)).toLocaleString("en-US"));
 
-  const seniorityEl = document.getElementById("seniority");
-  const depthEl = document.getElementById("depth");
-  const speedEl = document.getElementById("speed");
   const durationEl = document.getElementById("duration");
   const confidentialEl = document.getElementById("confidential");
   const resetBtn = document.getElementById("resetBtn");
@@ -986,55 +1030,30 @@
     3: { name: "All Hands", amt: 1000, def: "Everybody on it. Fastest possible fill." }
   };
 
-  const ADHOC_ASYNC = 175;
-  const ADHOC_INTERVIEW = 350;
+  const BASE_PRIMARY = 1500;
+  const BASE_PARALLEL = 800;
+  const SEAT_RATE = 300;
+
+  const ADHOC_ASYNC = 125;
+  const ADHOC_INTERVIEW = 275;
 
   let asyncQty = 0;
   let interviewQty = 0;
 
-  function renderAddons() {
-    const asyncBreakeven = Math.ceil(depthMeta[2].amt / ADHOC_ASYNC);
-    const asyncTotal = ADHOC_ASYNC * asyncQty;
-    document.getElementById("asyncQty").textContent = asyncQty;
-    document.getElementById("asyncTotal").textContent = fmt(asyncTotal);
-    document.getElementById("asyncCaption").textContent = fmt(ADHOC_ASYNC) + " × " + asyncQty;
-    const asyncHint = document.getElementById("asyncHint");
-    asyncHint.classList.toggle("show", asyncQty >= asyncBreakeven);
-    asyncHint.textContent = "At " + asyncQty + " this week, upgrading Depth to Async Video Response (+" +
-      fmt(depthMeta[2].amt) + "/wk) would cost " + fmt(depthMeta[2].amt) + " instead of " + fmt(asyncTotal) + ".";
+  // ---- Search state ----
+  let searches = [];
+  let activeId = null;
+  let seq = 0;
 
-    const interviewBreakeven = Math.ceil(depthMeta[3].amt / ADHOC_INTERVIEW);
-    const interviewTotal = ADHOC_INTERVIEW * interviewQty;
-    document.getElementById("interviewQty").textContent = interviewQty;
-    document.getElementById("interviewTotal").textContent = fmt(interviewTotal);
-    document.getElementById("interviewCaption").textContent = fmt(ADHOC_INTERVIEW) + " × " + interviewQty;
-    const interviewHint = document.getElementById("interviewHint");
-    interviewHint.classList.toggle("show", interviewQty >= interviewBreakeven);
-    interviewHint.textContent = "At " + interviewQty + " this week, upgrading Depth to Video Interview (+" +
-      fmt(depthMeta[3].amt) + "/wk) would cost " + fmt(depthMeta[3].amt) + " instead of " + fmt(interviewTotal) + ".";
+  function newSearch() {
+    seq += 1;
+    return { id: seq, seniority: 1, depth: 1, speed: 1, seats: 0 };
   }
-
-  function refreshAll() {
-    renderAddons();
-    render();
+  function baseRateFor(index) { return index === 0 ? BASE_PRIMARY : BASE_PARALLEL; }
+  function searchWeekly(s, index) {
+    return baseRateFor(index) + seniorityMeta[s.seniority].amt + depthMeta[s.depth].amt +
+      speedMeta[s.speed].amt + SEAT_RATE * s.seats;
   }
-
-  document.getElementById("asyncMinus").addEventListener("click", () => {
-    asyncQty = Math.max(0, asyncQty - 1);
-    refreshAll();
-  });
-  document.getElementById("asyncPlus").addEventListener("click", () => {
-    asyncQty = Math.min(20, asyncQty + 1);
-    refreshAll();
-  });
-  document.getElementById("interviewMinus").addEventListener("click", () => {
-    interviewQty = Math.max(0, interviewQty - 1);
-    refreshAll();
-  });
-  document.getElementById("interviewPlus").addEventListener("click", () => {
-    interviewQty = Math.min(20, interviewQty + 1);
-    refreshAll();
-  });
 
   function sliderFill(el) {
     const min = Number(el.min), max = Number(el.max), val = Number(el.value);
@@ -1042,106 +1061,263 @@
     el.style.background = "linear-gradient(to right, var(--brass) " + pct + "%, var(--line) " + pct + "%)";
   }
 
+  // ---- Tabs + panels ----
+  function renderTabs() {
+    const tabsEl = document.getElementById("searchTabs");
+    tabsEl.innerHTML = "";
+    searches.forEach((s, i) => {
+      const tab = document.createElement("div");
+      tab.className = "search-tab" + (s.id === activeId ? " active" : "");
+      tab.setAttribute("role", "button");
+      tab.tabIndex = 0;
+      const label = document.createElement("span");
+      label.textContent = "Search #" + (i + 1);
+      tab.appendChild(label);
+      if (searches.length > 1) {
+        const close = document.createElement("button");
+        close.type = "button";
+        close.className = "tab-close";
+        close.textContent = "\u00D7";
+        close.setAttribute("aria-label", "Remove Search #" + (i + 1));
+        close.addEventListener("click", (e) => { e.stopPropagation(); removeSearch(s.id); });
+        tab.appendChild(close);
+      }
+      tab.addEventListener("click", () => { activeId = s.id; refreshAll(); });
+      tab.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); activeId = s.id; refreshAll(); } });
+      tabsEl.appendChild(tab);
+    });
+  }
+
+  function renderPanels() {
+    const wrap = document.getElementById("searchPanels");
+    wrap.innerHTML = "";
+    searches.forEach((s, i) => {
+      const base = baseRateFor(i);
+      const panel = document.createElement("div");
+      panel.className = "search-panel" + (s.id === activeId ? " active" : "");
+
+      panel.innerHTML =
+        '<div class="field-group">' +
+          '<p class="field-help" style="margin-bottom:12px;">Base rate for this search: <strong>' + fmt(base) + '/wk</strong>' + (i === 0 ? ' (primary)' : ' (parallel)') + '.</p>' +
+          '<div class="field-title-row">' +
+            '<label class="field-label">Seniority</label>' +
+            '<span class="tier-amt s-seniorityAmt">' + fmtSigned(seniorityMeta[s.seniority].amt) + '/wk</span>' +
+          '</div>' +
+          '<p class="field-help">From taking work off your plate to owning the whole outcome.</p>' +
+          '<input type="range" class="s-seniority" min="1" max="3" step="1" value="' + s.seniority + '">' +
+          '<div class="slider-ticks"><span>Jr</span><span>Mid</span><span>Sr</span></div>' +
+          '<div class="tier-readout"><span class="tier-def s-seniorityDef">' + seniorityMeta[s.seniority].def + '</span></div>' +
+        '</div>' +
+        '<div class="field-group">' +
+          '<div class="field-title-row">' +
+            '<label class="field-label">Depth</label>' +
+            '<span class="tier-amt s-depthAmt">' + fmtSigned(depthMeta[s.depth].amt) + '/wk</span>' +
+          '</div>' +
+          '<p class="field-help">From a written first pass to a live conversation on camera.</p>' +
+          '<input type="range" class="s-depth" min="1" max="3" step="1" value="' + s.depth + '">' +
+          '<div class="slider-ticks"><span>Questionnaire</span><span>Async Video</span><span>Interview</span></div>' +
+          '<div class="tier-readout"><span class="tier-def s-depthDef">' + depthMeta[s.depth].def + '</span></div>' +
+        '</div>' +
+        '<div class="field-group">' +
+          '<div class="field-title-row">' +
+            '<label class="field-label">Speed</label>' +
+            '<span class="tier-amt s-speedAmt">' + fmtSigned(speedMeta[s.speed].amt) + '/wk</span>' +
+          '</div>' +
+          '<p class="field-help">A steady weekly build, or all hands on your role when you\u2019re in a crunch.</p>' +
+          '<input type="range" class="s-speed" min="1" max="3" step="1" value="' + s.speed + '">' +
+          '<div class="slider-ticks"><span>Steady</span><span>Accelerated</span><span>All Hands</span></div>' +
+          '<div class="tier-readout"><span class="tier-def s-speedDef">' + speedMeta[s.speed].def + '</span></div>' +
+        '</div>' +
+        '<div class="field-group">' +
+          '<div class="headcount-row">' +
+            '<div class="headcount-label"><span class="field-label">Same-Role Headcount</span>' +
+            '<p>Extra seats of this exact role at ' + fmt(SEAT_RATE) + '/wk each.</p></div>' +
+            '<div class="qty-stepper">' +
+              '<button type="button" class="qty-btn seat-minus" aria-label="Decrease headcount">\u2212</button>' +
+              '<span class="qty-value seat-qty">' + s.seats + '</span>' +
+              '<button type="button" class="qty-btn seat-plus" aria-label="Increase headcount">+</button>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+
+      wrap.appendChild(panel);
+
+      const sen = panel.querySelector(".s-seniority");
+      const dep = panel.querySelector(".s-depth");
+      const spd = panel.querySelector(".s-speed");
+      sen.addEventListener("input", () => {
+        s.seniority = Number(sen.value);
+        panel.querySelector(".s-seniorityDef").textContent = seniorityMeta[s.seniority].def;
+        panel.querySelector(".s-seniorityAmt").textContent = fmtSigned(seniorityMeta[s.seniority].amt) + "/wk";
+        sliderFill(sen); render();
+      });
+      dep.addEventListener("input", () => {
+        s.depth = Number(dep.value);
+        panel.querySelector(".s-depthDef").textContent = depthMeta[s.depth].def;
+        panel.querySelector(".s-depthAmt").textContent = fmtSigned(depthMeta[s.depth].amt) + "/wk";
+        sliderFill(dep); render();
+      });
+      spd.addEventListener("input", () => {
+        s.speed = Number(spd.value);
+        panel.querySelector(".s-speedDef").textContent = speedMeta[s.speed].def;
+        panel.querySelector(".s-speedAmt").textContent = fmtSigned(speedMeta[s.speed].amt) + "/wk";
+        sliderFill(spd); render();
+      });
+      panel.querySelector(".seat-minus").addEventListener("click", () => {
+        s.seats = Math.max(0, s.seats - 1);
+        panel.querySelector(".seat-qty").textContent = s.seats; render();
+      });
+      panel.querySelector(".seat-plus").addEventListener("click", () => {
+        s.seats = Math.min(20, s.seats + 1);
+        panel.querySelector(".seat-qty").textContent = s.seats; render();
+      });
+
+      sliderFill(sen); sliderFill(dep); sliderFill(spd);
+    });
+  }
+
+  function addSearch() {
+    const s = newSearch();
+    searches.push(s);
+    activeId = s.id;
+    refreshAll();
+  }
+  function removeSearch(id) {
+    if (searches.length <= 1) return;
+    const idx = searches.findIndex(x => x.id === id);
+    searches.splice(idx, 1);
+    if (activeId === id) activeId = searches[Math.max(0, idx - 1)].id;
+    refreshAll();
+  }
+  document.getElementById("addSearchBtn").addEventListener("click", addSearch);
+
+  // ---- Add-ons ----
+  function renderAddons() {
+    const asyncBreakeven = 4;
+    const asyncTotal = ADHOC_ASYNC * asyncQty;
+    document.getElementById("asyncQty").textContent = asyncQty;
+    document.getElementById("asyncTotal").textContent = fmt(asyncTotal);
+    document.getElementById("asyncCaption").textContent = fmt(ADHOC_ASYNC) + " × " + asyncQty;
+    const asyncHint = document.getElementById("asyncHint");
+    asyncHint.classList.toggle("show", asyncQty >= asyncBreakeven);
+    asyncHint.textContent = "At " + asyncQty + " this week, upgrading a search\u2019s Depth to Async Video Response (+" +
+      fmt(depthMeta[2].amt) + "/wk) would cost " + fmt(depthMeta[2].amt) + " instead of " + fmt(asyncTotal) + ".";
+
+    const interviewBreakeven = 4;
+    const interviewTotal = ADHOC_INTERVIEW * interviewQty;
+    document.getElementById("interviewQty").textContent = interviewQty;
+    document.getElementById("interviewTotal").textContent = fmt(interviewTotal);
+    document.getElementById("interviewCaption").textContent = fmt(ADHOC_INTERVIEW) + " × " + interviewQty;
+    const interviewHint = document.getElementById("interviewHint");
+    interviewHint.classList.toggle("show", interviewQty >= interviewBreakeven);
+    interviewHint.textContent = "At " + interviewQty + " this week, upgrading a search\u2019s Depth to Video Interview (+" +
+      fmt(depthMeta[3].amt) + "/wk) would cost " + fmt(depthMeta[3].amt) + " instead of " + fmt(interviewTotal) + ".";
+  }
+
+  document.getElementById("asyncMinus").addEventListener("click", () => { asyncQty = Math.max(0, asyncQty - 1); refreshAll(); });
+  document.getElementById("asyncPlus").addEventListener("click", () => { asyncQty = Math.min(50, asyncQty + 1); refreshAll(); });
+  document.getElementById("interviewMinus").addEventListener("click", () => { interviewQty = Math.max(0, interviewQty - 1); refreshAll(); });
+  document.getElementById("interviewPlus").addEventListener("click", () => { interviewQty = Math.min(50, interviewQty + 1); refreshAll(); });
+
+  // ---- Totals ----
   function getCurrentState() {
-    const seniority = seniorityMeta[Number(seniorityEl.value)];
-    const depth = depthMeta[Number(depthEl.value)];
-    const speed = speedMeta[Number(speedEl.value)];
-    const base = 1500;
-    const subtotal = base + seniority.amt + depth.amt + speed.amt;
     const isConfidential = confidentialEl.checked;
-    const premium = isConfidential ? subtotal * 0.2 : 0;
-    const weeklyRate = subtotal + premium;
     const duration = Number(durationEl.value);
+    const perSearch = searches.map((s, i) => ({
+      index: i, base: baseRateFor(i), weekly: searchWeekly(s, i),
+      seniority: seniorityMeta[s.seniority], depth: depthMeta[s.depth], speed: speedMeta[s.speed], seats: s.seats
+    }));
+    const combinedWeekly = perSearch.reduce((a, x) => a + x.weekly, 0);
+    const premium = isConfidential ? combinedWeekly * 0.2 : 0;
+    const weeklyRate = combinedWeekly + premium;
     const recurringBudget = weeklyRate * duration;
     const asyncTotal = ADHOC_ASYNC * asyncQty;
     const interviewTotal = ADHOC_INTERVIEW * interviewQty;
     const totalBudget = recurringBudget + asyncTotal + interviewTotal;
-    return { seniority, depth, speed, base, subtotal, isConfidential, premium, weeklyRate, duration, recurringBudget, asyncTotal, interviewTotal, totalBudget };
+    return { isConfidential, duration, perSearch, combinedWeekly, premium, weeklyRate,
+      recurringBudget, asyncTotal, interviewTotal, totalBudget };
   }
 
   function buildLedgerRows(s) {
     const rows = [];
-    rows.push({ label: "Base rate", val: fmt(s.base), kind: "" });
-    rows.push({ label: "Seniority: " + s.seniority.name, val: fmtSigned(s.seniority.amt), kind: "" });
-    rows.push({ label: "Depth: " + s.depth.name, val: fmtSigned(s.depth.amt), kind: "" });
-    rows.push({ label: "Speed: " + s.speed.name, val: fmtSigned(s.speed.amt), kind: "" });
-    rows.push({ label: "Subtotal", val: fmt(s.subtotal), kind: "subtotal" });
-
+    s.perSearch.forEach((x, i) => {
+      rows.push({ label: "Search #" + (i + 1) + " weekly", val: fmt(x.weekly), kind: "" });
+    });
+    rows.push({ label: "Combined weekly subtotal", val: fmt(s.combinedWeekly), kind: "subtotal" });
     if (s.isConfidential) {
       rows.push({ label: "Confidentiality premium (20%)", val: fmtSigned(s.premium), kind: "premium" });
+      rows.push({ label: "Weekly rate", val: fmt(s.weeklyRate), kind: "subtotal" });
     }
-
-    rows.push({ label: "Weekly rate", val: fmt(s.weeklyRate), kind: "subtotal" });
-    rows.push({
-      label: "× " + s.duration + " week" + (s.duration === 1 ? "" : "s"),
-      val: fmt(s.recurringBudget),
-      kind: ""
-    });
-
-    if (asyncQty > 0) {
-      rows.push({ label: "Async Video Response × " + asyncQty, val: fmt(s.asyncTotal), kind: "" });
-    }
-    if (interviewQty > 0) {
-      rows.push({ label: "Video Interview × " + interviewQty, val: fmt(s.interviewTotal), kind: "" });
-    }
-
+    rows.push({ label: "× " + s.duration + " week" + (s.duration === 1 ? "" : "s"), val: fmt(s.recurringBudget), kind: "" });
+    if (asyncQty > 0) rows.push({ label: "Async Video Response × " + asyncQty, val: fmt(s.asyncTotal), kind: "" });
+    if (interviewQty > 0) rows.push({ label: "Video Interview × " + interviewQty, val: fmt(s.interviewTotal), kind: "" });
     rows.push({ label: "Total engagement budget", val: fmt(s.totalBudget), kind: "total" });
     return rows;
   }
 
   function rowsToHtml(rows) {
-    return rows.map(r => {
-      return '<div class="ledger-row ' + r.kind + '"><span class="label">' + r.label + '</span><span class="val">' + r.val + "</span></div>";
-    }).join("");
+    return rows.map(r =>
+      '<div class="ledger-row ' + r.kind + '"><span class="label">' + r.label + '</span><span class="val">' + r.val + "</span></div>"
+    ).join("");
   }
 
   function render() {
     const s = getCurrentState();
-
-    document.getElementById("seniorityDef").textContent = s.seniority.def;
-    document.getElementById("seniorityAmt").textContent = fmtSigned(s.seniority.amt);
-    document.getElementById("depthDef").textContent = s.depth.def;
-    document.getElementById("depthAmt").textContent = fmtSigned(s.depth.amt);
-    document.getElementById("speedDef").textContent = s.speed.def;
-    document.getElementById("speedAmt").textContent = fmtSigned(s.speed.amt);
     document.getElementById("confTag").classList.toggle("show", s.isConfidential);
-
     document.getElementById("ledgerRows").innerHTML = rowsToHtml(buildLedgerRows(s));
-
-    sliderFill(seniorityEl);
-    sliderFill(depthEl);
-    sliderFill(speedEl);
     sliderFill(durationEl);
   }
 
+  function refreshAll() {
+    renderTabs();
+    renderPanels();
+    renderAddons();
+    render();
+  }
+
+  // ---- Agreement ----
   function fmtDate(d) {
     return d.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
   }
-
   function addWeeks(date, weeks) {
     const d = new Date(date);
     d.setDate(d.getDate() + weeks * 7);
     return d;
   }
 
-  function feeTableRows(s) {
-    const rows = [
-      ["Seniority tier", s.seniority.name],
-      ["Vetting depth", s.depth.name],
-      ["Search intensity", s.speed.name],
-      ["Weekly rate", fmt(s.weeklyRate) + " / week × " + s.duration + " week" + (s.duration === 1 ? "" : "s")]
-    ];
-    if (s.asyncTotal > 0) rows.push(["Async Video Response × " + asyncQty, fmt(s.asyncTotal)]);
-    if (s.interviewTotal > 0) rows.push(["Video Interview × " + interviewQty, fmt(s.interviewTotal)]);
-    return rows;
-  }
-
-  function feeTableHtml(s) {
-    const rows = feeTableRows(s);
-    return '<table class="agreement-table">' +
-      rows.map(r => "<tr><td>" + r[0] + "</td><td>" + r[1] + "</td></tr>").join("") +
+  function scheduleABlocks(s) {
+    let html = "";
+    s.perSearch.forEach((x, i) => {
+      const rows = [
+        ["Base rate", fmt(x.base) + " / week" + (i === 0 ? " (primary)" : " (parallel)")],
+        ["Seniority tier", x.seniority.name],
+        ["Vetting depth", x.depth.name],
+        ["Search intensity", x.speed.name]
+      ];
+      if (x.seats > 0) rows.push(["Same-role headcount", (x.seats + 1) + " seats (" + x.seats + " extra × " + fmt(SEAT_RATE) + " = " + fmtSigned(SEAT_RATE * x.seats) + "/wk)"]);
+      rows.push(["Search weekly rate", fmt(x.weekly) + " / week"]);
+      html += '<p class="doc-section-title">Search #' + (i + 1) + '</p>' +
+        '<table class="agreement-table">' +
+        rows.map(r => "<tr><td>" + r[0] + "</td><td>" + r[1] + "</td></tr>").join("") +
+        "</table>";
+    });
+    // Combined summary
+    const summ = [];
+    summ.push(["Combined weekly subtotal (" + s.perSearch.length + " search" + (s.perSearch.length === 1 ? "" : "es") + ")", fmt(s.combinedWeekly) + " / week"]);
+    if (s.isConfidential) {
+      summ.push(["Confidentiality surcharge (+20%)", fmtSigned(s.premium) + " / week"]);
+      summ.push(["Weekly rate", fmt(s.weeklyRate) + " / week"]);
+    }
+    summ.push(["Duration", s.duration + " week" + (s.duration === 1 ? "" : "s")]);
+    summ.push(["Recurring subtotal", fmt(s.recurringBudget)]);
+    if (s.asyncTotal > 0) summ.push(["Async Video Response × " + asyncQty, fmt(s.asyncTotal)]);
+    if (s.interviewTotal > 0) summ.push(["Video Interview × " + interviewQty, fmt(s.interviewTotal)]);
+    html += '<p class="doc-section-title">Engagement Summary</p>' +
+      '<table class="agreement-table">' +
+      summ.map(r => "<tr><td>" + r[0] + "</td><td>" + r[1] + "</td></tr>").join("") +
       '<tr class="total"><td>TOTAL ENGAGEMENT FEE</td><td>' + fmt(s.totalBudget) + "</td></tr>" +
       "</table>";
+    return html;
   }
 
   const startDateEl = document.getElementById("startDate");
@@ -1169,16 +1345,16 @@
       const finalShare = s.totalBudget - third * 2;
       const midpointDate = addWeeks(startDate, Math.floor(s.duration / 2));
       installmentRows = [
-        ["Initial (1/3)", fmt(third), "On execution of this Agreement", "Due upon receipt"],
-        ["Midpoint (1/3)", fmt(third), "At the midpoint of the Term (~" + fmtDate(midpointDate) + ")", "Due upon receipt"],
-        ["Final (1/3)", fmt(finalShare), "At the end of the Term (~" + fmtDate(endDate) + ")", "Due upon receipt"]
+        ["Initial (1/3)", fmt(third), "On execution of this Agreement", "Net 15"],
+        ["Midpoint (1/3)", fmt(third), "At the midpoint of the Term (~" + fmtDate(midpointDate) + ")", "Net 15"],
+        ["Final (1/3)", fmt(finalShare), "At the end of the Term (~" + fmtDate(endDate) + ")", "Net 15"]
       ];
-      paymentIntro = "The engagement fee is invoiced in three equal installments: on execution of this Agreement, at the midpoint of the Term, and at the end of the Term. Each installment is due upon receipt, and Services begin only once the initial installment is paid. Midpoint and final installments are invoiced on schedule regardless of interim hiring outcomes, consistent with the best-efforts, no-placement-fee structure of this engagement.";
+      paymentIntro = "The engagement fee is invoiced in three equal installments: on execution of this Agreement, at the midpoint of the Term, and at the end of the Term. Each installment is due net 15 from the invoice date, and Services begin only once the initial installment is paid. Midpoint and final installments are invoiced on schedule regardless of interim hiring outcomes, consistent with the best-efforts, no-placement-fee structure of this engagement.";
     } else {
       installmentRows = [
-        ["Full engagement", fmt(s.totalBudget), "On execution of this Agreement", "Due upon receipt"]
+        ["Full engagement", fmt(s.totalBudget), "On execution of this Agreement", "Net 15"]
       ];
-      paymentIntro = "The full engagement fee is invoiced on execution of this Agreement and is due upon receipt. Services begin only once payment is received.";
+      paymentIntro = "The full engagement fee is invoiced on execution of this Agreement and is due net 15 from the invoice date. Services begin only once payment is received.";
     }
 
     const installmentTable =
@@ -1187,6 +1363,7 @@
       installmentRows.map(r => "<tr><td>" + r[0] + "</td><td>" + r[1] + "</td><td>" + r[2] + "</td><td>" + r[3] + "</td></tr>").join("") +
       "</table>";
 
+    const searchCount = s.perSearch.length;
     const output = document.getElementById("agreementOutput");
     output.innerHTML =
       '<div class="agreement-titleblock">' +
@@ -1200,7 +1377,7 @@
         "</p>" +
       "</div>" +
       "<section><h4>1. Services</h4>" +
-        "<p>Long Lead will provide recruiting and talent-sourcing services (the &ldquo;Services&rdquo;) to Client for the engagement described in Schedule A. The Services consist of proactive candidate sourcing and outreach, vetting to the depth selected, and regular reporting. Reporting cadence and the metrics tracked (for example, volume of outreach, seniority, location, background, or other criteria Client specifies) will be set by Client and delivered as often as Client reasonably requests.</p>" +
+        "<p>Long Lead will provide recruiting and talent-sourcing services (the &ldquo;Services&rdquo;) to Client for the " + searchCount + " concurrent search" + (searchCount === 1 ? "" : "es") + " described in Schedule A. The Services consist of proactive candidate sourcing and outreach, vetting to the depth selected, and regular reporting. Reporting cadence and the metrics tracked (for example, volume of outreach, seniority, location, background, or other criteria Client specifies) will be set by Client and delivered as often as Client reasonably requests.</p>" +
         "<p><strong>Best-efforts engagement.</strong> This is a retained, best-efforts engagement. Long Lead does not guarantee any particular number of candidates, interviews, introductions, or hires, and the fees are earned in exchange for the effort and services rendered, not contingent on any placement or hire.</p>" +
         "<p><strong>No placement fee.</strong> There is no separate placement, contingency, or success fee. The fees in Schedule A are the entire compensation for the Services. Client is free to hire, not hire, or engage any candidate at its sole discretion with no additional fee owed to Long Lead.</p>" +
       "</section>" +
@@ -1211,7 +1388,7 @@
         "<p>Client will pay Long Lead a total engagement fee of " + fmt(s.totalBudget) + ", calculated per the configuration in Schedule A.</p>" +
         "<p>" + paymentIntro + "</p>" +
         installmentTable +
-        "<p>If Client requests Async Video Response or Video Interview usage beyond what is already included in Schedule A, the cost of those extra uses is added to the final payment. Late amounts accrue interest at 1.5% per month or the maximum permitted by law, whichever is less.</p>" +
+        "<p>Async Video Response and Video Interview add-ons form a shared pool across all searches. If Client requests usage beyond what is already included in Schedule A, the cost of those extra uses is added to the final payment. Late amounts accrue interest at 1.5% per month or the maximum permitted by law, whichever is less.</p>" +
       "</section>" +
       "<section><h4>4. Termination</h4>" +
         "<p>Either Party may terminate this Agreement on " + (usesThirds ? "14 days" : "3 days") + "&rsquo; written notice. On termination, Client will pay for all Services performed and fees earned through the effective date of termination, including any installment already invoiced. Fees paid for periods not yet worked, if any, will be refunded on a pro-rata basis. Sections 5 through 8 survive termination.</p>" +
@@ -1229,7 +1406,7 @@
         "<p>This Agreement is the entire agreement between the Parties on its subject and supersedes prior discussions. It may be amended only in a writing signed by both Parties. It is governed by the laws of the State of Delaware, without regard to conflict-of-laws rules. If any provision is unenforceable, the rest remains in effect. This Agreement may be signed in counterparts, including electronically.</p>" +
       "</section>" +
       '<p class="doc-section-title">Schedule A: Engagement Configuration</p>' +
-      feeTableHtml(s) +
+      scheduleABlocks(s) +
       '<div class="agreement-signatures">' +
         '<div class="agreement-sig-block"><strong>Long Lead, LLC</strong>' +
           '<div class="agreement-sig-line">Signature</div>' +
@@ -1250,15 +1427,13 @@
     output.scrollIntoView({ behavior: "smooth", block: "start" });
   });
 
-  [seniorityEl, depthEl, speedEl, durationEl, confidentialEl].forEach(el => {
-    el.addEventListener("input", render);
-    el.addEventListener("change", render);
-  });
+  durationEl.addEventListener("input", render);
+  durationEl.addEventListener("change", render);
+  confidentialEl.addEventListener("change", render);
 
   resetBtn.addEventListener("click", () => {
-    seniorityEl.value = 1;
-    depthEl.value = 1;
-    speedEl.value = 1;
+    searches = [newSearch()];
+    activeId = searches[0].id;
     durationEl.value = 1;
     confidentialEl.checked = false;
     asyncQty = 0;
@@ -1277,5 +1452,10 @@
     output.innerHTML = "";
   });
 
+  // ---- Init ----
+  searches = [newSearch()];
+  activeId = searches[0].id;
   refreshAll();
 </script>
+</body>
+</html>
