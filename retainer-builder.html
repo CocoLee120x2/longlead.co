@@ -645,8 +645,7 @@
     line-height: 1.8;
     color: var(--ink);
     text-align: left;
-    margin: 0 auto;
-    max-width: 62ch;
+    margin: 0;
   }
 
   .agreement-output section { margin: 40px 0; }
@@ -1130,8 +1129,7 @@
       ["Seniority tier", s.seniority.name + " (" + fmtSigned(s.seniority.amt) + " / week)"],
       ["Vetting depth", s.depth.name + " (" + fmtSigned(s.depth.amt) + " / week)"],
       ["Search intensity", s.speed.name + " (" + fmtSigned(s.speed.amt) + " / week)"],
-      ["Weekly rate", fmt(s.weeklyRate) + " / week"],
-      ["Engagement duration", s.duration + " week" + (s.duration === 1 ? "" : "s")]
+      ["Weekly rate", fmt(s.weeklyRate) + " / week × " + s.duration + " week" + (s.duration === 1 ? "" : "s")]
     ];
     if (s.asyncTotal > 0) rows.push(["Async Video Response × " + asyncQty, fmt(s.asyncTotal)]);
     if (s.interviewTotal > 0) rows.push(["Video Interview × " + interviewQty, fmt(s.interviewTotal)]);
@@ -1207,29 +1205,27 @@
         "<p><strong>No placement fee.</strong> There is no separate placement, contingency, or success fee. The fees in Schedule A are the entire compensation for the Services. Client is free to hire, not hire, or engage any candidate at its sole discretion with no additional fee owed to Long Lead.</p>" +
       "</section>" +
       "<section><h4>2. Term</h4>" +
-        "<p>The engagement begins on " + fmtDate(startDate) + " and runs for " + s.duration + " week" + (s.duration === 1 ? "" : "s") + ", through approximately " + fmtDate(endDate) + ' (the &ldquo;Term&rdquo;), unless extended by written agreement or terminated under Section 5.</p>' +
+        "<p>The engagement begins on " + fmtDate(startDate) + " and runs for " + s.duration + " week" + (s.duration === 1 ? "" : "s") + ", through approximately " + fmtDate(endDate) + ' (the &ldquo;Term&rdquo;).</p>' +
       "</section>" +
-      "<section><h4>3. Fees</h4>" +
+      "<section><h4>3. Fees &amp; Payment Schedule</h4>" +
         "<p>Client will pay Long Lead a total engagement fee of " + fmt(s.totalBudget) + ", calculated per the configuration in Schedule A.</p>" +
-      "</section>" +
-      "<section><h4>4. Payment Schedule</h4>" +
         "<p>" + paymentIntro + "</p>" +
         installmentTable +
         "<p>If Client requests Async Video Response or Video Interview usage beyond what is already included in Schedule A, the cost of those extra uses is added to the final payment. Late amounts accrue interest at 1.5% per month or the maximum permitted by law, whichever is less.</p>" +
       "</section>" +
-      "<section><h4>5. Termination</h4>" +
-        "<p>Either Party may terminate this Agreement on " + (usesThirds ? "14 days" : "3 days") + "&rsquo; written notice. On termination, Client will pay for all Services performed and fees earned through the effective date of termination, including any installment already invoiced. Fees paid for periods not yet worked, if any, will be refunded on a pro-rata basis. Sections 6 through 9 survive termination.</p>" +
+      "<section><h4>4. Termination</h4>" +
+        "<p>Either Party may terminate this Agreement on " + (usesThirds ? "14 days" : "3 days") + "&rsquo; written notice. On termination, Client will pay for all Services performed and fees earned through the effective date of termination, including any installment already invoiced. Fees paid for periods not yet worked, if any, will be refunded on a pro-rata basis. Sections 5 through 8 survive termination.</p>" +
       "</section>" +
-      "<section><h4>6. Confidentiality</h4>" +
+      "<section><h4>5. Confidentiality</h4>" +
         "<p>Both Parties agree to keep any private information they learn about each other confidential, and to use it only for this engagement, not for any other purpose. Candidate information Long Lead provides to Client is confidential and may only be used to evaluate and hire candidates.</p>" +
       "</section>" +
-      "<section><h4>7. Ownership of Work Product</h4>" +
-        "<p>The candidate names, profiles, and research Long Lead delivers become Client&rsquo;s to use for hiring once Client has paid the fee that covers that work. Long Lead keeps its own general methods, templates, and know-how.</p>" +
+      "<section><h4>6. Ownership of Work Product</h4>" +
+        "<p>The candidate names, profiles, and research Long Lead delivers become Client&rsquo;s to use in perpetuity once Client has paid the fee that covers that work. Long Lead keeps its own general methods, templates, and know-how.</p>" +
       "</section>" +
-      "<section><h4>8. Independent Contractor; Limitation of Liability</h4>" +
+      "<section><h4>7. Independent Contractor; Limitation of Liability</h4>" +
         "<p>Long Lead is an independent contractor, not an employee, agent, or joint venturer of Client. Long Lead does not guarantee the performance, tenure, or suitability of any candidate. To the fullest extent permitted by law, each Party&rsquo;s total liability under this Agreement is limited to the total fees paid by Client under this Agreement, and neither Party is liable for indirect, incidental, or consequential damages.</p>" +
       "</section>" +
-      "<section><h4>9. General</h4>" +
+      "<section><h4>8. General</h4>" +
         "<p>This Agreement is the entire agreement between the Parties on its subject and supersedes prior discussions. It may be amended only in a writing signed by both Parties. It is governed by the laws of the State of Delaware, without regard to conflict-of-laws rules. If any provision is unenforceable, the rest remains in effect. This Agreement may be signed in counterparts, including electronically.</p>" +
       "</section>" +
       '<p class="doc-section-title">Schedule A: Engagement Configuration</p>' +
