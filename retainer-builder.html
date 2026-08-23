@@ -891,8 +891,6 @@
 
       <div id="searchPanels"></div>
 
-      <button type="button" class="add-search-btn" id="addSearchBtn">+ Add Parallel Search</button>
-
       <div class="field-group">
         <label class="field-label" for="duration">Engagement Duration</label>
         <p class="field-help">Projected length of the search.</p>
@@ -904,6 +902,10 @@
           <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span>
         </div>
       </div>
+
+      <div class="field-group" id="headcountGroup"></div>
+
+      <button type="button" class="add-search-btn" id="addSearchBtn">+ Add Parallel Search</button>
 
     </section>
 
@@ -1142,7 +1144,9 @@
 
       panel.innerHTML =
         '<div class="field-group">' +
-          '<p class="field-help" style="margin-bottom:12px;">Base rate for a search is ' + fmt(base) + '/wk, and includes sourcing, outreach, engagement, questionnaire and qualified candidate collection.</p>' +
+          '<p class="field-help" style="margin-bottom:0; font-size:15px; font-weight:600; color:var(--ink);">Base rate for a search is ' + fmt(base) + '/wk, and includes sourcing, outreach, engagement, questionnaire and qualified candidate collection.</p>' +
+        '</div>' +
+        '<div class="field-group">' +
           '<div class="field-title-row">' +
             '<label class="field-label">Seniority</label>' +
             '<span class="tier-amt s-seniorityAmt">' + fmtSigned(seniorityMeta[s.seniority].amt) + '/wk</span>' +
@@ -1151,26 +1155,15 @@
           '<input type="range" class="s-seniority" min="1" max="3" step="1" value="' + s.seniority + '">' +
           '<div class="slider-ticks"><span>Jr</span><span>Mid</span><span>Sr</span></div>' +
           '<div class="tier-readout"><span class="tier-def s-seniorityDef">' + seniorityMeta[s.seniority].def + '</span></div>' +
-        '</div>' +
-        '<div class="field-group">' +
-          '<div class="field-title-row">' +
-            '<label class="field-label">Speed</label>' +
-            '<span class="tier-amt s-speedAmt">' + fmtSigned(speedMeta[s.speed].amt) + '/wk</span>' +
-          '</div>' +
-          '<p class="field-help">A steady weekly build, or all hands on your role when you\u2019re in a crunch.</p>' +
-          '<input type="range" class="s-speed" min="1" max="3" step="1" value="' + s.speed + '">' +
-          '<div class="slider-ticks"><span>Steady</span><span>Accelerated</span><span>All Hands</span></div>' +
-          '<div class="tier-readout"><span class="tier-def s-speedDef">' + speedMeta[s.speed].def + '</span></div>' +
-        '</div>' +
-        '<div class="field-group">' +
-          '<div class="headcount-row">' +
-            '<div class="headcount-label"><span class="field-label">Same-Role Headcount</span>' +
-            '<p>Extra seats of this exact role at ' + fmt(SEAT_RATE) + '/wk each.</p></div>' +
-            '<div class="qty-stepper">' +
-              '<button type="button" class="qty-btn seat-minus" aria-label="Decrease headcount">\u2212</button>' +
-              '<span class="qty-value seat-qty">' + s.seats + '</span>' +
-              '<button type="button" class="qty-btn seat-plus" aria-label="Increase headcount">+</button>' +
+          '<div style="margin-top:44px;">' +
+            '<div class="field-title-row">' +
+              '<label class="field-label">Speed</label>' +
+              '<span class="tier-amt s-speedAmt">' + fmtSigned(speedMeta[s.speed].amt) + '/wk</span>' +
             '</div>' +
+            '<p class="field-help">A steady weekly build, or all hands on your role when you\u2019re in a crunch.</p>' +
+            '<input type="range" class="s-speed" min="1" max="3" step="1" value="' + s.speed + '">' +
+            '<div class="slider-ticks"><span>Steady</span><span>Accelerated</span><span>All Hands</span></div>' +
+            '<div class="tier-readout"><span class="tier-def s-speedDef">' + speedMeta[s.speed].def + '</span></div>' +
           '</div>' +
         '</div>';
 
@@ -1190,16 +1183,31 @@
         panel.querySelector(".s-speedAmt").textContent = fmtSigned(speedMeta[s.speed].amt) + "/wk";
         sliderFill(spd); render();
       });
-      panel.querySelector(".seat-minus").addEventListener("click", () => {
-        s.seats = Math.max(0, s.seats - 1);
-        panel.querySelector(".seat-qty").textContent = s.seats; render();
-      });
-      panel.querySelector(".seat-plus").addEventListener("click", () => {
-        s.seats = Math.min(20, s.seats + 1);
-        panel.querySelector(".seat-qty").textContent = s.seats; render();
-      });
-
       sliderFill(sen); sliderFill(spd);
+    });
+  }
+
+  function renderHeadcount() {
+    const s = searches.find(x => x.id === activeId);
+    const group = document.getElementById("headcountGroup");
+    group.innerHTML =
+      '<div class="headcount-row">' +
+        '<div class="headcount-label"><span class="field-label">Same-Role Headcount</span>' +
+        '<p>Extra seats of this exact role at ' + fmt(SEAT_RATE) + '/wk each.</p></div>' +
+        '<div class="qty-stepper">' +
+          '<button type="button" class="qty-btn seat-minus" aria-label="Decrease headcount">−</button>' +
+          '<span class="qty-value seat-qty">' + s.seats + '</span>' +
+          '<button type="button" class="qty-btn seat-plus" aria-label="Increase headcount">+</button>' +
+        '</div>' +
+      '</div>';
+
+    group.querySelector(".seat-minus").addEventListener("click", () => {
+      s.seats = Math.max(0, s.seats - 1);
+      group.querySelector(".seat-qty").textContent = s.seats; render();
+    });
+    group.querySelector(".seat-plus").addEventListener("click", () => {
+      s.seats = Math.min(20, s.seats + 1);
+      group.querySelector(".seat-qty").textContent = s.seats; render();
     });
   }
 
@@ -1308,6 +1316,7 @@
   function refreshAll() {
     renderTabs();
     renderPanels();
+    renderHeadcount();
     renderAddons();
     render();
   }
