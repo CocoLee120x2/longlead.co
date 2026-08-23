@@ -1061,9 +1061,9 @@
   function buildLedgerRows(s) {
     const rows = [];
     rows.push({ label: "Base rate", val: fmt(s.base), kind: "" });
-    rows.push({ label: "Seniority — " + s.seniority.name, val: fmtSigned(s.seniority.amt), kind: "" });
-    rows.push({ label: "Depth — " + s.depth.name, val: fmtSigned(s.depth.amt), kind: "" });
-    rows.push({ label: "Speed — " + s.speed.name, val: fmtSigned(s.speed.amt), kind: "" });
+    rows.push({ label: "Seniority: " + s.seniority.name, val: fmtSigned(s.seniority.amt), kind: "" });
+    rows.push({ label: "Depth: " + s.depth.name, val: fmtSigned(s.depth.amt), kind: "" });
+    rows.push({ label: "Speed: " + s.speed.name, val: fmtSigned(s.speed.amt), kind: "" });
     rows.push({ label: "Subtotal", val: fmt(s.subtotal), kind: "subtotal" });
 
     if (s.isConfidential) {
@@ -1176,7 +1176,7 @@
         ["Midpoint (1/3)", fmt(third), "At the midpoint of the Term (~" + fmtDate(midpointDate) + ")", "Due upon receipt"],
         ["Final (1/3)", fmt(finalShare), "At the end of the Term (~" + fmtDate(endDate) + ")", "Due upon receipt"]
       ];
-      paymentIntro = "The engagement fee is invoiced in three equal installments — on execution of this Agreement, at the midpoint of the Term, and at the end of the Term. Each installment is due upon receipt, and Services begin only once the initial installment is paid. Midpoint and final installments are invoiced on schedule regardless of interim hiring outcomes, consistent with the best-efforts, no-placement-fee structure of this engagement.";
+      paymentIntro = "The engagement fee is invoiced in three equal installments: on execution of this Agreement, at the midpoint of the Term, and at the end of the Term. Each installment is due upon receipt, and Services begin only once the initial installment is paid. Midpoint and final installments are invoiced on schedule regardless of interim hiring outcomes, consistent with the best-efforts, no-placement-fee structure of this engagement.";
     } else {
       installmentRows = [
         ["Full engagement", fmt(s.totalBudget), "On execution of this Agreement", "Due upon receipt"]
@@ -1233,7 +1233,7 @@
       "<section><h4>9. General</h4>" +
         "<p>This Agreement is the entire agreement between the Parties on its subject and supersedes prior discussions. It may be amended only in a writing signed by both Parties. It is governed by the laws of the State of Delaware, without regard to conflict-of-laws rules. If any provision is unenforceable, the rest remains in effect. This Agreement may be signed in counterparts, including electronically.</p>" +
       "</section>" +
-      '<p class="doc-section-title">Schedule A — Engagement Configuration</p>' +
+      '<p class="doc-section-title">Schedule A: Engagement Configuration</p>' +
       feeTableHtml(s) +
       '<div class="agreement-signatures">' +
         '<div class="agreement-sig-block"><strong>Long Lead, LLC</strong>' +
