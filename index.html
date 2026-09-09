@@ -578,7 +578,7 @@
         <span class="ll-masthead-links">
           <a class="ll-masthead-mail" href="/about">About</a>
           <span class="ll-masthead-sep" aria-hidden="true">·</span>
-          <a class="ll-masthead-mail" href="mailto:kelly@kellymilner.com">kelly@kellymilner.com</a>
+          <a class="ll-masthead-mail" href="mailto:kelly@longlead.co">kelly@longlead.co</a>
         </span>
       </div>
     </header>
@@ -590,7 +590,7 @@
         <p class="ll-hero-sub">Get back the 13 hours a week your team spends searching.</p>
         <p class="ll-lede">Real people, sourced and vetted, whenever you need them.</p>
       </div>
-      <form class="ll-form ll-cta-hero" action="https://formsubmit.co/kelly@kellymilner.com" method="POST">
+      <form class="ll-form ll-cta-hero" action="https://formsubmit.co/kelly@longlead.co" method="POST">
         <input type="hidden" name="_subject" value="New Long Lead inquiry (hero)">
         <input type="hidden" name="_captcha" value="false">
         <input type="hidden" name="_template" value="table">
@@ -732,7 +732,7 @@
           </svg>
           Long Lead
         </span>
-        <a class="ll-colophon-mail" href="mailto:kelly@kellymilner.com">kelly@kellymilner.com</a>
+        <a class="ll-colophon-mail" href="mailto:kelly@longlead.co">kelly@longlead.co</a>
       </div>
     </section>
 
@@ -743,7 +743,7 @@
   // Submit every .ll-form in place via FormSubmit's AJAX endpoint so no one
   // ever leaves the page. Falls back to a normal submit if JS is unavailable.
   (function () {
-    var ENDPOINT = "https://formsubmit.co/ajax/kelly@kellymilner.com";
+    var ENDPOINT = "https://formsubmit.co/ajax/kelly@longlead.co";
     document.querySelectorAll(".ll-form").forEach(function (form) {
       form.addEventListener("submit", function (e) {
         e.preventDefault();
@@ -768,7 +768,7 @@
             if (!form.querySelector(".ll-form-err")) {
               var err = document.createElement("p");
               err.className = "ll-form-err";
-              err.textContent = "Something went wrong. Please email kelly@kellymilner.com directly.";
+              err.textContent = "Something went wrong. Please email kelly@longlead.co directly.";
               form.appendChild(err);
             }
           });
