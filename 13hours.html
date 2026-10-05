@@ -1,190 +1,802 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Long Lead: Beat the clock</title>
-</head>
-<body style="margin:0;background:#F3F4F2">
-
-<!-- ===== COPY FROM HERE ===== -->
+<title>Long Lead: beat the clock</title>
+<meta name="description" content="Filling a role takes 44 days and 13 recruiter-hours a week. Long Lead spends those hours before the role exists.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Long Lead">
+<meta property="og:description" content="Start building your bench. Not a subscription, no bench, no bill. Every name is yours to keep.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><g fill='%2316202B'><circle cx='8' cy='32' r='4'/><circle cx='21' cy='32' r='4'/><circle cx='34' cy='32' r='4'/></g><rect x='45' y='24' width='16' height='16' rx='2' fill='%231F6B5B'/></svg>">
 <style>
-.ll-bc{--navy:#16202B;--teal:#1F6B5B;--cream:#F3F4F2;--mint:#9FD1C3;--muted:#5A6470;--rule:#C9CCC7;
-  background:var(--cream);color:var(--navy);font-family:Georgia,"Times New Roman",serif;padding:72px 24px 56px;box-sizing:border-box}
-.ll-bc *,.ll-bc *::before,.ll-bc *::after{box-sizing:border-box}
-.ll-bc__inner{max-width:1080px;margin:0 auto}
-.ll-bc__head{text-align:center;margin-bottom:44px}
-.ll-bc__head h2{font-weight:400;font-size:clamp(34px,5vw,52px);line-height:1.1;margin:0 0 10px;letter-spacing:-.01em}
-.ll-bc__head p{font-family:"Courier New",Courier,monospace;font-size:15px;color:var(--teal);margin:0}
-.ll-bc__grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.ll-bc__side{border-radius:14px;padding:32px 32px 28px;display:flex;flex-direction:column;gap:28px}
-.ll-bc__side--old{border:1px solid var(--rule);gap:44px}
-.ll-bc__side--new{background:var(--navy);color:var(--cream)}
-.ll-bc__label{font-family:"Courier New",Courier,monospace;font-size:14px;margin:0}
-.ll-bc__side--new .ll-bc__label{color:var(--mint)}
-.ll-bc__stat{display:flex;align-items:center;gap:20px;min-height:104px}
-.ll-bc__stat svg{flex:0 0 auto;width:96px;height:96px}
-.ll-bc__num{font-size:clamp(56px,7vw,76px);line-height:.9;font-variant-numeric:lining-nums}
-.ll-bc__unit{font-family:"Courier New",Courier,monospace;font-size:14px;line-height:1.45}
-.ll-bc__unit em{display:block;font-style:normal;color:var(--muted)}
-.ll-bc__side--new .ll-bc__unit em{color:var(--mint)}
-.ll-bc__bench{width:100%;height:auto;display:block}
-.ll-bc__line{margin-top:auto}
-.ll-bc__line p{font-style:italic;font-size:15px;margin:0 0 10px}
-.ll-bc__track{position:relative;height:4px;border-radius:2px;background:var(--rule)}
-.ll-bc__side--new .ll-bc__track{background:#2E3A47}
-.ll-bc__fill{position:absolute;left:0;top:0;bottom:0;border-radius:2px;background:var(--navy);width:100%}
-.ll-bc__side--new .ll-bc__fill{background:var(--mint);width:9%}
-.ll-bc__track::before,.ll-bc__track::after{content:"";position:absolute;top:50%;width:10px;height:10px;border-radius:50%;transform:translateY(-50%)}
-.ll-bc__track::before{left:-3px;background:var(--navy)}
-.ll-bc__side--old .ll-bc__track::after{right:-3px;background:var(--navy)}
-.ll-bc__side--new .ll-bc__track::before{background:var(--mint)}
-.ll-bc__ends{display:flex;justify-content:space-between;font-family:"Courier New",Courier,monospace;font-size:13px;margin-top:10px}
-.ll-bc__side--new .ll-bc__ends{color:var(--mint)}
-.ll-bc__foot{text-align:center;font-family:"Courier New",Courier,monospace;font-size:14px;margin:40px 0 0}
-.ll-bc .hand-fast{transform-origin:50px 50px;animation:ll-spin 1.6s linear infinite}
-.ll-bc .hand-calm{transform-origin:50px 50px;animation:ll-spin 60s linear infinite}
-@keyframes ll-spin{to{transform:rotate(360deg)}}
-.ll-bc.is-ready .ll-bc__side--old .ll-bc__fill{animation:ll-grow-old 4.4s cubic-bezier(.4,0,.6,1) both}
-.ll-bc.is-ready .ll-bc__side--new .ll-bc__fill{animation:ll-grow-new .6s ease-out both}
-@keyframes ll-grow-old{from{width:0}to{width:100%}}
-@keyframes ll-grow-new{from{width:0}to{width:9%}}
-@media (max-width:780px){.ll-bc{padding:56px 16px 44px}.ll-bc__grid{grid-template-columns:1fr}.ll-bc__side{padding:26px 22px 24px}.ll-bc__stat{gap:14px}.ll-bc__stat svg{width:68px;height:68px}}
-@media (prefers-reduced-motion:reduce){.ll-bc .hand-fast,.ll-bc .hand-calm,.ll-bc.is-ready .ll-bc__fill{animation:none}}
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+</style>
+</head>
+<body>
+<style>
+  :root {
+    --paper:      #F3F4F2;
+    --paper-2:    #EAECE8;
+    --ink:        #16202B;
+    --ink-soft:   #4E5C66;
+    --rule:       #D5D9D4;
+    --accent:     #1F6B5B;
+    --accent-dim: #E2EDE8;
+    --late:       #A8836A;
+    --late-dim:   #EFE5DC;
+
+    --serif: "Hoefler Text", "Iowan Old Style", ui-serif, Palatino, "Palatino Linotype", Georgia, serif;
+    --sans:  -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    --mono:  ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:      #10171E;
+      --paper-2:    #17212A;
+      --ink:        #E8EAE6;
+      --ink-soft:   #94A3AC;
+      --rule:       #26333D;
+      --accent:     #47B99A;
+      --accent-dim: #16302B;
+      --late:       #C09A80;
+      --late-dim:   #2C241E;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper:      #10171E;
+    --paper-2:    #17212A;
+    --ink:        #E8EAE6;
+    --ink-soft:   #94A3AC;
+    --rule:       #26333D;
+    --accent:     #47B99A;
+    --accent-dim: #16302B;
+    --late:       #C09A80;
+    --late-dim:   #2C241E;
+  }
+
+  :root[data-theme="light"] {
+    --paper:      #F3F4F2;
+    --paper-2:    #EAECE8;
+    --ink:        #16202B;
+    --ink-soft:   #4E5C66;
+    --rule:       #D5D9D4;
+    --accent:     #1F6B5B;
+    --accent-dim: #E2EDE8;
+    --late:       #A8836A;
+    --late-dim:   #EFE5DC;
+  }
+
+  html, body {
+    background: var(--paper);
+    color: var(--ink);
+  }
+
+  /* ============================================================
+     MOBILE FIRST. Base styles are the phone layout; every media
+     query below is min-width and adds to it. Nothing here should
+     need a max-width query.
+     ============================================================ */
+
+  .ll {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;  /* stop iOS inflating type in landscape */
+  }
+
+  .ll-wrap {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 0 20px 52px;
+  }
+
+  .ll-measure { max-width: none; }
+
+  .ll-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0;
+  }
+
+  .ll h2 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(1.45rem, 5.2vw, 2.45rem);
+    line-height: 1.2;
+    letter-spacing: -0.012em;
+    text-wrap: balance;
+    margin: 0;
+  }
+
+  .ll h3 {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 1.0625rem;
+    letter-spacing: -0.005em;
+    margin: 0;
+  }
+
+  .ll p { margin: 0; }
+  .ll strong { font-weight: 600; }
+
+  /* even out line lengths so short copy never strands a word or two on the last line */
+  .ll p { text-wrap: pretty; }
+
+  /* ---------- masthead ---------- */
+
+  .ll-masthead {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 22px 0 14px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  /* masthead logo lockup: mark + tagline as one unit */
+  .ll-logo-lockup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .ll-masthead-logo {
+    height: 40px;
+    width: auto;
+    display: block;
+  }
+
+  .ll-logo-lockup-tagline {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.03em;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  .ll-logo-mini {
+    height: 11px;
+    width: auto;
+    color: var(--ink-soft);
+    flex: none;
+  }
+
+  .ll-masthead-note {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .ll-masthead-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    text-align: right;
+  }
+
+  .ll-masthead-mail {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .ll-masthead-mail:hover { text-decoration: underline; }
+
+  /* nav + email share one baseline row under the "talent pipelining" note.
+     The separator is faded --ink-soft, not --rule: --rule is a hairline color
+     and vanishes at 11px type. Faint enough to read as punctuation between the
+     two links, not as a third item */
+  .ll-masthead-links {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .ll-masthead-sep { font-size: 11px; color: var(--ink-soft); opacity: 0.5; }
+
+  /* ---------- hero ---------- */
+
+  /* no padding-bottom: the chart is the last child, and any value here would
+     add to the next section's padding-top rather than replace it */
+  .ll-hero {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 32px 0 0;
+  }
+
+  /* the words + form; the art column sits beside it on wide screens */
+  .ll-hero-main {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* logo art: hidden on phones (no white space to fill), revealed as a second
+     column at the desktop breakpoint below */
+  .ll-hero-art { display: none; }
+
+  .ll-hero h1 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(1.95rem, 7.4vw, 4.05rem);
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+    max-width: 15em;
+    margin: 0;
+  }
+
+  /* headline, lead, and sub read as one descending unit: three sizes, tight
+     internal spacing, then the section gap carries down to the CTA */
+  .ll-hero-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  /* the second beat of the headline: a serif step down from the h1, still
+     part of the statement, not yet the explainer */
+  .ll-hero-lead {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(1.3rem, 4.4vw, 2.1rem);
+    line-height: 1.18;
+    letter-spacing: -0.014em;
+    text-wrap: balance;
+    color: var(--ink);
+  }
+
+  /* the explainer: sans, softer, smallest of the three. a touch more space
+     above it sets it apart from the two serif lines */
+  .ll-hero-sub {
+    margin-top: 0;
+    font-size: 1.0625rem;
+    line-height: 1.5;
+    font-weight: 500;
+    color: var(--accent);
+  }
+
+  /* hero CTA: sits under the subhead so the ask is in the first view, no scroll */
+  .ll-cta-hero { margin-top: 2px; }
+
+  /* ---------- generic section ---------- */
+
+  .ll-section {
+    padding-top: 46px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  /* ---------- pricing ---------- */
+
+  /* footnote hugging the list above it; the negative margin pulls it back out of
+     the section's flex gap so it reads as attached to the list, not floating
+     between the list and the lede below */
+  /* .ll .ll-footnote, not .ll-footnote — `.ll p { margin: 0 }` above outranks a
+     lone class and would zero the negative margin out */
+  .ll .ll-footnote {
+    margin-top: -16px;
+    font-size: 0.8125rem;
+    line-height: 1.55;
+    font-style: italic;
+    color: var(--ink-soft);
+  }
+
+  /* Lead-in sentence. Used for the price anchor and the closing tease in pricing,
+     and the figures line in the hero. No margin — each sits in a flex parent whose
+     gap already spaces it. */
+  .ll-lede {
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+
+  /* header + subhead read as one unit: pull the subhead up tight under the h2,
+     out of the section's flex gap */
+  .ll h2 + .ll-lede,
+  .ll h2 + .ll-measure { margin-top: -21px; }
+
+  /* ---------- depth list ---------- */
+
+  .ll-depth-list {
+    margin: 4px 0 0;
+    padding-left: 1.1em;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .ll-depth-list li {
+    font-size: 1rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+
+  .ll-depth-list li::marker { color: var(--accent); }
+  .ll-depth-list strong { color: var(--ink); }
+
+  /* ---------- faq ---------- */
+
+  .ll-faq {
+    display: flex;
+    flex-direction: column;
+    margin-top: 8px;
+  }
+
+  .ll-faq details { border-top: 1px solid var(--rule); }
+  .ll-faq details:last-child { border-bottom: 1px solid var(--rule); }
+
+  .ll-faq summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    padding: 16px 0;
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 1.0625rem;
+    letter-spacing: -0.005em;
+  }
+  .ll-faq summary::-webkit-details-marker { display: none; }
+  .ll-faq summary::after {
+    content: "+";
+    font-family: var(--mono);
+    font-size: 1rem;
+    color: var(--accent);
+    flex: none;
+  }
+  .ll-faq details[open] summary::after { content: "\2212"; }
+  .ll-faq summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .ll-faq details p {
+    color: var(--ink-soft);
+    padding: 0 0 20px;
+    max-width: 44em;
+  }
+
+  /* a section that opens with the same divider as the closing block.
+     margin-top and padding-top match so the divider sits with equal space
+     above and below it */
+  .ll-section.ll-ruled {
+    margin-top: 28px;
+    border-top: 1px solid var(--rule);
+    padding-top: 28px;
+  }
+
+  /* ---------- close ---------- */
+
+  .ll-close {
+    margin-top: 28px;
+    border-top: 1px solid var(--rule);
+    padding-top: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  /* no cap here. 13em forced "cup of coffee." onto its own line.
+     text-wrap: balance on .ll h2 still evens the break on narrow screens. */
+  .ll-close h2 { max-width: none; }
+
+  .ll-cta {
+    align-self: flex-start;
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--paper);
+    background: var(--accent);
+    padding: 15px 26px;
+    border-radius: 2px;
+    transition: opacity 0.18s ease;
+  }
+  .ll-cta:hover { opacity: 0.82; }
+  .ll-cta:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+  /* ---------- contact form ---------- */
+
+  .ll-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-width: 30em;
+    margin-top: 4px;
+  }
+
+  .ll-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .ll-field label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .ll-field input {
+    font-family: var(--sans);
+    font-size: 1rem;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 11px 13px;
+    width: 100%;
+  }
+  .ll-field input::placeholder { color: var(--ink-soft); opacity: 0.65; }
+  .ll-field input:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+    border-color: var(--accent);
+  }
+
+  /* the .ll-cta styles assume an <a>; as a form button it needs the resets */
+  .ll-form button.ll-cta {
+    align-self: flex-start;
+    border: 0;
+    cursor: pointer;
+    margin-top: 2px;
+  }
+
+  /* honeypot: hidden from people, catches bots that fill every field */
+  .ll-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+  /* inline states: shown in place of the form so no one leaves the page */
+  .ll-form-thanks {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    line-height: 1.3;
+    color: var(--accent);
+  }
+  .ll-form-err {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: var(--late);
+    margin-top: 4px;
+  }
+
+  .ll-colophon {
+    margin-top: 36px;
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  /* footer email: a live mailto link styled exactly like the masthead's —
+     lowercase, same size and tracking, not the colophon's uppercase caps */
+  .ll-colophon-mail {
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .ll-colophon-mail:hover { text-decoration: underline; }
+
+  /* ============================================================
+     SCALE UP. Column counts always divide evenly, so a short
+     final row never leaves an empty cell: 1 → 2 → 4, never 3.
+     ============================================================ */
+
+
+  @media (min-width: 620px) {
+    .ll { font-size: 17px; line-height: 1.65; }
+    .ll-wrap { padding: 0 28px 72px; }
+    .ll-eyebrow { font-size: 12px; }
+
+    .ll-masthead { padding: 30px 0 16px; }
+    .ll-masthead-note { font-size: 11.5px; }
+    .ll-masthead-logo { height: 48px; }
+
+    .ll-hero { padding: 56px 0 0; gap: 26px; }
+    .ll-hero h1 { line-height: 1.09; letter-spacing: -0.022em; }
+    .ll-lede { font-size: 1.1875rem; line-height: 1.6; }
+    .ll-hero-stack { gap: 4px; }
+    .ll-hero-sub { font-size: 1.25rem; line-height: 1.45; margin-top: 0; }
+
+    .ll-section { padding-top: 62px; gap: 22px; }
+    .ll h2 { line-height: 1.18; }
+
+    .ll .ll-footnote { margin-top: -20px; }  /* section gap grows to 22px here; keep the tight hug */
+    .ll h2 + .ll-lede,
+    .ll h2 + .ll-measure { margin-top: -25px; }  /* keep the header/subhead unit tight */
+
+    .ll-close { margin-top: 36px; padding-top: 36px; gap: 22px; }
+    .ll-section.ll-ruled { margin-top: 36px; padding-top: 36px; }
+    .ll-colophon { margin-top: 44px; }
+  }
+
+  /* desktop: the hero becomes two columns — words/form on the left, logo art
+     filling the white space on the right, centered against the copy */
+  @media (min-width: 860px) {
+    .ll-hero {
+      flex-direction: row;
+      align-items: center;
+      gap: 40px;
+    }
+    .ll-hero-main { flex: 1 1 0; min-width: 0; }
+    .ll-hero-art {
+      display: block;
+      flex: 0 0 26%;
+      max-width: 240px;
+    }
+    .ll-hero-art img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  }
+
 </style>
 
-<section class="ll-bc" aria-labelledby="ll-bc-title">
- <div class="ll-bc__inner">
-  <header class="ll-bc__head">
-   <h2 id="ll-bc-title">Beat the clock</h2>
-   <p>From reactive hiring to a ready bench</p>
-  </header>
+<style>
+  /* ---------- beat the clock (13hours page) ---------- */
+  .ll-bc { --bc-panel: #16202B; --bc-on: #F3F4F2; --bc-mint: #9FD1C3; --bc-track: #2E3A47; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .ll-bc { --bc-panel: #17212A; } }
+  :root[data-theme="dark"] .ll-bc { --bc-panel: #17212A; }
 
-  <div class="ll-bc__grid">
-   <article class="ll-bc__side ll-bc__side--old" aria-label="The usual way">
-    <p class="ll-bc__label">The usual way</p>
+  .ll-bc-grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 6px; }
+  .ll-bc-side { border-radius: 4px; padding: 24px 20px 22px; display: flex; flex-direction: column; gap: 26px; }
+  .ll-bc-old { border: 1px solid var(--rule); color: var(--ink); }
+  .ll-bc-new { background: var(--bc-panel); color: var(--bc-on); border: 1px solid var(--bc-panel); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .ll-bc-new { border-color: var(--rule); } }
+  :root[data-theme="dark"] .ll-bc-new { border-color: var(--rule); }
 
-    <div class="ll-bc__stat">
-     <svg viewBox="0 0 100 100" aria-hidden="true">
-      <circle cx="50" cy="50" r="38" fill="none" stroke="#16202B" stroke-width="2.5" stroke-dasharray="52 7 30 9 70 5 48 18" stroke-linecap="round"/>
-      <g stroke="#16202B" stroke-width="2" stroke-linecap="round">
-       <line x1="50" y1="17" x2="50" y2="23"/><line x1="83" y1="50" x2="77" y2="50"/><line x1="50" y1="83" x2="50" y2="77"/><line x1="17" y1="50" x2="23" y2="50"/>
-      </g>
-      <path d="M62 30 L57 41 L64 47" fill="none" stroke="#16202B" stroke-width="1.2" stroke-linejoin="round"/>
-      <path d="M90 22 l6 -3 l-2 7 z M8 70 l-5 4 l7 1 z M78 92 l5 4 l1 -6 z" fill="#16202B"/>
-      <line x1="50" y1="50" x2="66" y2="58" stroke="#16202B" stroke-width="2.5" stroke-linecap="round"/>
-      <line class="hand-fast" x1="50" y1="50" x2="50" y2="22" stroke="#16202B" stroke-width="2" stroke-linecap="round"/>
-      <circle cx="50" cy="50" r="3.5" fill="#16202B"/>
-     </svg>
-     <span class="ll-bc__num">44</span>
-     <span class="ll-bc__unit">days the seat<br>sits empty</span>
-    </div>
+  .ll .ll-bc-label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--ink-soft); }
+  .ll .ll-bc-new .ll-bc-label { color: var(--bc-mint); }
 
-    <div class="ll-bc__stat">
-     <svg viewBox="0 0 100 100" aria-hidden="true">
-      <g fill="none" stroke="#16202B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-       <path d="M66 18 Q70 16 71 20 L71 60"/>
-       <path d="M28 60 L74 60 L72 66 L30 66 Z"/>
-       <path d="M34 66 L30 90 M68 66 L72 90 M51 66 L51 88"/>
-      </g>
-      <g fill="none" stroke="#5A6470" stroke-width=".8">
-       <path d="M30 90 Q36 82 51 88 M30 90 L42 80 M30 90 L36 78"/>
-       <path d="M72 90 Q66 82 51 88 M72 90 L62 79"/>
-      </g>
-      <line x1="60" y1="24" x2="54" y2="34" stroke="#16202B" stroke-width="1"/>
-      <rect x="16" y="33" width="46" height="17" rx="2" fill="#F3F4F2" stroke="#16202B" stroke-width="1.5" transform="rotate(-6 39 41)"/>
-      <text x="39" y="45" text-anchor="middle" font-family="Georgia,serif" font-size="9" fill="#16202B" transform="rotate(-6 39 41)">Open role</text>
-     </svg>
-     <span class="ll-bc__num">13</span>
-     <span class="ll-bc__unit">recruiter-hours a week<em>after the role opens</em></span>
-    </div>
+  .ll-bc-stat { display: flex; align-items: center; gap: 14px; }
+  .ll-bc-stat svg { flex: none; width: 64px; height: 64px; }
+  .ll-bc-num { font-family: var(--serif); font-size: clamp(3.2rem, 12vw, 4.6rem); line-height: .9; letter-spacing: -0.02em; }
+  .ll-bc-unit { font-family: var(--mono); font-size: 12.5px; line-height: 1.5; }
+  .ll-bc-unit span { display: block; color: var(--ink-soft); }
+  .ll-bc-new .ll-bc-unit span { color: var(--bc-mint); }
 
-    <div class="ll-bc__line">
-     <p>Searching from zero</p>
-     <div class="ll-bc__track"><span class="ll-bc__fill"></span></div>
-     <div class="ll-bc__ends"><span>Role opens</span><span>Day 44</span></div>
-    </div>
-   </article>
+  .ll-bc-bench { display: block; width: 100%; height: auto; }
 
-   <article class="ll-bc__side ll-bc__side--new" aria-label="The bench way">
-    <p class="ll-bc__label">The bench way</p>
+  .ll-bc-line { margin-top: auto; }
+  .ll .ll-bc-line p { font-family: var(--serif); font-style: italic; font-size: 1rem; margin: 0 0 10px; }
+  .ll-bc-track { position: relative; height: 4px; border-radius: 2px; background: var(--rule); }
+  .ll-bc-new .ll-bc-track { background: var(--bc-track); }
+  .ll-bc-fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 2px; background: var(--ink); width: 100%; }
+  .ll-bc-new .ll-bc-fill { background: var(--bc-mint); width: 9%; }
+  .ll-bc-track::before, .ll-bc-track::after { content: ""; position: absolute; top: 50%; width: 10px; height: 10px; border-radius: 50%; transform: translateY(-50%); }
+  .ll-bc-track::before { left: -3px; background: var(--ink); }
+  .ll-bc-old .ll-bc-track::after { right: -3px; background: var(--ink); }
+  .ll-bc-new .ll-bc-track::before { background: var(--bc-mint); }
+  .ll-bc-ends { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; margin-top: 10px; color: var(--ink-soft); }
+  .ll-bc-new .ll-bc-ends { color: var(--bc-mint); }
 
-    <div class="ll-bc__stat">
-     <svg viewBox="0 0 100 100" aria-hidden="true">
-      <circle cx="50" cy="50" r="38" fill="none" stroke="#9FD1C3" stroke-width="2.5"/>
-      <g stroke="#9FD1C3" stroke-width="2" stroke-linecap="round">
-       <line x1="50" y1="17" x2="50" y2="23"/><line x1="83" y1="50" x2="77" y2="50"/><line x1="50" y1="83" x2="50" y2="77"/><line x1="17" y1="50" x2="23" y2="50"/>
-      </g>
-      <line x1="50" y1="50" x2="64" y2="42" stroke="#F3F4F2" stroke-width="2.5" stroke-linecap="round"/>
-      <line class="hand-calm" x1="50" y1="50" x2="50" y2="22" stroke="#F3F4F2" stroke-width="2" stroke-linecap="round"/>
-      <circle cx="50" cy="50" r="3.5" fill="#F3F4F2"/>
-     </svg>
-     <span class="ll-bc__num">13</span>
-     <span class="ll-bc__unit">same hours, spent<em>before the role exists</em></span>
-    </div>
+  .ll-bc .hand-fast { transform-origin: 50px 50px; animation: ll-bc-spin 1.6s linear infinite; }
+  .ll-bc .hand-calm { transform-origin: 50px 50px; animation: ll-bc-spin 60s linear infinite; }
+  @keyframes ll-bc-spin { to { transform: rotate(360deg); } }
+  .ll-bc.is-ready .ll-bc-old .ll-bc-fill { animation: ll-bc-old 4.4s cubic-bezier(.4,0,.6,1) both; }
+  .ll-bc.is-ready .ll-bc-new .ll-bc-fill { animation: ll-bc-new .6s ease-out both; }
+  @keyframes ll-bc-old { from { width: 0; } to { width: 100%; } }
+  @keyframes ll-bc-new { from { width: 0; } to { width: 9%; } }
+  @media (prefers-reduced-motion: reduce) {
+    .ll-bc .hand-fast, .ll-bc .hand-calm, .ll-bc.is-ready .ll-bc-fill { animation: none; }
+  }
 
-    <svg class="ll-bc__bench" viewBox="0 0 440 190" role="img" aria-label="Sourced, vetted, and interested candidates on your bench, next to an open role">
-     <g font-family="Georgia,serif">
-      <g>
-       <rect x="8" y="10" width="100" height="120" rx="6" fill="#F3F4F2"/>
-       <circle cx="58" cy="38" r="12" fill="#1F6B5B"/><path d="M38 66 Q58 46 78 66 Z" fill="#1F6B5B"/>
-       <line x1="26" y1="80" x2="90" y2="80" stroke="#C9CCC7" stroke-width="3" stroke-linecap="round"/>
-       <line x1="26" y1="90" x2="74" y2="90" stroke="#C9CCC7" stroke-width="3" stroke-linecap="round"/>
-       <rect x="20" y="102" width="76" height="20" rx="10" fill="#1F6B5B"/>
-       <text x="58" y="116" text-anchor="middle" font-size="12" fill="#F3F4F2">Sourced</text>
-      </g>
-      <g>
-       <rect x="120" y="10" width="100" height="120" rx="6" fill="#F3F4F2"/>
-       <circle cx="170" cy="38" r="12" fill="#1F6B5B"/><path d="M150 66 Q170 46 190 66 Z" fill="#1F6B5B"/>
-       <line x1="138" y1="80" x2="202" y2="80" stroke="#C9CCC7" stroke-width="3" stroke-linecap="round"/>
-       <line x1="138" y1="90" x2="186" y2="90" stroke="#C9CCC7" stroke-width="3" stroke-linecap="round"/>
-       <rect x="132" y="102" width="76" height="20" rx="10" fill="#1F6B5B"/>
-       <text x="170" y="116" text-anchor="middle" font-size="12" fill="#F3F4F2">Vetted</text>
-      </g>
-      <g>
-       <rect x="232" y="10" width="100" height="120" rx="6" fill="#F3F4F2"/>
-       <circle cx="282" cy="38" r="12" fill="#1F6B5B"/><path d="M262 66 Q282 46 302 66 Z" fill="#1F6B5B"/>
-       <line x1="250" y1="80" x2="314" y2="80" stroke="#C9CCC7" stroke-width="3" stroke-linecap="round"/>
-       <line x1="250" y1="90" x2="298" y2="90" stroke="#C9CCC7" stroke-width="3" stroke-linecap="round"/>
-       <rect x="242" y="102" width="80" height="20" rx="10" fill="#1F6B5B"/>
-       <text x="282" y="116" text-anchor="middle" font-size="12" fill="#F3F4F2">Interested</text>
-      </g>
-     </g>
-     <line x1="0" y1="142" x2="340" y2="142" stroke="#9FD1C3" stroke-width="4" stroke-linecap="round"/>
-     <line x1="18" y1="142" x2="18" y2="160" stroke="#9FD1C3" stroke-width="3" stroke-linecap="round"/>
-     <line x1="322" y1="142" x2="322" y2="160" stroke="#9FD1C3" stroke-width="3" stroke-linecap="round"/>
-     <text x="170" y="180" text-anchor="middle" font-family="Courier New,monospace" font-size="13" fill="#9FD1C3">your bench, in your ATS</text>
-     <path d="M342 70 L364 70" stroke="#9FD1C3" stroke-width="2" stroke-dasharray="3 4" stroke-linecap="round"/>
-     <path d="M362 64 L370 70 L362 76" fill="none" stroke="#9FD1C3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-     <rect x="378" y="4" width="56" height="140" rx="2" fill="none" stroke="#F3F4F2" stroke-width="2.5"/>
-     <rect x="382" y="8" width="48" height="132" fill="#1F6B5B" opacity=".35"/>
-     <path d="M382 8 L418 16 L418 134 L382 140 Z" fill="#F3F4F2"/>
-     <circle cx="412" cy="100" r="2.5" fill="#16202B"/>
-     <text x="399" y="66" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#16202B">Open</text>
-     <text x="399" y="80" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#16202B">role</text>
-    </svg>
+  .ll-masthead-mail[aria-current="page"] { text-decoration: underline; text-underline-offset: 3px; }
 
-    <div class="ll-bc__line">
-     <p>Start with names you already know</p>
-     <div class="ll-bc__track"><span class="ll-bc__fill"></span></div>
-     <div class="ll-bc__ends"><span>Role opens. Day 1.</span><span></span></div>
-    </div>
-   </article>
+  @media (min-width: 620px) {
+    .ll-bc-side { padding: 30px 28px 26px; gap: 30px; }
+    .ll-bc-stat { gap: 20px; }
+    .ll-bc-stat svg { width: 88px; height: 88px; }
+    .ll-bc-unit { font-size: 13px; }
+  }
+  @media (min-width: 860px) {
+    .ll-bc-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+    .ll-bc-old { gap: 40px; }
+  }
+</style>
+
+<div class="ll">
+  <div class="ll-wrap">
+
+    <header class="ll-masthead">
+      <div class="ll-logo-lockup">
+        <img class="ll-masthead-logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMjAwMCIgem9vbUFuZFBhbj0ibWFnbmlmeSIgdmlld0JveD0iMCAwIDE1MDAgMTQ5OS45OTk5MzMiIGhlaWdodD0iMjAwMCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ieE1pZFlNaWQgbWVldCIgdmVyc2lvbj0iMS4wIj48ZGVmcz48Y2xpcFBhdGggaWQ9Ijk0NGEwM2Y3YmIiPjxwYXRoIGQ9Ik0gMjgwLjY3NTc4MSAxNjggTCAxMjY5LjE3NTc4MSAxNjggTCAxMjY5LjE3NTc4MSAxMTU2LjUgTCAyODAuNjc1NzgxIDExNTYuNSBaIE0gMjgwLjY3NTc4MSAxNjggIiBjbGlwLXJ1bGU9Im5vbnplcm8iLz48L2NsaXBQYXRoPjwvZGVmcz48ZyBjbGlwLXBhdGg9InVybCgjOTQ0YTAzZjdiYikiPjxwYXRoIGZpbGw9IiMwMDE4NDMiIGQ9Ik0gNzc1LjA1MDc4MSAxNjggQyA1MDEuOTEwMTU2IDE2OCAyODAuNjc1NzgxIDM4OS4yMzA0NjkgMjgwLjY3NTc4MSA2NjIuMzcxMDk0IEMgMjgwLjY3NTc4MSA5MzUuNTE1NjI1IDUwMS45MTAxNTYgMTE1Ni43NDYwOTQgNzc1LjA1MDc4MSAxMTU2Ljc0NjA5NCBDIDEwNDguMTkxNDA2IDExNTYuNzQ2MDk0IDEyNjkuNDIxODc1IDkzNS41MTU2MjUgMTI2OS40MjE4NzUgNjYyLjM3MTA5NCBDIDEyNjkuNDIxODc1IDM4OS4yMzA0NjkgMTA0OC4xOTE0MDYgMTY4IDc3NS4wNTA3ODEgMTY4IFogTSA3NzUuMDUwNzgxIDE2OCAiIGZpbGwtb3BhY2l0eT0iMSIgZmlsbC1ydWxlPSJub256ZXJvIi8+PC9nPjxwYXRoIGZpbGw9IiNmZmZmZmYiIGQ9Ik0gNjc0LjA0Mjk2OSAxMjc5LjY4MzU5NCBDIDYzNy4wOTM3NSAxMjg0IDU5MC43MDcwMzEgMTI3Ni40NDkyMTkgNTU2LjMyMDMxMiAxMjYyLjQyMTg3NSBDIDUxOC4wMjM0MzggMTI0Ni43ODEyNSA0ODUuNjYwMTU2IDEyMTYuNDQxNDA2IDQ2OS44ODI4MTIgMTE3Ny44NzEwOTQgQyA0NDEuMjkyOTY5IDExMDcuODg2NzE5IDQ2My45NDkyMTkgMTAwOC45MDYyNSA0OTIuNTM1MTU2IDk0Mi4xNTIzNDQgQyA1NDQuMzE2NDA2IDgyMS4zMjgxMjUgNjQ5LjkwNjI1IDc0My41MTk1MzEgNzc1LjcyMjY1NiA3MTMuMDQyOTY5IEMgODI4Ljk4ODI4MSA3MDAuMjM0Mzc1IDg4My4wNjI1IDY5NC44Mzk4NDQgOTM0LjMwNDY4OCA2NzMuOTM3NSBDIDEwNDEuMjQyMTg4IDYzMC4yNDYwOTQgMTEwNy40NTMxMjUgNTI5LjkxNzk2OSAxMTUwLjYwNTQ2OSA0MjcuMTYwMTU2IEMgMTE2Mi40NzI2NTYgNDAwLjU5Mzc1IDExNzAuODMyMDMxIDM3MC41MjM0MzggMTE4Ni4zMzk4NDQgMzQ1LjcxMDkzOCBDIDExOTIuMDAzOTA2IDMzNi42NzU3ODEgMTIwMC4wOTM3NSAzMjcuMTAxNTYyIDEyMTEuMjg5MDYyIDMyNS4wNzgxMjUgQyAxMjE3LjQ5MjE4OCAzMjQgMTIyMy41NTg1OTQgMzI1Ljc1MzkwNiAxMjI4LjQxNDA2MiAzMjkuNjY0MDYyIEMgMTI1NS4zODI4MTIgMzUxLjkxNDA2MiAxMjYxLjE4MzU5NCA0MzIuMTQ4NDM4IDEyNjMuNzQ2MDk0IDQ2Ni40MDIzNDQgQyAxMjgwLjA2MjUgNjg2Ljc0NjA5NCAxMTk2LjU4OTg0NCA5MjUuODM1OTM4IDEwNTIuNDMzNTk0IDEwOTIuMTA5Mzc1IEMgOTU0LjgwNDY4OCAxMjA0Ljk3NjU2MiA4MjIuMjQ2MDk0IDEyNjkuMDMxMjUgNjc0LjA0Mjk2OSAxMjc5LjY4MzU5NCBaIE0gNjc0LjA0Mjk2OSAxMjc5LjY4MzU5NCAiIGZpbGwtb3BhY2l0eT0iMSIgZmlsbC1ydWxlPSJub256ZXJvIi8+PHBhdGggZmlsbD0iIzAwOWE5ZSIgZD0iTSA2OTguMDQyOTY5IDEzMjcuNjgzNTk0IEMgNjYxLjA5Mzc1IDEzMzIgNjE0LjcwNzAzMSAxMzI0LjQ0OTIxOSA1ODAuMzIwMzEyIDEzMTAuNDIxODc1IEMgNTQyLjAyMzQzOCAxMjk0Ljc4MTI1IDUwOS42NjAxNTYgMTI2NC40NDE0MDYgNDkzLjg4MjgxMiAxMjI1Ljg3MTA5NCBDIDQ2NS4yOTI5NjkgMTE1NS44ODY3MTkgNDg3Ljk0OTIxOSAxMDU2LjkwNjI1IDUxNi41MzUxNTYgOTkwLjE1MjM0NCBDIDU2OC4zMTY0MDYgODY5LjMyODEyNSA2NzMuOTA2MjUgNzkxLjUxOTUzMSA3OTkuNzIyNjU2IDc2MS4wNDI5NjkgQyA4NTIuOTg4MjgxIDc0OC4yMzQzNzUgOTA3LjA2MjUgNzQyLjgzOTg0NCA5NTguMzA0Njg4IDcyMS45Mzc1IEMgMTA2NS4yNDIxODggNjc4LjI0NjA5NCAxMTMxLjQ1MzEyNSA1NzcuOTE3OTY5IDExNzQuNjA1NDY5IDQ3NS4xNjAxNTYgQyAxMTg2LjQ3MjY1NiA0NDguNTkzNzUgMTE5NC44MzIwMzEgNDE4LjUyMzQzOCAxMjEwLjMzOTg0NCAzOTMuNzEwOTM4IEMgMTIxNi4wMDM5MDYgMzg0LjY3NTc4MSAxMjI0LjA5Mzc1IDM3NS4xMDE1NjIgMTIzNS4yODkwNjIgMzczLjA3ODEyNSBDIDEyNDEuNDkyMTg4IDM3MiAxMjQ3LjU1ODU5NCAzNzMuNzUzOTA2IDEyNTIuNDE0MDYyIDM3Ny42NjQwNjIgQyAxMjc5LjM4MjgxMiAzOTkuOTE0MDYyIDEyODUuMTgzNTk0IDQ4MC4xNDg0MzggMTI4Ny43NDYwOTQgNTE0LjQwMjM0NCBDIDEzMDQuMDYyNSA3MzQuNzQ2MDk0IDEyMjAuNTg5ODQ0IDk3My44MzU5MzggMTA3Ni40MzM1OTQgMTE0MC4xMDkzNzUgQyA5NzguODA0Njg4IDEyNTIuOTc2NTYyIDg0Ni4yNDYwOTQgMTMxNy4wMzEyNSA2OTguMDQyOTY5IDEzMjcuNjgzNTk0IFogTSA2OTguMDQyOTY5IDEzMjcuNjgzNTk0ICIgZmlsbC1vcGFjaXR5PSIxIiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48L3N2Zz4=" alt="Long Lead">
+        <span class="ll-logo-lockup-tagline">Meet talent before you need them</span>
+      </div>
+
+      <div class="ll-masthead-right">
+        <span class="ll-masthead-note">Talent pipelining</span>
+        <span class="ll-masthead-links">
+          <a class="ll-masthead-mail" href="/13hours" aria-current="page">See the difference</a>
+          <span class="ll-masthead-sep" aria-hidden="true">·</span>
+          <a class="ll-masthead-mail" href="/about">About</a>
+          <span class="ll-masthead-sep" aria-hidden="true">·</span>
+          <a class="ll-masthead-mail" href="mailto:hello@longlead.co">hello@longlead.co</a>
+        </span>
+      </div>
+    </header>
+
+    <section class="ll-section ll-bc" aria-labelledby="ll-bc-title">
+      <p class="ll-eyebrow">See it</p>
+      <h2 id="ll-bc-title">Beat the clock.</h2>
+      <p class="ll-lede">The same 13 hours a week, spent before the role exists instead of after.</p>
+
+      <div class="ll-bc-grid">
+        <article class="ll-bc-side ll-bc-old" aria-label="The usual way">
+          <p class="ll-bc-label">The usual way</p>
+
+          <div class="ll-bc-stat">
+            <svg viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+              <circle cx="50" cy="50" r="38" fill="none" stroke="currentColor" stroke-width="2.5" stroke-dasharray="52 7 30 9 70 5 48 18" stroke-linecap="round"/>
+              <g stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <line x1="50" y1="17" x2="50" y2="23"/><line x1="83" y1="50" x2="77" y2="50"/><line x1="50" y1="83" x2="50" y2="77"/><line x1="17" y1="50" x2="23" y2="50"/>
+              </g>
+              <path d="M62 30 L57 41 L64 47" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+              <path d="M90 22 l6 -3 l-2 7 z M8 70 l-5 4 l7 1 z M78 92 l5 4 l1 -6 z" fill="currentColor"/>
+              <line x1="50" y1="50" x2="66" y2="58" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+              <line class="hand-fast" x1="50" y1="50" x2="50" y2="22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="50" cy="50" r="3.5" fill="currentColor"/>
+            </svg>
+            <span class="ll-bc-num">44</span>
+            <span class="ll-bc-unit">days the seat<br>sits empty</span>
+          </div>
+
+          <div class="ll-bc-stat">
+            <svg viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+              <g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M66 18 Q70 16 71 20 L71 60"/>
+                <path d="M28 60 L74 60 L72 66 L30 66 Z"/>
+                <path d="M34 66 L30 90 M68 66 L72 90 M51 66 L51 88"/>
+              </g>
+              <g fill="none" stroke="currentColor" stroke-width=".8" opacity=".5">
+                <path d="M30 90 Q36 82 51 88 M30 90 L42 80 M30 90 L36 78"/>
+                <path d="M72 90 Q66 82 51 88 M72 90 L62 79"/>
+              </g>
+              <line x1="60" y1="24" x2="54" y2="34" stroke="currentColor" stroke-width="1"/>
+              <rect x="16" y="33" width="46" height="17" rx="2" style="fill: var(--paper)" stroke="currentColor" stroke-width="1.5" transform="rotate(-6 39 41)"/>
+              <text x="39" y="45" text-anchor="middle" font-family="Georgia,serif" font-size="9" fill="currentColor" transform="rotate(-6 39 41)">Open role</text>
+            </svg>
+            <span class="ll-bc-num">13</span>
+            <span class="ll-bc-unit">recruiter-hours a week<span>after the role opens</span></span>
+          </div>
+
+          <div class="ll-bc-line">
+            <p>Searching from zero</p>
+            <div class="ll-bc-track"><span class="ll-bc-fill"></span></div>
+            <div class="ll-bc-ends"><span>Role opens</span><span>Day 44</span></div>
+          </div>
+        </article>
+
+        <article class="ll-bc-side ll-bc-new" aria-label="The bench way">
+          <p class="ll-bc-label">The bench way</p>
+
+          <div class="ll-bc-stat">
+            <svg viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#9FD1C3" stroke-width="2.5"/>
+              <g stroke="#9FD1C3" stroke-width="2" stroke-linecap="round">
+                <line x1="50" y1="17" x2="50" y2="23"/><line x1="83" y1="50" x2="77" y2="50"/><line x1="50" y1="83" x2="50" y2="77"/><line x1="17" y1="50" x2="23" y2="50"/>
+              </g>
+              <line x1="50" y1="50" x2="64" y2="42" stroke="#F3F4F2" stroke-width="2.5" stroke-linecap="round"/>
+              <line class="hand-calm" x1="50" y1="50" x2="50" y2="22" stroke="#F3F4F2" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="50" cy="50" r="3.5" fill="#F3F4F2"/>
+            </svg>
+            <span class="ll-bc-num">13</span>
+            <span class="ll-bc-unit">same hours, spent<span>before the role exists</span></span>
+          </div>
+
+          <svg class="ll-bc-bench" viewBox="0 0 440 190" role="img" aria-label="Sourced, vetted, and interested candidates on your bench, next to an open role">
+            <g font-family="Georgia,serif">
+              <rect x="8" y="10" width="100" height="120" rx="6" fill="#F3F4F2"/>
+              <circle cx="58" cy="38" r="12" fill="#1F6B5B"/><path d="M38 66 Q58 46 78 66 Z" fill="#1F6B5B"/>
+              <line x1="26" y1="80" x2="90" y2="80" stroke="#C9CCC7" stroke-width="3" stroke-linecap="round"/>
+              <line x1="26" y1="90" x2="74" y2="90" stroke="#C9CCC7" stroke-width="3" stroke-linecap="round"/>
+              <rect x="20" y="102" width="76" height="20" rx="10" fill="#1F6B5B"/>
+              <text x="58" y="116" text-anchor="middle" font-size="12" fill="#F3F4F2">Sourced</text>
+
+              <rect x="120" y="10" width="100" height="120" rx="6" fill="#F3F4F2"/>
+              <circle cx="170" cy="38" r="12" fill="#1F6B5B"/><path d="M150 66 Q170 46 190 66 Z" fill="#1F6B5B"/>
+              <line x1="138" y1="80" x2="202" y2="80" stroke="#C9CCC7" stroke-width="3" stroke-linecap="round"/>
+              <line x1="138" y1="90" x2="186" y2="90" stroke="#C9CCC7" stroke-width="3" stroke-linecap="round"/>
+              <rect x="132" y="102" width="76" height="20" rx="10" fill="#1F6B5B"/>
+              <text x="170" y="116" text-anchor="middle" font-size="12" fill="#F3F4F2">Vetted</text>
+
+              <rect x="232" y="10" width="100" height="120" rx="6" fill="#F3F4F2"/>
+              <circle cx="282" cy="38" r="12" fill="#1F6B5B"/><path d="M262 66 Q282 46 302 66 Z" fill="#1F6B5B"/>
+              <line x1="250" y1="80" x2="314" y2="80" stroke="#C9CCC7" stroke-width="3" stroke-linecap="round"/>
+              <line x1="250" y1="90" x2="298" y2="90" stroke="#C9CCC7" stroke-width="3" stroke-linecap="round"/>
+              <rect x="242" y="102" width="80" height="20" rx="10" fill="#1F6B5B"/>
+              <text x="282" y="116" text-anchor="middle" font-size="12" fill="#F3F4F2">Interested</text>
+            </g>
+            <line x1="0" y1="142" x2="340" y2="142" stroke="#9FD1C3" stroke-width="4" stroke-linecap="round"/>
+            <line x1="18" y1="142" x2="18" y2="160" stroke="#9FD1C3" stroke-width="3" stroke-linecap="round"/>
+            <line x1="322" y1="142" x2="322" y2="160" stroke="#9FD1C3" stroke-width="3" stroke-linecap="round"/>
+            <text x="170" y="182" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="13" fill="#9FD1C3">your bench, in your ATS</text>
+            <path d="M342 70 L364 70" stroke="#9FD1C3" stroke-width="2" stroke-dasharray="3 4" stroke-linecap="round"/>
+            <path d="M362 64 L370 70 L362 76" fill="none" stroke="#9FD1C3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="378" y="4" width="56" height="140" rx="2" fill="none" stroke="#F3F4F2" stroke-width="2.5"/>
+            <rect x="382" y="8" width="48" height="132" fill="#1F6B5B" opacity=".35"/>
+            <path d="M382 8 L418 16 L418 134 L382 140 Z" fill="#F3F4F2"/>
+            <circle cx="412" cy="100" r="2.5" fill="#16202B"/>
+            <text x="399" y="66" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#16202B">Open</text>
+            <text x="399" y="80" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#16202B">role</text>
+          </svg>
+
+          <div class="ll-bc-line">
+            <p>Start with names you already know</p>
+            <div class="ll-bc-track"><span class="ll-bc-fill"></span></div>
+            <div class="ll-bc-ends"><span>Role opens. Day 1.</span><span></span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="ll-close">
+      <h2>Let’s have a virtual cup of coffee.</h2>
+      <p class="ll-measure" style="color: var(--ink-soft);">Tell us the role, and we’ll tell you who could be on your bench.</p>
+
+      <a class="ll-cta" href="https://calendly.com/longlead/15min" target="_blank" rel="noopener">Grab 15-mins</a>
+    </section>
+
+    <section>
+      <div class="ll-colophon">
+        <span style="display:flex;align-items:center;gap:9px;">
+          <svg class="ll-logo-mini" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+            <g fill="currentColor">
+              <circle cx="8" cy="32" r="4"/><circle cx="21" cy="32" r="4"/><circle cx="34" cy="32" r="4"/>
+              <rect x="45" y="24" width="16" height="16" rx="2"/>
+            </g>
+          </svg>
+          Long Lead
+        </span>
+        <a class="ll-colophon-mail" href="mailto:hello@longlead.co">hello@longlead.co</a>
+      </div>
+    </section>
+
   </div>
-
-  <p class="ll-bc__foot">Meet talent before you need them™</p>
- </div>
-</section>
+</div>
 
 <script>
-(function(){
-  var s=document.querySelector('.ll-bc');if(!s)return;
-  if(!('IntersectionObserver' in window)){s.classList.add('is-ready');return;}
-  var io=new IntersectionObserver(function(e){if(e[0].isIntersecting){s.classList.add('is-ready');io.disconnect();}},{threshold:.35});
-  io.observe(s);
-})();
+  (function () {
+    var s = document.querySelector(".ll-bc"); if (!s) return;
+    if (!("IntersectionObserver" in window)) { s.classList.add("is-ready"); return; }
+    var io = new IntersectionObserver(function (e) {
+      if (e[0].isIntersecting) { s.classList.add("is-ready"); io.disconnect(); }
+    }, { threshold: 0.35 });
+    io.observe(s);
+  })();
 </script>
-<!-- ===== COPY TO HERE ===== -->
 
 </body>
 </html>
