@@ -136,6 +136,10 @@
   .sp-row{display:grid;grid-template-columns:28px minmax(0,1fr) 180px 48px 170px;gap:14px;align-items:center;padding:12px 0;border-bottom:1px solid var(--rule);font-size:15px}
   .sp-row.h{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);border-bottom:1px solid var(--ink)}
   .sp-row .n{font-family:var(--mono);font-size:12px;color:var(--ink-soft)}
+  .sp-row input[type=checkbox]{width:16px;height:16px;accent-color:var(--accent);margin:0}
+  .sp-row.off > span:not(.n), .sp-row.off .p{opacity:.4}
+  .sp-row.off input[type=range], .sp-row.off select{opacity:.4;pointer-events:none}
+  .sp-note{font-size:14px;color:var(--ink-soft);margin-top:-8px}
   .sp-row .p{font-family:var(--mono);font-size:14px;text-align:right}
   .sp-row input[type=range]{width:100%;accent-color:var(--accent)}
   .sp-row select{font:14px var(--sans);padding:6px 8px;border:1px solid var(--rule);border-radius:6px;background:var(--paper);color:var(--ink)}
@@ -183,11 +187,13 @@
           <div class="sp-tog">
             <button id="b1" class="on" type="button">Advisory / embedded</button>
             <button id="b2" type="button">Task-based</button>
+            <button id="b3" type="button">Ad hoc</button>
           </div>
           <label class="sp-fee">Engagement fee $ <input id="fee" type="number" value="100000" step="1000" min="0"></label>
         </div>
         <div class="sp-cards" id="cards"></div>
         <div class="sp-warn" id="warn"></div>
+        <p class="sp-note" id="note" hidden>Check the tasks this client needs, then set each share and owner. Unchecked tasks count as 0%.</p>
         <div>
           <div class="sp-row h"><span>#</span><span>Step</span><span>Share</span><span></span><span>Owner</span></div>
           <div id="rows"></div>
@@ -246,12 +252,30 @@
       ["Submission and bench delivery", 10, LL],
       ["Account management and renewal", 10, TI],
       ["House: overhead, BD, discretionary", 10, "House"]
+    ],
+    3: [
+      ["Lead generation and intro", 5, TI, false],
+      ["Discovery and needs assessment", 5, TI, false],
+      ["Proposal, pricing and close", 5, TI, false],
+      ["Kickoff and intake", 5, LL, false],
+      ["Calibration", 5, LL, false],
+      ["Hiring strategy and process design", 5, LL, false],
+      ["Hiring manager and interviewer coaching", 5, LL, false],
+      ["Embedded support", 5, LL, false],
+      ["Sourcing", 5, LL, false],
+      ["Questionnaire vetting", 5, LL, false],
+      ["Video screening", 5, LL, false],
+      ["Submission and bench delivery", 5, LL, false],
+      ["Reporting and recaps", 5, LL, false],
+      ["Account management, renewal and expansion", 5, TI, false],
+      ["House: overhead, BD, discretionary", 10, "House", true]
     ]
   };
 
   var model = 1;
   function clone(m) { return DEF[m].map(function (r) { return r.slice(); }); }
-  var state = { 1: clone(1), 2: clone(2) };
+  var state = { 1: clone(1), 2: clone(2), 3: clone(3) };
+  function isOn(r) { return r[3] !== false; }
   function $(id) { return document.getElementById(id); }
   function fmt(n) { return "$" + Math.round(n).toLocaleString("en-US"); }
   function pf(n) { return (Math.round(n * 10) / 10) + "%"; }
@@ -260,6 +284,7 @@
     var fee = Math.max(0, +$("fee").value || 0), give = $("give").checked, t = {}, sum = 0, joint = 0;
     PARTIES.forEach(function (o) { t[o] = 0; });
     state[model].forEach(function (r) {
+      if (!isOn(r)) return;
       sum += r[1];
       var o = r[2];
       if (give && o === "House") o = TI;
@@ -283,7 +308,10 @@
 
   function build() {
     $("rows").innerHTML = state[model].map(function (r, i) {
-      return '<div class="sp-row"><span class="n">' + String(i + 1).padStart(2, "0") + "</span><span>" + r[0] +
+      var lead = model === 3
+        ? '<span class="n"><input type="checkbox" data-c="' + i + '"' + (isOn(r) ? " checked" : "") + ' aria-label="Include ' + r[0] + '"></span>'
+        : '<span class="n">' + String(i + 1).padStart(2, "0") + "</span>";
+      return '<div class="sp-row' + (isOn(r) ? "" : " off") + '">' + lead + "<span>" + r[0] +
         '</span><input type="range" min="0" max="40" step="5" value="' + r[1] + '" data-i="' + i + '" aria-label="' + r[0] + ' share">' +
         '<span class="p" id="p' + i + '">' + r[1] + '%</span><select data-o="' + i + '" aria-label="' + r[0] + ' owner">' +
         OWN.map(function (o) { return "<option" + (o === r[2] ? " selected" : "") + ">" + o + "</option>"; }).join("") +
@@ -303,6 +331,14 @@
         calc();
       });
     });
+    document.querySelectorAll("#rows input[type=checkbox]").forEach(function (el) {
+      el.addEventListener("change", function (e) {
+        var i = +e.target.dataset.c;
+        state[model][i][3] = e.target.checked;
+        e.target.closest(".sp-row").classList.toggle("off", !e.target.checked);
+        calc();
+      });
+    });
     calc();
   }
 
@@ -310,11 +346,14 @@
     model = m;
     $("b1").classList.toggle("on", m === 1);
     $("b2").classList.toggle("on", m === 2);
+    $("b3").classList.toggle("on", m === 3);
+    $("note").hidden = m !== 3;
     build();
   }
 
   $("b1").addEventListener("click", function () { pick(1); });
   $("b2").addEventListener("click", function () { pick(2); });
+  $("b3").addEventListener("click", function () { pick(3); });
   $("fee").addEventListener("input", calc);
   $("give").addEventListener("change", calc);
   $("reset").addEventListener("click", function () {
