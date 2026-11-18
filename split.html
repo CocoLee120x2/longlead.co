@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Long Lead: partner split</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'&gt;&lt;g fill='%2316202B'&gt;&lt;circle cx='8' cy='32' r='4'/&gt;&lt;circle cx='21' cy='32' r='4'/&gt;&lt;circle cx='34' cy='32' r='4'/&gt;&lt;/g&gt;&lt;rect x='45' y='24' width='16' height='16' rx='2' fill='%231F6B5B'/&gt;&lt;/svg&gt;">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+
+  :root {
+    --paper:      #F3F4F2;
+    --paper-2:    #EAECE8;
+    --ink:        #16202B;
+    --ink-soft:   #4E5C66;
+    --rule:       #D5D9D4;
+    --accent:     #1F6B5B;
+    --accent-dim: #E2EDE8;
+    --late:       #A8836A;
+    --late-dim:   #EFE5DC;
+    --serif: "Hoefler Text", "Iowan Old Style", ui-serif, Palatino, "Palatino Linotype", Georgia, serif;
+    --sans:  -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    --mono:  ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:      #10171E;
+      --paper-2:    #17212A;
+      --ink:        #E8EAE6;
+      --ink-soft:   #94A3AC;
+      --rule:       #26333D;
+      --accent:     #47B99A;
+      --accent-dim: #16302B;
+      --late:       #C09A80;
+      --late-dim:   #2C241E;
+    }
+  }
+
+  html, body { background: var(--paper); color: var(--ink); }
+
+  .ll {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+  }
+  .ll-wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px 52px; }
+  .ll-eyebrow {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.13em;
+    text-transform: uppercase; color: var(--accent); margin: 0;
+  }
+  .ll h2 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(1.45rem, 5.2vw, 2.45rem); line-height: 1.2;
+    letter-spacing: -0.012em; text-wrap: balance; margin: 0;
+  }
+  .ll p { margin: 0; text-wrap: pretty; }
+
+  .ll-masthead {
+    display: flex; justify-content: space-between; align-items: baseline;
+    gap: 20px; flex-wrap: wrap; padding: 22px 0 14px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .ll-logo-lockup {
+    text-decoration: none; color: inherit; display: flex;
+    flex-direction: column; align-items: center; gap: 4px;
+  }
+  .ll-masthead-logo { height: 40px; width: auto; display: block; }
+  .ll-logo-lockup-tagline {
+    font-family: var(--sans); font-weight: 600; font-size: 10px;
+    letter-spacing: 0.03em; color: var(--ink); white-space: nowrap;
+  }
+  .ll-logo-mini { height: 11px; width: auto; color: var(--ink-soft); flex: none; }
+  .ll-masthead-note {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--ink-soft);
+  }
+  .ll-masthead-right {
+    display: flex; flex-direction: column; align-items: flex-end;
+    gap: 4px; text-align: right;
+  }
+  .ll-masthead-mail {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em;
+    color: var(--accent); text-decoration: none;
+  }
+  .ll-masthead-mail:hover { text-decoration: underline; }
+  .ll-masthead-links { display: flex; align-items: baseline; gap: 8px; }
+  .ll-masthead-sep { font-size: 11px; color: var(--ink-soft); opacity: 0.5; }
+
+  .ll-colophon {
+    margin-top: 36px; padding-top: 20px; border-top: 1px solid var(--rule);
+    font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.09em;
+    text-transform: uppercase; color: var(--ink-soft);
+    display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  }
+  .ll-colophon-mail {
+    font-size: 11px; letter-spacing: 0.04em; text-transform: none;
+    color: var(--accent); text-decoration: none;
+  }
+  .ll-colophon-mail:hover { text-decoration: underline; }
+
+  @media (min-width: 620px) {
+    .ll { font-size: 17px; line-height: 1.65; }
+    .ll-wrap { padding: 0 28px 72px; }
+    .ll-eyebrow { font-size: 12px; }
+    .ll-masthead { padding: 30px 0 16px; }
+    .ll-masthead-note { font-size: 11.5px; }
+    .ll-masthead-logo { height: 48px; }
+    .ll h2 { line-height: 1.18; }
+    .ll-colophon { margin-top: 44px; }
+  }
+
+  .sp{padding:40px 0 48px;display:flex;flex-direction:column;gap:24px}
+  .sp-head{display:flex;flex-direction:column;gap:10px;max-width:40em}
+  .sp-head p.sub{color:var(--ink-soft)}
+  .sp-bar{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between}
+  .sp-tog{display:flex;border:1px solid var(--rule);border-radius:999px;padding:3px}
+  .sp-tog button{font:500 14px var(--sans);background:none;border:0;color:var(--ink-soft);padding:8px 16px;border-radius:999px;cursor:pointer}
+  .sp-tog button.on{background:var(--accent);color:var(--paper)}
+  .sp-fee{display:flex;gap:10px;align-items:center;font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft)}
+  .sp-fee input{font:16px var(--mono);width:140px;padding:8px 10px;border:1px solid var(--rule);border-radius:6px;background:var(--paper);color:var(--ink)}
+  .sp-cards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+  .sp-card{background:var(--paper-2);border:1px solid var(--rule);border-radius:8px;padding:16px;min-height:120px;display:flex;flex-direction:column}
+  .sp-card.joint{background:var(--accent-dim);border-color:var(--accent)}
+  .sp-card .l{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
+  .sp-card.joint .l{color:var(--accent)}
+  .sp-card .v{font-family:var(--serif);font-size:2rem;line-height:1.1;margin-top:6px}
+  .sp-card .d{font-family:var(--mono);font-size:13px;color:var(--accent);margin-top:2px}
+  .sp-warn{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+  .sp-row{display:grid;grid-template-columns:28px minmax(0,1fr) 180px 48px 170px;gap:14px;align-items:center;padding:12px 0;border-bottom:1px solid var(--rule);font-size:15px}
+  .sp-row.h{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);border-bottom:1px solid var(--ink)}
+  .sp-row .n{font-family:var(--mono);font-size:12px;color:var(--ink-soft)}
+  .sp-row .p{font-family:var(--mono);font-size:14px;text-align:right}
+  .sp-row input[type=range]{width:100%;accent-color:var(--accent)}
+  .sp-row select{font:14px var(--sans);padding:6px 8px;border:1px solid var(--rule);border-radius:6px;background:var(--paper);color:var(--ink)}
+  .sp-foot{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;font-size:14px;color:var(--ink-soft)}
+  .sp-foot button{font:12px var(--mono);letter-spacing:.06em;text-transform:uppercase;background:none;border:1px solid var(--rule);color:var(--ink-soft);padding:8px 14px;border-radius:6px;cursor:pointer}
+  @media(max-width:700px){
+    .sp-cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .sp-row{grid-template-columns:22px minmax(0,1fr) 44px}
+    .sp-row input[type=range]{grid-column:2/4}
+    .sp-row select{grid-column:2/4}
+    .sp-row.h span:nth-child(n+3){display:none}
+  }
+</style>
+</head>
+<body>
+<div class="ll">
+  <div class="ll-wrap">
+
+    <header class="ll-masthead">
+      <a class="ll-logo-lockup" href="/" aria-label="Long Lead home">
+        <img class="ll-masthead-logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMjAwMCIgem9vbUFuZFBhbj0ibWFnbmlmeSIgdmlld0JveD0iMCAwIDE1MDAgMTQ5OS45OTk5MzMiIGhlaWdodD0iMjAwMCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ieE1pZFlNaWQgbWVldCIgdmVyc2lvbj0iMS4wIj48ZGVmcz48Y2xpcFBhdGggaWQ9Ijk0NGEwM2Y3YmIiPjxwYXRoIGQ9Ik0gMjgwLjY3NTc4MSAxNjggTCAxMjY5LjE3NTc4MSAxNjggTCAxMjY5LjE3NTc4MSAxMTU2LjUgTCAyODAuNjc1NzgxIDExNTYuNSBaIE0gMjgwLjY3NTc4MSAxNjggIiBjbGlwLXJ1bGU9Im5vbnplcm8iLz48L2NsaXBQYXRoPjwvZGVmcz48ZyBjbGlwLXBhdGg9InVybCgjOTQ0YTAzZjdiYikiPjxwYXRoIGZpbGw9IiMwMDE4NDMiIGQ9Ik0gNzc1LjA1MDc4MSAxNjggQyA1MDEuOTEwMTU2IDE2OCAyODAuNjc1NzgxIDM4OS4yMzA0NjkgMjgwLjY3NTc4MSA2NjIuMzcxMDk0IEMgMjgwLjY3NTc4MSA5MzUuNTE1NjI1IDUwMS45MTAxNTYgMTE1Ni43NDYwOTQgNzc1LjA1MDc4MSAxMTU2Ljc0NjA5NCBDIDEwNDguMTkxNDA2IDExNTYuNzQ2MDk0IDEyNjkuNDIxODc1IDkzNS41MTU2MjUgMTI2OS40MjE4NzUgNjYyLjM3MTA5NCBDIDEyNjkuNDIxODc1IDM4OS4yMzA0NjkgMTA0OC4xOTE0MDYgMTY4IDc3NS4wNTA3ODEgMTY4IFogTSA3NzUuMDUwNzgxIDE2OCAiIGZpbGwtb3BhY2l0eT0iMSIgZmlsbC1ydWxlPSJub256ZXJvIi8+PC9nPjxwYXRoIGZpbGw9IiNmZmZmZmYiIGQ9Ik0gNjc0LjA0Mjk2OSAxMjc5LjY4MzU5NCBDIDYzNy4wOTM3NSAxMjg0IDU5MC43MDcwMzEgMTI3Ni40NDkyMTkgNTU2LjMyMDMxMiAxMjYyLjQyMTg3NSBDIDUxOC4wMjM0MzggMTI0Ni43ODEyNSA0ODUuNjYwMTU2IDEyMTYuNDQxNDA2IDQ2OS44ODI4MTIgMTE3Ny44NzEwOTQgQyA0NDEuMjkyOTY5IDExMDcuODg2NzE5IDQ2My45NDkyMTkgMTAwOC45MDYyNSA0OTIuNTM1MTU2IDk0Mi4xNTIzNDQgQyA1NDQuMzE2NDA2IDgyMS4zMjgxMjUgNjQ5LjkwNjI1IDc0My41MTk1MzEgNzc1LjcyMjY1NiA3MTMuMDQyOTY5IEMgODI4Ljk4ODI4MSA3MDAuMjM0Mzc1IDg4My4wNjI1IDY5NC44Mzk4NDQgOTM0LjMwNDY4OCA2NzMuOTM3NSBDIDEwNDEuMjQyMTg4IDYzMC4yNDYwOTQgMTEwNy40NTMxMjUgNTI5LjkxNzk2OSAxMTUwLjYwNTQ2OSA0MjcuMTYwMTU2IEMgMTE2Mi40NzI2NTYgNDAwLjU5Mzc1IDExNzAuODMyMDMxIDM3MC41MjM0MzggMTE4Ni4zMzk4NDQgMzQ1LjcxMDkzOCBDIDExOTIuMDAzOTA2IDMzNi42NzU3ODEgMTIwMC4wOTM3NSAzMjcuMTAxNTYyIDEyMTEuMjg5MDYyIDMyNS4wNzgxMjUgQyAxMjE3LjQ5MjE4OCAzMjQgMTIyMy41NTg1OTQgMzI1Ljc1MzkwNiAxMjI4LjQxNDA2MiAzMjkuNjY0MDYyIEMgMTI1NS4zODI4MTIgMzUxLjkxNDA2MiAxMjYxLjE4MzU5NCA0MzIuMTQ4NDM4IDEyNjMuNzQ2MDk0IDQ2Ni40MDIzNDQgQyAxMjgwLjA2MjUgNjg2Ljc0NjA5NCAxMTk2LjU4OTg0NCA5MjUuODM1OTM4IDEwNTIuNDMzNTk0IDEwOTIuMTA5Mzc1IEMgOTU0LjgwNDY4OCAxMjA0Ljk3NjU2MiA4MjIuMjQ2MDk0IDEyNjkuMDMxMjUgNjc0LjA0Mjk2OSAxMjc5LjY4MzU5NCBaIE0gNjc0LjA0Mjk2OSAxMjc5LjY4MzU5NCAiIGZpbGwtb3BhY2l0eT0iMSIgZmlsbC1ydWxlPSJub256ZXJvIi8+PHBhdGggZmlsbD0iIzAwOWE5ZSIgZD0iTSA2OTguMDQyOTY5IDEzMjcuNjgzNTk0IEMgNjYxLjA5Mzc1IDEzMzIgNjE0LjcwNzAzMSAxMzI0LjQ0OTIxOSA1ODAuMzIwMzEyIDEzMTAuNDIxODc1IEMgNTQyLjAyMzQzOCAxMjk0Ljc4MTI1IDUwOS42NjAxNTYgMTI2NC40NDE0MDYgNDkzLjg4MjgxMiAxMjI1Ljg3MTA5NCBDIDQ2NS4yOTI5NjkgMTE1NS44ODY3MTkgNDg3Ljk0OTIxOSAxMDU2LjkwNjI1IDUxNi41MzUxNTYgOTkwLjE1MjM0NCBDIDU2OC4zMTY0MDYgODY5LjMyODEyNSA2NzMuOTA2MjUgNzkxLjUxOTUzMSA3OTkuNzIyNjU2IDc2MS4wNDI5NjkgQyA4NTIuOTg4MjgxIDc0OC4yMzQzNzUgOTA3LjA2MjUgNzQyLjgzOTg0NCA5NTguMzA0Njg4IDcyMS45Mzc1IEMgMTA2NS4yNDIxODggNjc4LjI0NjA5NCAxMTMxLjQ1MzEyNSA1NzcuOTE3OTY5IDExNzQuNjA1NDY5IDQ3NS4xNjAxNTYgQyAxMTg2LjQ3MjY1NiA0NDguNTkzNzUgMTE5NC44MzIwMzEgNDE4LjUyMzQzOCAxMjEwLjMzOTg0NCAzOTMuNzEwOTM4IEMgMTIxNi4wMDM5MDYgMzg0LjY3NTc4MSAxMjI0LjA5Mzc1IDM3NS4xMDE1NjIgMTIzNS4yODkwNjIgMzczLjA3ODEyNSBDIDEyNDEuNDkyMTg4IDM3MiAxMjQ3LjU1ODU5NCAzNzMuNzUzOTA2IDEyNTIuNDE0MDYyIDM3Ny42NjQwNjIgQyAxMjc5LjM4MjgxMiAzOTkuOTE0MDYyIDEyODUuMTgzNTk0IDQ4MC4xNDg0MzggMTI4Ny43NDYwOTQgNTE0LjQwMjM0NCBDIDEzMDQuMDYyNSA3MzQuNzQ2MDk0IDEyMjAuNTg5ODQ0IDk3My44MzU5MzggMTA3Ni40MzM1OTQgMTE0MC4xMDkzNzUgQyA5NzguODA0Njg4IDEyNTIuOTc2NTYyIDg0Ni4yNDYwOTQgMTMxNy4wMzEyNSA2OTguMDQyOTY5IDEzMjcuNjgzNTk0IFogTSA2OTguMDQyOTY5IDEzMjcuNjgzNTk0ICIgZmlsbC1vcGFjaXR5PSIxIiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48L3N2Zz4=" alt="Long Lead">
+        <span class="ll-logo-lockup-tagline">Meet talent before you need them</span>
+      </a>
+
+      <div class="ll-masthead-right">
+        <span class="ll-masthead-note">Talent pipelining</span>
+        <span class="ll-masthead-links">
+          <a class="ll-masthead-mail" href="/split" style="font-weight:700">Partner split</a>
+          <span class="ll-masthead-sep" aria-hidden="true">·</span>
+          <a class="ll-masthead-mail" href="/13hours">See the difference</a>
+          <span class="ll-masthead-sep" aria-hidden="true">·</span>
+          <a class="ll-masthead-mail" href="/about">About</a>
+          <span class="ll-masthead-sep" aria-hidden="true">·</span>
+          <a class="ll-masthead-mail" href="mailto:hello@longlead.co">hello@longlead.co</a>
+        </span>
+      </div>
+    </header>
+
+    <section>
+      <div class="sp">
+        <div class="sp-head">
+          <p class="ll-eyebrow">The Inventory, powered by Long Lead</p>
+          <h2>Partner split</h2>
+          <p class="sub">Pick a model, set the fee, and assign each step. Whoever does the step earns its share.</p>
+        </div>
+        <div class="sp-bar">
+          <div class="sp-tog">
+            <button id="b1" class="on" type="button">Advisory / embedded</button>
+            <button id="b2" type="button">Task-based</button>
+          </div>
+          <label class="sp-fee">Engagement fee $ <input id="fee" type="number" value="100000" step="1000" min="0"></label>
+        </div>
+        <div class="sp-cards" id="cards"></div>
+        <div class="sp-warn" id="warn"></div>
+        <div>
+          <div class="sp-row h"><span>#</span><span>Step</span><span>Share</span><span></span><span>Owner</span></div>
+          <div id="rows"></div>
+        </div>
+        <div class="sp-foot">
+          <label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="give"> Give the house share to The Inventory for BD expenses</label>
+          <button id="reset" type="button">Reset</button>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="ll-colophon">
+        <span style="display:flex;align-items:center;gap:9px;">
+          <svg class="ll-logo-mini" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+            <g fill="currentColor">
+              <circle cx="8" cy="32" r="4"></circle><circle cx="21" cy="32" r="4"></circle><circle cx="34" cy="32" r="4"></circle>
+              <rect x="45" y="24" width="16" height="16" rx="2"></rect>
+            </g>
+          </svg>
+          Long Lead
+        </span>
+        <a class="ll-colophon-mail" href="mailto:hello@longlead.co">hello@longlead.co</a>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script>
+(function () {
+  var LL = "Long Lead", TI = "The Inventory", SPLIT = "50/50 split", OUT = "Outsourced";
+  var PARTIES = [LL, TI, OUT, "House"];
+  var OWN = [LL, TI, SPLIT, OUT, "House"];
+  var DEF = {
+    1: [
+      ["Lead generation and intro", 10, TI],
+      ["Discovery and needs assessment", 5, TI],
+      ["Proposal, pricing and close", 5, TI],
+      ["Kickoff and intake", 5, LL],
+      ["Hiring strategy and process design", 10, LL],
+      ["Hiring manager and interviewer coaching", 10, LL],
+      ["Embedded support", 15, LL],
+      ["Execution support", 25, OUT],
+      ["Reporting, recaps, renewal and expansion", 5, TI],
+      ["House: overhead, BD, discretionary", 10, "House"]
+    ],
+    2: [
+      ["Lead generation and intro", 10, TI],
+      ["Discovery, proposal and close", 5, TI],
+      ["Kickoff and intake", 5, LL],
+      ["Calibration", 5, LL],
+      ["Sourcing", 20, OUT],
+      ["Questionnaire vetting", 10, OUT],
+      ["Video screening", 15, LL],
+      ["Submission and bench delivery", 10, LL],
+      ["Account management and renewal", 10, TI],
+      ["House: overhead, BD, discretionary", 10, "House"]
+    ]
+  };
+
+  var model = 1;
+  function clone(m) { return DEF[m].map(function (r) { return r.slice(); }); }
+  var state = { 1: clone(1), 2: clone(2) };
+  function $(id) { return document.getElementById(id); }
+  function fmt(n) { return "$" + Math.round(n).toLocaleString("en-US"); }
+  function pf(n) { return (Math.round(n * 10) / 10) + "%"; }
+
+  function calc() {
+    var fee = Math.max(0, +$("fee").value || 0), give = $("give").checked, t = {}, sum = 0, joint = 0;
+    PARTIES.forEach(function (o) { t[o] = 0; });
+    state[model].forEach(function (r) {
+      sum += r[1];
+      var o = r[2];
+      if (give && o === "House") o = TI;
+      if (o === SPLIT) { joint += r[1]; t[LL] += r[1] / 2; t[TI] += r[1] / 2; }
+      else t[o] += r[1];
+    });
+    $("cards").innerHTML =
+      '<div class="sp-card joint"><div class="l">Split 50/50</div><div class="v">' + pf(joint) +
+      '</div><div class="d">' + fmt(fee * joint / 100) + " · " + fmt(fee * joint / 200) + " each</div></div>" +
+      PARTIES.map(function (o) {
+        return '<div class="sp-card"><div class="l">' + o + '</div><div class="v">' + pf(t[o]) +
+          '</div><div class="d">' + fmt(fee * t[o] / 100) + "</div></div>";
+      }).join("");
+    var w = $("warn");
+    if (sum === 100) { w.style.color = "var(--accent)"; w.textContent = "Total 100%"; }
+    else {
+      w.style.color = "var(--late)";
+      w.textContent = "Total " + sum + "%. " + (sum > 100 ? "Over by " + (sum - 100) : "Under by " + (100 - sum)) + " points";
+    }
+  }
+
+  function build() {
+    $("rows").innerHTML = state[model].map(function (r, i) {
+      return '<div class="sp-row"><span class="n">' + String(i + 1).padStart(2, "0") + "</span><span>" + r[0] +
+        '</span><input type="range" min="0" max="40" step="5" value="' + r[1] + '" data-i="' + i + '" aria-label="' + r[0] + ' share">' +
+        '<span class="p" id="p' + i + '">' + r[1] + '%</span><select data-o="' + i + '" aria-label="' + r[0] + ' owner">' +
+        OWN.map(function (o) { return "<option" + (o === r[2] ? " selected" : "") + ">" + o + "</option>"; }).join("") +
+        "</select></div>";
+    }).join("");
+    document.querySelectorAll("#rows input[type=range]").forEach(function (el) {
+      el.addEventListener("input", function (e) {
+        var i = +e.target.dataset.i;
+        state[model][i][1] = +e.target.value;
+        $("p" + i).textContent = e.target.value + "%";
+        calc();
+      });
+    });
+    document.querySelectorAll("#rows select").forEach(function (el) {
+      el.addEventListener("change", function (e) {
+        state[model][+e.target.dataset.o][2] = e.target.value;
+        calc();
+      });
+    });
+    calc();
+  }
+
+  function pick(m) {
+    model = m;
+    $("b1").classList.toggle("on", m === 1);
+    $("b2").classList.toggle("on", m === 2);
+    build();
+  }
+
+  $("b1").addEventListener("click", function () { pick(1); });
+  $("b2").addEventListener("click", function () { pick(2); });
+  $("fee").addEventListener("input", calc);
+  $("give").addEventListener("change", calc);
+  $("reset").addEventListener("click", function () {
+    state[model] = clone(model);
+    $("give").checked = false;
+    build();
+  });
+
+  build();
+})();
+</script>
+</body>
+</html>
