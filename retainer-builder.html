@@ -427,6 +427,36 @@
   .ledger-row.premium .label,
   .ledger-row.premium .val { color: var(--burgundy); }
 
+  .ledger-row.discount .label,
+  .ledger-row.discount .val { color: var(--brass-strong); }
+
+  .discount-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 18px;
+    padding: 14px 16px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 7px;
+  }
+  .discount-label .field-label { margin-bottom: 2px; }
+  .discount-label p { margin: 0; font-size: 12px; color: var(--slate); line-height: 1.5; }
+  .discount-inputs { display: flex; gap: 6px; flex: none; }
+  .discount-inputs select,
+  .discount-inputs input {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 14px;
+    color: var(--ink);
+    background: var(--surface-sunken);
+    border: 1px solid var(--line-strong);
+    border-radius: 6px;
+    padding: 8px 10px;
+  }
+  .discount-inputs select { cursor: pointer; }
+  .discount-inputs input { width: 96px; text-align: right; }
+
   .ledger-row.total {
     border-top: 2px solid var(--ink);
     margin-top: 8px;
@@ -986,6 +1016,19 @@
       <div class="ledger">
         <p class="ledger-title">Breakdown</p>
         <div id="ledgerRows"></div>
+        <div class="discount-row">
+          <div class="discount-label">
+            <label class="field-label" for="discountValue">Client discount</label>
+            <p>Applied to the total engagement budget.</p>
+          </div>
+          <div class="discount-inputs">
+            <select id="discountType" aria-label="Discount type">
+              <option value="pct">%</option>
+              <option value="flat">$</option>
+            </select>
+            <input type="number" id="discountValue" min="0" step="1" placeholder="0" inputmode="decimal">
+          </div>
+        </div>
       </div>
 
       <p class="footnote">Estimate for internal planning purposes. Final engagement terms are confirmed in the signed agreement.</p>
@@ -1278,9 +1321,17 @@
     const recurringBudget = weeklyRate * duration;
     const asyncTotal = packBreakdown(asyncQty, ADHOC_ASYNC).total;
     const interviewTotal = packBreakdown(interviewQty, ADHOC_INTERVIEW).total;
-    const totalBudget = recurringBudget + asyncTotal + interviewTotal;
+    const preDiscountTotal = recurringBudget + asyncTotal + interviewTotal;
+    const discountType = document.getElementById("discountType").value;
+    const discountInput = Math.max(0, Number(document.getElementById("discountValue").value) || 0);
+    let discount = discountType === "pct"
+      ? preDiscountTotal * Math.min(100, discountInput) / 100
+      : Math.min(preDiscountTotal, discountInput);
+    discount = Math.round(discount);
+    const discountLabel = discountType === "pct" ? "Discount (" + Math.min(100, discountInput) + "%)" : "Discount";
+    const totalBudget = preDiscountTotal - discount;
     return { isConfidential, duration, perSearch, combinedWeekly, premium, weeklyRate,
-      recurringBudget, asyncTotal, interviewTotal, totalBudget };
+      recurringBudget, asyncTotal, interviewTotal, preDiscountTotal, discount, discountLabel, totalBudget };
   }
 
   function buildLedgerRows(s) {
@@ -1296,6 +1347,10 @@
     rows.push({ label: "× " + s.duration + " week" + (s.duration === 1 ? "" : "s"), val: fmt(s.recurringBudget), kind: "" });
     if (asyncQty > 0) rows.push({ label: "Async Video Response (" + packCaption(packBreakdown(asyncQty, ADHOC_ASYNC), ADHOC_ASYNC) + ")", val: fmt(s.asyncTotal), kind: "" });
     if (interviewQty > 0) rows.push({ label: "Video Interview Screen (" + packCaption(packBreakdown(interviewQty, ADHOC_INTERVIEW), ADHOC_INTERVIEW) + ")", val: fmt(s.interviewTotal), kind: "" });
+    if (s.discount > 0) {
+      rows.push({ label: "Subtotal", val: fmt(s.preDiscountTotal), kind: "subtotal" });
+      rows.push({ label: s.discountLabel, val: fmtSigned(-s.discount), kind: "discount" });
+    }
     rows.push({ label: "Total engagement budget", val: fmt(s.totalBudget), kind: "total" });
     return rows;
   }
@@ -1356,6 +1411,10 @@
     summ.push(["Recurring subtotal", fmt(s.recurringBudget)]);
     if (s.asyncTotal > 0) summ.push(["Async Video Response (" + packCaption(packBreakdown(asyncQty, ADHOC_ASYNC), ADHOC_ASYNC) + ")", fmt(s.asyncTotal)]);
     if (s.interviewTotal > 0) summ.push(["Video Interview Screen (" + packCaption(packBreakdown(interviewQty, ADHOC_INTERVIEW), ADHOC_INTERVIEW) + ")", fmt(s.interviewTotal)]);
+    if (s.discount > 0) {
+      summ.push(["Subtotal", fmt(s.preDiscountTotal)]);
+      summ.push([s.discountLabel, fmtSigned(-s.discount)]);
+    }
     html += '<p class="doc-section-title">Engagement Summary</p>' +
       '<table class="agreement-table">' +
       summ.map(r => "<tr><td>" + r[0] + "</td><td>" + r[1] + "</td></tr>").join("") +
@@ -1475,6 +1534,8 @@
   durationEl.addEventListener("input", render);
   durationEl.addEventListener("change", render);
   confidentialEl.addEventListener("change", render);
+  document.getElementById("discountType").addEventListener("change", render);
+  document.getElementById("discountValue").addEventListener("input", render);
 
   resetBtn.addEventListener("click", () => {
     searches = [newSearch()];
@@ -1483,6 +1544,8 @@
     confidentialEl.checked = false;
     asyncQty = 0;
     interviewQty = 0;
+    document.getElementById("discountType").selectedIndex = 0;
+    document.getElementById("discountValue").value = "";
     refreshAll();
 
     document.getElementById("clientEntity").value = "";
