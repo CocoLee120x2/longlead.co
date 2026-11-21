@@ -1366,6 +1366,9 @@
     document.getElementById("confTag").classList.toggle("show", s.isConfidential);
     document.getElementById("ledgerRows").innerHTML = rowsToHtml(buildLedgerRows(s));
     sliderFill(durationEl);
+    // Keep an already-generated agreement in sync with the current configuration.
+    const out = document.getElementById("agreementOutput");
+    if (out && out.classList.contains("show")) buildAgreement(false);
   }
 
   function refreshAll() {
@@ -1426,7 +1429,7 @@
   const startDateEl = document.getElementById("startDate");
   startDateEl.value = new Date().toISOString().split("T")[0];
 
-  document.getElementById("generateAgreementBtn").addEventListener("click", () => {
+  function buildAgreement(scroll) {
     const s = getCurrentState();
 
     const clientEntity = document.getElementById("clientEntity").value.trim() || "[Client Legal Entity]";
@@ -1489,7 +1492,7 @@
         "<p>The engagement begins on " + fmtDate(startDate) + " and runs for " + s.duration + " week" + (s.duration === 1 ? "" : "s") + ", through approximately " + fmtDate(endDate) + ' (the &ldquo;Term&rdquo;).</p>' +
       "</section>" +
       "<section><h4>3. Fees &amp; Payment Schedule</h4>" +
-        "<p>Client will pay Long Lead a total engagement fee of " + fmt(s.totalBudget) + ", calculated per the configuration in Schedule A.</p>" +
+        "<p>Client will pay Long Lead a total engagement fee of " + fmt(s.totalBudget) + ", calculated per the configuration in Schedule A" + (s.discount > 0 ? ", which reflects a discount of " + fmt(s.discount) + " off the " + fmt(s.preDiscountTotal) + " subtotal" : "") + ".</p>" +
         "<p>" + paymentIntro + "</p>" +
         installmentTable +
         "<p>Async Video Response and Video Interview add-ons form a shared pool across all searches. If Client requests usage beyond what is already included in Schedule A, the cost of those extra uses is added to the final payment. Late amounts accrue interest at 1.5% per month or the maximum permitted by law, whichever is less.</p>" +
@@ -1528,8 +1531,10 @@
 
     output.classList.add("show");
     document.getElementById("printAgreementBtn").addEventListener("click", () => window.print());
-    output.scrollIntoView({ behavior: "smooth", block: "start" });
-  });
+    if (scroll) output.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  document.getElementById("generateAgreementBtn").addEventListener("click", () => buildAgreement(true));
 
   durationEl.addEventListener("input", render);
   durationEl.addEventListener("change", render);
